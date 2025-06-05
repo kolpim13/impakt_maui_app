@@ -1,0 +1,50 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
+             x:Class="impakt_maui_app.QRScanner">
+
+    <Grid x:Name="MainGrid">
+        
+        <!--Initially visible / not hidden part with mod options-->
+        <VerticalStackLayout x:Name="ButtonPanel"
+                             Padding="30" Spacing="20">
+        
+            <!--Implemented scanning modes-->
+            <!--#####-->
+            
+            <!--Scanning modes during implementation-->
+            <Button Text="Check In" Clicked="OnAnyScanButtobClicked" ClassId="CheckIn" 
+                    BackgroundColor="Blue" IsEnabled="True"/>
+            
+            <!--Scanning modes are not implemented-->
+            <Button Text="Check Entrances Today" Clicked="OnAnyScanButtobClicked" ClassId="CheckEntrancesToday" 
+                    BackgroundColor="Gray" IsEnabled="False"/>
+            <Button Text="Update Pass Data" Clicked="OnAnyScanButtobClicked" ClassId="UpdatePassData" 
+                    BackgroundColor="Gray" IsEnabled="False"/>
+            
+            <!--Come back to the main page-->
+            <Button Text="Back ==> Main Page" Clicked="OnToMainPageClicked" 
+                    BackgroundColor="Blue" IsEnabled="True"/>
+            
+        </VerticalStackLayout>
+
+        <!--Grid with barecode (invisible / hidden untill explicitly called)-->
+        <VerticalStackLayout x:Name="ScanningPannel" 
+                             IsVisible="False">
+            
+            <!--QR Scanner itself-->
+            <zxing:CameraBarcodeReaderView x:Name="QRCodeReader"
+                                IsDetecting="True"
+                                BarcodesDetected="OnBarcodesDetected" />
+
+            <!--Back button ==> makes the grid hidden again-->
+            <Button Text="Back"
+                    BackgroundColor="Blue"
+                    Clicked="OnBackClicked" />
+        </VerticalStackLayout>
+
+    </Grid>
+
+
+</ContentPage>
+    
