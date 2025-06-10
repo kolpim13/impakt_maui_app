@@ -1,7 +1,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
-             x:Class="impakt_maui_app.QRScanner">
+             x:Class="impakt_maui_app.QRScanner" 
+             xmlns:local="impakt_maui_app.QRScanner">
 
     <Grid x:Name="MainGrid">
         
@@ -13,15 +14,16 @@
             <!--#####-->
             
             <!--Scanning modes during implementation-->
-            <Button Text="Check In" Clicked="OnAnyScanButtobClicked" ClassId="CheckIn" 
-                    BackgroundColor="Blue" IsEnabled="True"/>
-            
+            <Button Text="Update Pass Data" Clicked="OnAnyScanButtobClicked" ClassId="UpdatePassData" 
+                BackgroundColor="Blue" IsEnabled="True" />
+
             <!--Scanning modes are not implemented-->
+            <Button Text="Check In" Clicked="OnAnyScanButtobClicked" ClassId="CheckIn" 
+                BackgroundColor="Gray" IsEnabled="False"/>
+            
             <Button Text="Check Entrances Today" Clicked="OnAnyScanButtobClicked" ClassId="CheckEntrancesToday" 
                     BackgroundColor="Gray" IsEnabled="False"/>
-            <Button Text="Update Pass Data" Clicked="OnAnyScanButtobClicked" ClassId="UpdatePassData" 
-                    BackgroundColor="Gray" IsEnabled="False"/>
-            
+
             <!--Come back to the main page-->
             <Button Text="Back ==> Main Page" Clicked="OnToMainPageClicked" 
                     BackgroundColor="Blue" IsEnabled="True"/>
@@ -36,6 +38,31 @@
             <zxing:CameraBarcodeReaderView x:Name="QRCodeReader"
                                 IsDetecting="True"
                                 BarcodesDetected="OnBarcodesDetected" />
+
+            <!--Update pass data-->
+            <Picker x:Name="PickerPassType" IsVisible="False"
+                    SelectedIndex="0"
+                    Title="Select pass type" >
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>No</x:String>
+                        <x:String>Limited</x:String>
+                        <x:String>Unlimited</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            
+            <Picker x:Name="PickerPassEntrances" IsVisible="False"
+                    Title="Select entrances amount" >
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:Int16}">
+                        <x:Int16>4</x:Int16>
+                        <x:Int16>8</x:Int16>
+                        <x:Int16>12</x:Int16>
+                        <x:Int16>16</x:Int16>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
 
             <!--Back button ==> makes the grid hidden again-->
             <Button Text="Back"
