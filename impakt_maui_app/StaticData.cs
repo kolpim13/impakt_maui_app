@@ -7,24 +7,93 @@ using Newtonsoft.Json;
 
 namespace impakt_maui_app
 {
-    public class BackendResp_UserInfo
+    public enum PassType: ushort
     {
-        public string status { get; set; }
+        No = 0,
+        Limited = 1,
+        Unlimited = 2,
+    }
+
+    public enum AccountType: ushort
+    {
+        Admin = 0,
+        Instructor = 1,
+        Member = 2,
+    }
+
+    public class BackendReq_RegisterNewMember
+    {
         public string name { get; set; }
         public string surname { get; set; }
+        public string email { get; set; }
+        public string? phone_number { get; set; } // Optional
+        public DateTime? date_of_birth { get; set; } // Optional
+        public string? account_type { get; set; } // Optional
+    }
+
+    public class BackendReq_CheckInMember
+    {
+        public string card_id { get; set; }
+    }
+
+    public class BackendReq_UpdatePassDetails
+    {
+        public string card_id { get; set; }
+        public int pass_type { get; set; }
+        public int entrances_left { get; set; }
+        public DateOnly expiration_date { get; set; }
+    }
+
+    /* The data will be returned from backend when user is logged in */
+    public class BackendResp_LogIn
+    {
+        public string card_id { get; set; }
+        public string name { get; set; }
+        public string surname { get; set; }
+        public string email { get; set; }
+        public string phone { get; set; }
+        public DateOnly? date_of_birth { get; set; }
+        public int? account_type { get; set; }
     }
 
     public static class UserInfo
     {
-        public static string? Name { get; set; } = "Name";
-        public static string? SurName { get; set; } = "SurName";
+        //public static int? ID { get; set; } = int.MaxValue;
 
-        public static void LoadData(string json)
+        public static string? Card_ID { get; set; }
+        public static string? Name { get; set; } 
+        public static string? SurName { get; set; }
+        public static string? Email { get; set; }
+        public static string? Phone { get; set; }
+        public static DateOnly? DateOfBirth{ get; set; }
+        public static AccountType? AccountType { get; set; }
+
+        public static void Fill_FromLogInResp(string json)
         {
-            BackendResp_UserInfo? user = JsonConvert.DeserializeObject<BackendResp_UserInfo>(json);
+            BackendResp_LogIn? user = JsonConvert.DeserializeObject<BackendResp_LogIn>(json);
 
+            Card_ID = user.card_id;
             Name = user.name;
             SurName = user.surname;
+            Email = user.email;
+            Phone = user.phone;
+            DateOfBirth = user.date_of_birth;
+            AccountType = (AccountType)user.account_type;
+        }
+    }
+
+    public static class Network
+    {
+#if ANDROID
+        public static string URL = "http://192.168.0.1:8000";  // ZF
+        // public static string URL = "http://192.168.0.199:8000";  // Personal
+#else
+        public static string URL = "http://localhost:8000";
+#endif
+
+        public static string LogInUrl
+        {
+            get { return URL + "/login/username"; }
         }
     }
 }

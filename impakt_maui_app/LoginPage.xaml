@@ -11,6 +11,17 @@
         <Button x:Name="ButtonLogin"
                 Text="Login" 
                 Clicked="OnLoginClicked" />
+
+        <!--Example of conditional view depends on platform-->
+        <Entry x:Name="IpEntry" Placeholder="Connection IP" />
+        <!--<Entry x:Name="IpEntry" Placeholder="Connection IP">
+            <Entry.IsVisible>
+                <OnPlatform x:TypeArguments="x:Boolean">
+                    <On Platform="Android" Value="True"/>
+                </OnPlatform>
+            </Entry.IsVisible>
+        </Entry>-->
+        
     </VerticalStackLayout>
 
 </ContentPage>
