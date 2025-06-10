@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 using ZXing.Net.Maui.Controls;
+using CommunityToolkit.Maui.Views;
+using impakt_maui_app.Popups;
 
 namespace impakt_maui_app
 {
@@ -30,6 +32,11 @@ namespace impakt_maui_app
         {
             await Shell.Current.GoToAsync("//QRScanner");
             return;
+        }
+
+        private async void OnAddMemberClicked(object? sender, EventArgs e)
+        {
+            await Shell.Current.ShowPopupAsync(new NewMemberPopup());
         }
     }
 }

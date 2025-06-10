@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 using ZXing.Net.Maui;
 using ZXing.Net.Maui.Controls;
 
@@ -21,6 +22,7 @@ namespace impakt_maui_app
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            builder.UseMauiApp<App>().UseMauiCommunityToolkit();
 
             return builder.Build();
         }
