@@ -14,13 +14,14 @@
             <!--#####-->
             
             <!--Scanning modes during implementation-->
+			<Button Text="Check In" Clicked="OnAnyScanButtobClicked" ClassId="CheckIn"
+                BackgroundColor="Blue" IsEnabled="True"/>
             <Button Text="Update Pass Data" Clicked="OnAnyScanButtobClicked" ClassId="UpdatePassData" 
+                BackgroundColor="Blue" IsEnabled="True" />
+			<Button Text="Get User Info" Clicked="OnAnyScanButtobClicked" ClassId="GetUserInfo"
                 BackgroundColor="Blue" IsEnabled="True" />
 
             <!--Scanning modes are not implemented-->
-            <Button Text="Check In" Clicked="OnAnyScanButtobClicked" ClassId="CheckIn" 
-                BackgroundColor="Gray" IsEnabled="False"/>
-            
             <Button Text="Check Entrances Today" Clicked="OnAnyScanButtobClicked" ClassId="CheckEntrancesToday" 
                     BackgroundColor="Gray" IsEnabled="False"/>
 
@@ -64,6 +65,11 @@
                 </Picker.ItemsSource>
             </Picker>
 
+			<!--CkeckIn member
+			    TBD: Hall, Payment by external source-->
+			<Label x:Name="CheckInStatusLabel" Text=" CheckIn status"
+				    IsVisible="False"/>
+			
             <!--Back button ==> makes the grid hidden again-->
             <Button Text="Back"
                     BackgroundColor="Blue"

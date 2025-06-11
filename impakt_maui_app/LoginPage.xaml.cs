@@ -44,7 +44,7 @@ namespace impakt_maui_app
             // Send prepared data on backend side
             try
             {
-                // Allow to choose
+                // Save URL
 #if ANDROID
                 string? ip = IpEntry.Text?.Trim();
                 if (string.IsNullOrEmpty(ip) == false)

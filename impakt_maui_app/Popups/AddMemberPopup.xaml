@@ -4,7 +4,7 @@
                x:Class="impakt_maui_app.Popups.NewMemberPopup">
 
     <VerticalStackLayout Padding="20" Spacing="10">
-        <!--Fileds should filled-->
+        <!--Fileds should be filled-->
         <Entry x:Name="NameEntry" Placeholder="Name" />
         <Entry x:Name="SurnameEntry" Placeholder="Surname" />
         <Entry x:Name="EmailEntry" Placeholder="Email" />

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using ZXing.Net.Maui;
 using ZXing.Net.Maui.Controls;
+using Syncfusion.Maui.Core.Hosting;
 
 namespace impakt_maui_app
 {

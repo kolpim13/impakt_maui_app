@@ -11,8 +11,6 @@ namespace impakt_maui_app.Popups
 {
     public partial class NewMemberPopup : Popup
     {
-        private string APIUrl = string.Format("http://localhost:8000/members/{0}/add", UserInfo.Card_ID);
-
         public NewMemberPopup()
         {
             InitializeComponent();
@@ -32,17 +30,25 @@ namespace impakt_maui_app.Popups
             };
 
             // Establish connection --> Send collected data --> react on response
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.PostAsJsonAsync(APIUrl, new_member);
-            if (response.IsSuccessStatusCode)
+            try
             {
-                await Shell.Current.DisplayAlert("Success", "Member added!", "OK");
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.PostAsJsonAsync(Network.NewMemberUrl, new_member);
+                if (response.IsSuccessStatusCode)
+                {
+                    await Shell.Current.DisplayAlert("Success", "Member added!", "OK");
+                }
+                else
+                {
+                    // Add some reaction later
+                    ;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // Add some reaction later
                 ;
             }
+            
 
             // Restore button disregardless result
             ButtonAddMember.IsEnabled = true;

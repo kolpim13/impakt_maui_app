@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Maui.Views;
+using impakt_maui_app.Popups;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
@@ -17,12 +19,15 @@ namespace impakt_maui_app
             None = 0,
             CheckIn,
             UpdatePassType,
+            GetUserInfo,
         }
 
         /* Data will be needed during existance of the page */
         private QRScanType scanType;
 
         private string uptdate_pass_details_url;
+        private string get_user_info_url;
+        private string checkin_member_url;
 
         public QRScanner() 
         {
@@ -40,6 +45,8 @@ namespace impakt_maui_app
             scanType = QRScanType.None;
 
             uptdate_pass_details_url = string.Format("{0}/members/update/", Network.URL);
+            get_user_info_url = string.Format("{0}/members/{1}/get/member_info", Network.URL, UserInfo.Card_ID);
+            checkin_member_url = string.Format("{0}/members/{1}/checkin", Network.URL, UserInfo.Card_ID);
         }
 
         private async void OnBarcodesDetected(object? sender, BarcodeDetectionEventArgs e)
@@ -53,29 +60,97 @@ namespace impakt_maui_app
             {
                 if (!string.IsNullOrEmpty(value))
                 {
+                    HttpClient client = new HttpClient();
+
                     // Call API depends on choosen parameters
-                    switch(scanType)
+                    switch (scanType)
                     {
+                        case QRScanType.CheckIn:
+                            try
+                            {
+                                // Assemble request
+                                BackendReq_CheckInMember req = new BackendReq_CheckInMember
+                                {
+                                    card_id = value,
+                                };
+
+                                // Process http request
+                                HttpResponseMessage response = await client.PostAsJsonAsync(checkin_member_url, req);
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    await DisplayAlert("Member was checked in", value, "OK");
+                                    await Navigation.PopAsync();
+                                }
+                                else
+                                {
+                                    string error_message = await response.Content.ReadAsStringAsync();
+                                    await DisplayAlert(error_message, value, "OK");
+                                    await Navigation.PopAsync();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                ;
+                            }
+                            break;
+
                         case QRScanType.UpdatePassType:
-                            PassType pass_type = (PassType)Enum.Parse(typeof(PassType), (string)PickerPassType.SelectedItem);
-                            BackendReq_UpdatePassDetails pass_details = new BackendReq_UpdatePassDetails
+                            try
                             {
-                                card_id = value,
-                                pass_type = (int)pass_type,
-                                entrances_left = Convert.ToInt16(PickerPassEntrances.SelectedItem),
-                                expiration_date = DateOnly.FromDateTime(DateTime.Today.AddDays(35)),
-                            };
+                                PassType pass_type = (PassType)Enum.Parse(typeof(PassType), (string)PickerPassType.SelectedItem);
+                                BackendReq_UpdatePassDetails pass_details = new BackendReq_UpdatePassDetails
+                                {
+                                    card_id = value,
+                                    pass_type = (int)pass_type,
+                                    entrances_left = Convert.ToInt16(PickerPassEntrances.SelectedItem),
+                                    expiration_date = DateOnly.FromDateTime(DateTime.Today.AddDays(35)),
+                                };
 
-                            HttpClient client = new HttpClient();
-                            HttpResponseMessage response = await client.PostAsJsonAsync(uptdate_pass_details_url, pass_details);
-                            if (response.IsSuccessStatusCode)
-                            {
-
+                                // Process http request
+                                HttpResponseMessage response = await client.PostAsJsonAsync(uptdate_pass_details_url, pass_details);
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    ;
+                                }
+                                else
+                                {
+                                    ;
+                                }
                             }
-                            else
+                            catch (Exception ex)
                             {
-
+                                ;
                             }
+                            break;
+
+                        case QRScanType.GetUserInfo:
+                            try
+                            {
+                                // Assemble request
+                                BackendReq_MemberInfo req = new BackendReq_MemberInfo
+                                {
+                                    card_id = value,
+                                };
+
+                                // Process http request
+                                HttpResponseMessage response = await client.PostAsJsonAsync(get_user_info_url, req);
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    BackendResp_MemberInfo member_info = await response.Content.ReadFromJsonAsync<BackendResp_MemberInfo>();
+                                    await Shell.Current.ShowPopupAsync(new MemberInfoPopup(member_info));
+                                }
+                                else
+                                {
+                                    ;
+                                }
+
+                                    
+                            }
+                            catch (Exception ex)
+                            {
+                                ;
+                            }
+                            
                             break;
                     }
 
@@ -101,6 +176,9 @@ namespace impakt_maui_app
                         PickerPassType.IsVisible = true;
                         PickerPassEntrances.IsVisible = true;
                         break;
+                    case "GetUserInfo":
+                        scanType = QRScanType.GetUserInfo;
+                        break;
                 }
             }
 
@@ -123,6 +201,8 @@ namespace impakt_maui_app
                 case QRScanType.UpdatePassType:
                     PickerPassType.IsVisible = false;
                     PickerPassEntrances.IsVisible = false;
+                    break;
+                case QRScanType.GetUserInfo:
                     break;
             }
             scanType = QRScanType.None;
