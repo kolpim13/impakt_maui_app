@@ -38,5 +38,11 @@ namespace impakt_maui_app
         {
             await Shell.Current.ShowPopupAsync(new NewMemberPopup());
         }
+
+        private async void OnCheckInHistoryClicked(object? sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//ChecInHistory");
+            return;
+        }
     }
 }

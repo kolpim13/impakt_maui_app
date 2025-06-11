@@ -1,0 +1,17 @@
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="impakt_maui_app.Popups.MemberInfoPopup">
+
+    <VerticalStackLayout Padding="20" Spacing="10">
+
+        <Label x:Name="NameLabel" Text="Name" />
+        <Label x:Name="SurnameLabel" Text="Surname" />
+        <Label x:Name="EmailLabel" Text="Email" />
+        <Label x:Name="PhoneLabel" Text="Phone" />
+        <Label x:Name="DateOfBirthLabel" Text="Date of birth" />
+		<Label x:Name="EntrancesLeftLabel" Text="Pass entrancess left" />
+		<Label x:Name="PassExpirationDateLabel" Text="Date of finishing pass" />
+    </VerticalStackLayout>
+    
+</toolkit:Popup>

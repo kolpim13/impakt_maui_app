@@ -23,5 +23,11 @@
         Title="QR Scanner"
         ContentTemplate="{DataTemplate local:QRScanner}"
         Route="QRScanner" />
+    
+    <!--Look on history of checkin-->
+    <ShellContent 
+        Title="CheckIn History"
+        ContentTemplate="{DataTemplate local:CheckinHistory}"
+        Route="ChecInHistory"/>
 
 </Shell>

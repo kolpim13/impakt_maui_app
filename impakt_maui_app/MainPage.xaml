@@ -24,6 +24,10 @@
                     Text="Go to QRScanner" 
                     Clicked="OnTempClicked" />
 
+            <Button x:Name="ButtonCheckInHistory"
+                    Text="Go to CheckIn history"
+                    Clicked="OnCheckInHistoryClicked" />
+
         </VerticalStackLayout>
     </ScrollView>
 

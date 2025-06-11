@@ -56,6 +56,43 @@ namespace impakt_maui_app
         public int? account_type { get; set; }
     }
 
+    public class BackendReq_MemberInfo
+    {
+        public string card_id { get; set; }
+    }
+    public class BackendResp_MemberInfo
+    {
+        public string card_id { get; set; }
+        public string name { get; set; }
+        public string surname { get; set; }
+        public string email { get; set; }
+        public string? phone_number { get; set; }
+        public DateOnly? date_of_birth { get; set; }
+        public int account_type { get; set; }
+    }
+
+    public class BackendReq_CheckInFilters
+    {
+        public int limit { get; set; }
+        public string? control_name { get; set; }
+        public string? control_surname { get; set; }
+        public string? hall { get; set; }
+        public string? card_id { get; set; }
+        public string? name { get; set; }
+        public string? surname { get; set; }
+        public DateTime? date_time_min { get; set; }
+        public DateTime? date_time_max { get; set; }
+    }
+    public class BackendResp_CheckIn
+    {
+        public string control_name { get; set; }
+        public string control_surname { get; set; }
+        public string hall { get; set; }
+        public string card_id { get; set; }
+        public string name { get; set; }
+        public string surname { get; set; }
+        public DateTime date_time { get; set; }
+    }
     public static class UserInfo
     {
         //public static int? ID { get; set; } = int.MaxValue;
@@ -85,15 +122,25 @@ namespace impakt_maui_app
     public static class Network
     {
 #if ANDROID
-        public static string URL = "http://192.168.0.1:8000";  // ZF
-        // public static string URL = "http://192.168.0.199:8000";  // Personal
+        // public static string URL { get; set; } = "http://192.168.0.1:8000";  // ZF
+        // public static string URL { get; set; } = "http://192.168.0.199:8000";  // Personal
+        public static string URL { get; set; } = "http://192.168.0.6:8000";  // Grzegosz
 #else
-        public static string URL = "http://localhost:8000";
+        public static string URL { get; set; } = "http://localhost:8000";
 #endif
+
+        public static string NewMemberUrl
+        {
+            get { return string.Format("{0}/members/{1}/add", URL, UserInfo.Card_ID); }
+        }
 
         public static string LogInUrl
         {
             get { return URL + "/login/username"; }
+        }
+        public static string CheckInHistoryUrl
+        {
+            get { return string.Format("{0}/checkin/log/filtered", URL); }
         }
     }
 }
