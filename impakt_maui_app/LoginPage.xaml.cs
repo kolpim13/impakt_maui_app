@@ -1,10 +1,14 @@
-﻿using System;
+﻿using impakt_maui_app.Schemas;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Speech.Recognition;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.Net.Http;
 
 namespace impakt_maui_app
 {
@@ -30,18 +34,20 @@ namespace impakt_maui_app
             // Validate both username && password were entered
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
+                // Mark unfullfilled entry with red color --> finish function
+                if (string.IsNullOrEmpty(username))
+                {
+                    UsernameEntry.BackgroundColor = Colors.Red;
+                }
+
+                if (string.IsNullOrEmpty(password))
+                {
+                    PasswordEntry.BackgroundColor = Colors.Red;
+                }
+                
                 return;
             }
 
-            // Prepare data to be sent on a backend
-            string post_json = JsonConvert.SerializeObject(new
-            {
-                username = username,
-                password = password,
-            });
-            var post_content = new StringContent(post_json, Encoding.UTF8, "application/json");
-
-            // Send prepared data on backend side
             try
             {
                 // Save URL
@@ -52,14 +58,23 @@ namespace impakt_maui_app
                     Network.URL = "http://" + ip + ":8000";
                 }
 #endif
-                var response = await _httpClient.PostAsync(Network.LogInUrl, post_content);
-                var body = await response.Content.ReadAsStringAsync();
+                // Assemble post request --> send it.
+                Req_LogIn req = new Req_LogIn
+                {
+                    username = username,
+                    password = password,
+                };
+
+                HttpResponseMessage response = await _httpClient.PostAsJsonAsync(Network.LogInUrl, req);
+                string response_body = await response.Content.ReadAsStringAsync();
 
                 // Validate the response
                 if (response.IsSuccessStatusCode)
                 {
+                    // response.Content.ReadFromJsonAsync
+
                     // Get data about the user from the backend response
-                    UserInfo.Fill_FromLogInResp(body);
+                    UserInfo.Fill_FromLogInResp(response_body);
 
                     // Dispatch all used resources
                     _httpClient.Dispose();
@@ -67,11 +82,27 @@ namespace impakt_maui_app
                     // Free all resources --> navigate to the main page
                     await Shell.Current.GoToAsync("//MainPage");
                 }
+                else
+                {
+                    string header = "Problem during Login";
+                    string message = string.Format("Status code: {0} - {1}\n{2}", (int)response.StatusCode, response.StatusCode, response_body);
+                    await DisplayAlert(header, message, "OK");
+                    await Navigation.PopAsync();
+                }
             }
             catch (Exception ex)
             {
-                // Add smth here later
-                ButtonLogin.BackgroundColor = Colors.Red;
+                await DisplayAlert("Exception", "random error", "OK");
+                await Navigation.PopAsync();
+            }
+        }
+
+        private void EntryFormsFocused(object? sender, EventArgs e)
+        {
+            if (sender is Entry entry)
+            {
+                // Restore background color of corresponding entry form.
+                entry.BackgroundColor = Colors.White;
             }
         }
     }

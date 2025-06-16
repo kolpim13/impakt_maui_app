@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using impakt_maui_app.Schemas;
 using Newtonsoft.Json;
 
 namespace impakt_maui_app
@@ -45,16 +46,6 @@ namespace impakt_maui_app
     }
 
     /* The data will be returned from backend when user is logged in */
-    public class BackendResp_LogIn
-    {
-        public string card_id { get; set; }
-        public string name { get; set; }
-        public string surname { get; set; }
-        public string email { get; set; }
-        public string phone { get; set; }
-        public DateOnly? date_of_birth { get; set; }
-        public int? account_type { get; set; }
-    }
 
     public class BackendReq_MemberInfo
     {
@@ -104,18 +95,22 @@ namespace impakt_maui_app
         public static string? Phone { get; set; }
         public static DateOnly? DateOfBirth{ get; set; }
         public static AccountType? AccountType { get; set; }
+        public static string? Token { get; set; }
+        public static bool? Activated { get; set; }
 
         public static void Fill_FromLogInResp(string json)
         {
-            BackendResp_LogIn? user = JsonConvert.DeserializeObject<BackendResp_LogIn>(json);
+            Resp_LogIn? user = JsonConvert.DeserializeObject<Resp_LogIn>(json);
 
             Card_ID = user.card_id;
             Name = user.name;
             SurName = user.surname;
             Email = user.email;
-            Phone = user.phone;
+            Phone = user.phone_number;
             DateOfBirth = user.date_of_birth;
             AccountType = (AccountType)user.account_type;
+            Token = user.token;
+            Activated = user.activated; 
         }
     }
 
