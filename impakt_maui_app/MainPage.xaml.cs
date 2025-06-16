@@ -36,7 +36,8 @@ namespace impakt_maui_app
 
         private async void OnAddMemberClicked(object? sender, EventArgs e)
         {
-            await Shell.Current.ShowPopupAsync(new NewMemberPopup());
+            Popup_NewMember popup = new Popup_NewMember();
+            await Shell.Current.ShowPopupAsync(popup);
         }
 
         private async void OnCheckInHistoryClicked(object? sender, EventArgs e)

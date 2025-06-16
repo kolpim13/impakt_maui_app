@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Speech.Recognition;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,17 +33,8 @@ namespace impakt_maui_app
             // Validate both username && password were entered
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                // Mark unfullfilled entry with red color --> finish function
-                if (string.IsNullOrEmpty(username))
-                {
-                    UsernameEntry.BackgroundColor = Colors.Red;
-                }
-
-                if (string.IsNullOrEmpty(password))
-                {
-                    PasswordEntry.BackgroundColor = Colors.Red;
-                }
-                
+                await DisplayAlert("Error", "Fill both: username and password", "OK");
+                await Navigation.PopAsync();
                 return;
             }
 
@@ -94,15 +84,6 @@ namespace impakt_maui_app
             {
                 await DisplayAlert("Exception", "random error", "OK");
                 await Navigation.PopAsync();
-            }
-        }
-
-        private void EntryFormsFocused(object? sender, EventArgs e)
-        {
-            if (sender is Entry entry)
-            {
-                // Restore background color of corresponding entry form.
-                entry.BackgroundColor = Colors.White;
             }
         }
     }
