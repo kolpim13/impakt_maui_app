@@ -38,6 +38,20 @@ namespace impakt_maui_app.Popups
             }
         }
 
+        private bool isDateOfBirthVisible = false;
+        public bool IsDateOfBirthVisible
+        {
+            get => isDateOfBirthVisible;
+            set
+            {
+                if (isDateOfBirthVisible != value)
+                {
+                    isDateOfBirthVisible = value; 
+                    OnPropertyChanged(nameof(IsDateOfBirthVisible));
+                }
+            }
+        }
+
         private DateTime? _date_of_birth = null;
         public DateTime SelectedDateOfBirth
         {
@@ -58,10 +72,9 @@ namespace impakt_maui_app.Popups
             BindingContext = this;
 
             // Set size of the Popup form
-            //double width = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density * 0.8;
-            //double height = DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density * 0.8;
-            //double height = this.Size.Height;
-            //this.Size = new Size(width, height);
+            double width = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density * 0.8;
+            double height = DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density * 0.8;
+            this.Size = new Size(width, height);
 
             // Initialize variables
             DateOfBirthPicker.Date = DateTime.Now;
@@ -95,14 +108,14 @@ namespace impakt_maui_app.Popups
 
                 // Options
                 send_welcome_email = SendEmailCheckBox.IsChecked,
-                send_welcome_mms = false,
+                send_welcome_mms = false, // Temporlarly
             };
 
             // Establish connection --> Send collected data --> react on response
             try
             {
                 HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.PostAsJsonAsync(Network.NewMemberUrl, new_member);
+                HttpResponseMessage response = await client.PostAsJsonAsync(Network.AddNewMemberUrl, new_member);
                 if (response.IsSuccessStatusCode)
                 {
                     await Shell.Current.DisplayAlert("success", "member added!", "ok");
@@ -126,27 +139,5 @@ namespace impakt_maui_app.Popups
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    public class AccountTypeToBoolConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is AccountType selected && parameter is string param)
-                return selected.ToString() == param;
-
-            return false;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is bool isChecked && isChecked && parameter is string param &&
-                Enum.TryParse(typeof(AccountType), param, out var result))
-            {
-                return result!;
-            }
-
-            return Binding.DoNothing;
-        }
     }
 }

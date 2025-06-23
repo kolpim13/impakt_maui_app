@@ -9,13 +9,13 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace impakt_maui_app
+namespace impakt_maui_app.Pages
 {
-    public partial class LoginPage : ContentPage
+    public partial class Page_Login : ContentPage
     {
-        private readonly HttpClient _httpClient = new HttpClient();
+        //private readonly HttpClient _httpClient = new HttpClient();
 
-        public LoginPage()
+        public Page_Login()
         {
             InitializeComponent();
         }
@@ -55,6 +55,7 @@ namespace impakt_maui_app
                     password = password,
                 };
 
+                HttpClient _httpClient = new HttpClient();
                 HttpResponseMessage response = await _httpClient.PostAsJsonAsync(Network.LogInUrl, req);
                 string response_body = await response.Content.ReadAsStringAsync();
 
@@ -70,7 +71,7 @@ namespace impakt_maui_app
                     _httpClient.Dispose();
 
                     // Free all resources --> navigate to the main page
-                    await Shell.Current.GoToAsync("//MainPage");
+                    await Shell.Current.GoToAsync("//Page_Profile");
                 }
                 else
                 {

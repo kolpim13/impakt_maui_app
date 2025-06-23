@@ -3,6 +3,7 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 			   xmlns:local="clr-namespace:impakt_maui_app.Popups"
+			   xmlns:vm="clr-namespace:impakt_maui_app.VM"
 			   x:Class="impakt_maui_app.Popups.Popup_NewMember">
 
 	<!--<ContentPage.BindingContext>
@@ -10,7 +11,7 @@
 	</ContentPage.BindingContext>-->
 
 	<ContentPage.Resources>
-		<local:AccountTypeToBoolConverter x:Key="AccountTypeConverter" />
+		<vm:AccountTypeToBoolConverter x:Key="AccountTypeConverter" />
 	</ContentPage.Resources>
 
 
@@ -24,11 +25,17 @@
 
 			<!--Fields can be left empty-->
 			<Entry x:Name="PhoneEntry" Placeholder="Phone (Optional)"/>
-			<Label Text="Date of birth (Optional)" />
+			
+			<HorizontalStackLayout>
+				<CheckBox IsChecked="{Binding IsDateOfBirthVisible}" />
+				<Label Text="Date of birth (Optional)" 
+					   VerticalOptions ="Center"/>
+			</HorizontalStackLayout>
 			<DatePicker x:Name="DateOfBirthPicker"
 						MinimumDate="01/01/1950"
 						MaximumDate="01/01/2050" 
-						Date="{Binding SelectedDateOfBirth}"/>
+						Date="{Binding SelectedDateOfBirth}"
+						IsVisible="{Binding IsDateOfBirthVisible}"/>
 
 			<Label Text="Member type (Optional)" />
 			<HorizontalStackLayout IsVisible="{Binding IsRadioButtonVisible}">
@@ -43,7 +50,8 @@
 			<!--Options-->
 			<HorizontalStackLayout>
 				<CheckBox x:Name="SendEmailCheckBox" IsChecked="true" />
-				<Label Text="Send email" />
+				<Label Text="Send email" 
+					   VerticalOptions ="Center"/>
 			</HorizontalStackLayout>
 			<!--Sending mms is not implemented in back app-->
 			<HorizontalStackLayout 

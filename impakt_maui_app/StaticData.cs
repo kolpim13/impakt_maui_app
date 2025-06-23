@@ -124,11 +124,14 @@ namespace impakt_maui_app
         public static string URL { get; set; } = "http://localhost:8000";
 #endif
 
-        public static string NewMemberUrl
+        public static string AddNewMemberUrl
         {
-            get { return string.Format("{0}/members/{1}/add", URL, UserInfo.Card_ID); }
+            get { return string.Format("{0}/members/add/{1}", URL, UserInfo.Card_ID); }
         }
-
+        public static string CheckInUrl
+        {
+            get { return string.Format("{0}/checkin/{1}", URL, UserInfo.Card_ID); }
+        }
         public static string LogInUrl
         {
             get { return URL + "/login/username"; }
@@ -136,6 +139,14 @@ namespace impakt_maui_app
         public static string CheckInHistoryUrl
         {
             get { return string.Format("{0}/checkin/log/filtered", URL); }
+        }
+        public static string StatisticInstructorUrl
+        {
+            get { return string.Format("{0}/statistics/instructor/entries_amount/{1}", URL, UserInfo.Card_ID); }
+        }
+        public static string StatisticAllInstructorsUrl
+        {
+            get { return string.Format("{0}/statistics/all_instructors/entries_amount/{1}", URL, UserInfo.Card_ID); }
         }
     }
 }

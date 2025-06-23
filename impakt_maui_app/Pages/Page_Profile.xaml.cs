@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace impakt_maui_app.Pages
+{
+    public partial class Page_Profile : ContentPage
+    {
+        public Page_Profile()
+        {
+            InitializeComponent();
+        }
+    }
+}
