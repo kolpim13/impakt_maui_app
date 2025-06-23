@@ -9,6 +9,9 @@ public partial class Page_Statistics_AdminSummary : ContentPage, INotifyProperty
 {
     //public ObservableCollection<Resp_CheckIns_AmountInstructor>  { get; set; }
 
+    public ObservableCollection<Resp_Statistics_Admin_CheckInsByType> TableContent { get; set; } =
+        new ObservableCollection<Resp_Statistics_Admin_CheckInsByType>();
+
     DateTime _date_start = DateTime.Now;
     public DateTime SelectedDateStart
     {
@@ -46,13 +49,31 @@ public partial class Page_Statistics_AdminSummary : ContentPage, INotifyProperty
     {
         try
         {
-            Req_Statistics_AmountAllInstructors req = new Req_Statistics_AmountAllInstructors
+            Req_Statistics_Admin_CheckInsByType_All req = new Req_Statistics_Admin_CheckInsByType_All
             {
                 date_time_min = _date_start,
                 date_time_max = _date_end,
             };
+
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.PostAsJsonAsync(Network.StatisticAllInstructorsUrl, req);
+            if (response.IsSuccessStatusCode)
+            {
+                List<Resp_Statistics_Admin_CheckInsByType> data = await response.Content.ReadFromJsonAsync<List<Resp_Statistics_Admin_CheckInsByType>>();
+                if (data != null)
+                {
+                    TableContent.Clear();
+                    foreach (Resp_Statistics_Admin_CheckInsByType row in data)
+                    {
+                        TableContent.Add(row);
+                    }
+                    OnPropertyChanged(nameof(TableContent));
+                }
+            }
+            else
+            {
+                ;
+            }
         }
         catch (Exception ex)
         {
