@@ -5,10 +5,7 @@
              x:Class="impakt_maui_app.MainPage">
 
     <ScrollView>
-
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
+        <VerticalStackLayout Padding="30" Spacing="25">
 
             <Label Text="{Binding Name}"
                    Style="{StaticResource Headline}" />

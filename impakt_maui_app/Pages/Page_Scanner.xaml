@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="impakt_maui_app.Pages.Page_Scanner"
+             Title="Page_Scanner">
+
+    <ScrollView>
+        <VerticalStackLayout>
+            <Button x:Name="Btn_CheckIn" Text="CheckIn" 
+                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
+                    Clicked="OnClicked_CheckIn"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

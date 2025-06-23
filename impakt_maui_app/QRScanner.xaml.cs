@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Views;
 using impakt_maui_app.Popups;
+using impakt_maui_app.Schemas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,13 +70,13 @@ namespace impakt_maui_app
                             try
                             {
                                 // Assemble request
-                                BackendReq_CheckInMember req = new BackendReq_CheckInMember
+                                Req_CheckIn req = new Req_CheckIn
                                 {
                                     card_id = value,
                                 };
 
                                 // Process http request
-                                HttpResponseMessage response = await client.PostAsJsonAsync(checkin_member_url, req);
+                                HttpResponseMessage response = await client.PostAsJsonAsync(Network.CheckInUrl, req);
                                 if (response.IsSuccessStatusCode)
                                 {
                                     await DisplayAlert("Member was checked in", value, "OK");

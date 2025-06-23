@@ -1,4 +1,6 @@
-﻿namespace impakt_maui_app
+﻿using impakt_maui_app.Pages;
+
+namespace impakt_maui_app
 {
     public partial class AppShell : Shell
     {
@@ -6,8 +8,10 @@
         {
             InitializeComponent();
 
-            Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
-            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+            /* Register "invisible" route tabs. */
+            Routing.RegisterRoute("Page_Statistics_AdminSummary", typeof(Page_Statistics_AdminSummary));
+
+            Routing.RegisterRoute("Page_Scanner_QRScanner", typeof(Page_Scanner_QRScanner));
         }
     }
 }

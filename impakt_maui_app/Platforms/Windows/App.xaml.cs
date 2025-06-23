@@ -20,6 +20,14 @@ namespace impakt_maui_app.WinUI
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+
+        //protected override void OnLaunched(LaunchActivatedEventArgs args)
+        //{
+        //    // Resize window on windows
+        //    MauiWinUIWindow.Current.
+        //    var app_window = MauiWinUIWindow.Current;
+            
+        //}
     }
 
 }

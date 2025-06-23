@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:datagrid="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
+             x:Class="impakt_maui_app.Pages.Page_Statistics_AdminSummary"
+             Title="Page_Statistics_AdminSummary">
+
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Date selection-->
+            <VerticalStackLayout Grid.Row="0"
+                                 Grid.Column="0" Grid.ColumnSpan="0">
+                <Label Text="Date start" />
+                <DatePicker Date="{Binding SelectedDateStart, Mode=OneWayToSource}"/>
+            </VerticalStackLayout>
+            
+            <VerticalStackLayout Grid.Row="0"
+                                 Grid.Column="1" Grid.ColumnSpan="0">
+                <Label Text="Date end" />
+                <DatePicker Date="{Binding SelectedDateEnd, Mode=OneWayToSource}"/>
+            </VerticalStackLayout>
+            
+            <!--Get Data from database-->
+            <Button Grid.Row="1"
+                    Grid.Column="0" Grid.ColumnSpan="2"
+                    Text="Get data"
+                    Clicked="OnClicked_GetData"/>
+            
+            <!--Table with the data about all instructors-->
+            <datagrid:DataGrid Grid.Row="2"
+                               Grid.Column="0" Grid.ColumnSpan="2">
+
+                <datagrid:DataGrid.Columns>
+                    <datagrid:DataGridColumn Title="Name" PropertyName="Name" />
+                    <datagrid:DataGridColumn Title="Surname" PropertyName="Surname" />
+                    <datagrid:DataGridColumn Title="Pass" PropertyName="CheckinsPass" />
+                    <datagrid:DataGridColumn Title="Medicover" PropertyName="CheckinsMedicover" />
+                    <datagrid:DataGridColumn Title="PZU" PropertyName="CheckinsPZU" />
+                    <datagrid:DataGridColumn Title="Total" PropertyName="CheckinsTotal" />
+                </datagrid:DataGrid.Columns>
+            </datagrid:DataGrid>
+        </Grid>
+    </ScrollView>
+</ContentPage>
