@@ -10,9 +10,16 @@ namespace impakt_maui_app
 {
     public enum PassType: ushort
     {
-        No = 0,
-        Limited = 1,
-        Unlimited = 2,
+        NO             = 0,
+        LIMITED_1      = 1,
+        LIMITED_4      = 4,
+        LIMITED_8      = 8,
+        LIMITED_12     = 12,
+        UNLIMITED      = 20,
+        MEDICOVER_1    = 21,
+        PZU_1          = 41,
+        MULTISPORT_1   = 61,
+        OTHER_1        = 101,
     }
 
     public enum AccountType: ushort
@@ -123,10 +130,15 @@ namespace impakt_maui_app
 #else
         public static string URL { get; set; } = "http://localhost:8000";
 #endif
+        public static string Get_MemberInfo_Url(string member_id) => string.Format("{0}/members/get/info/{1}/{2}", URL, UserInfo.Card_ID, member_id);
 
+        public static string Post_Member_UpdatePass
+        {
+            get => string.Format("{0}/membres/update/pass/{1}", URL, UserInfo.Card_ID);
+        }
         public static string AddNewMemberUrl
         {
-            get { return string.Format("{0}/members/add/{1}", URL, UserInfo.Card_ID); }
+            get => string.Format("{0}/members/add/{1}", URL, UserInfo.Card_ID);
         }
         public static string CheckInUrl
         {

@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="impakt_maui_app.Pages.Page_Profile">
+             x:Class="impakt_maui_app.Pages.Page_Profile"
+             Title="Profile">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
@@ -26,41 +27,24 @@
                        HeightRequest="120"/>
             </Border>
 
-            <!-- Name and Email -->
+            <!-- Name and Email
+                To be updated firstly -->
             <Label Text="John Doe" FontSize="24" HorizontalOptions="Center"/>
             <Label Text="johndoe@email.com" FontSize="14" TextColor="Gray" HorizontalOptions="Center"/>
 
-            <!-- Stats -->
-            <Grid ColumnSpacing="20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center">
-                    <Label Text="Posts" FontAttributes="Bold" />
-                    <Label Text="50" />
-                </VerticalStackLayout>
-
-                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
-                    <Label Text="Followers" FontAttributes="Bold" />
-                    <Label Text="1090" />
-                </VerticalStackLayout>
-
-                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
-                    <Label Text="Following" FontAttributes="Bold" />
-                    <Label Text="150" />
-                </VerticalStackLayout>
-            </Grid>
-
-            <!-- Bio -->
-            <Label Text="Bio" FontAttributes="Bold" />
+            <!-- Bio 
+                Can be used as an introduction to every instructor later. -->
+            <!--<Label Text="Bio" FontAttributes="Bold" />
             <Label Text="Just another tech enthusiast exploring mobile development." 
-                   LineBreakMode="WordWrap"/>
+                   LineBreakMode="WordWrap"/>-->
 
-            <!-- Buttons -->
-            <Button Text="Edit Profile" CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"/>
+            <!-- Buttons [TBD] -->
+            <Button Text="Edit Profile" 
+                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"/>
+            <Button Text="Add member" 
+                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"/>
+            <Button Text="Add staff" 
+                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"/>
 
         </VerticalStackLayout>
     </ScrollView>

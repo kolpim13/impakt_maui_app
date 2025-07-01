@@ -4,7 +4,7 @@
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
              xmlns:vm="clr-namespace:impakt_maui_app.VM"
              x:Class="impakt_maui_app.Pages.Page_Scanner_QRScanner"
-             Title="QR CheckIn">
+             Title="QR Scanner">
 
     <ContentPage.Resources>
         <vm:ExternalPaymentToRadioButtonConverter x:Key="ExternalPaymentConverter"/>
@@ -51,6 +51,28 @@
                              IsChecked="{Binding ExternalPaymentType, Converter={StaticResource ExternalPaymentConverter}, ConverterParameter=Medicover}"/>
             </HorizontalStackLayout>
 
+            <Button Text="Test" 
+                    Clicked="OnTestClicked"/>
+        </VerticalStackLayout>
+        
+        <!--UpdatePass-->
+        <VerticalStackLayout Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" 
+                             IsVisible="{Binding ScanMode, Mode=OneWay, Converter={StaticResource QRScanModeConverter}, ConverterParameter=UpdatePass}">
+
+            <Picker Title="Choose a PassType"
+                    ItemsSource="{Binding PassTypes}"
+                    SelectedItem="{Binding SelectedPassType}"
+                    ItemDisplayBinding="{Binding .}"/>
+            
+            <Button Text="Test" 
+                    Clicked="OnTestClicked"/>
+        </VerticalStackLayout>
+
+        <!--Member`s info-->
+        <VerticalStackLayout Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" 
+                             IsVisible="{Binding ScanMode, Mode=OneWay, Converter={StaticResource QRScanModeConverter}, ConverterParameter=MemberInfo}">
+
+            <Label Text="Member Info" />
             <Button Text="Test" 
                     Clicked="OnTestClicked"/>
         </VerticalStackLayout>

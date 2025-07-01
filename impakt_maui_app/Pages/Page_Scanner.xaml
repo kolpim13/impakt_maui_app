@@ -2,13 +2,21 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="impakt_maui_app.Pages.Page_Scanner"
-             Title="Page_Scanner">
+             Title="QR Scanner">
 
     <ScrollView>
-        <VerticalStackLayout>
+        <VerticalStackLayout Padding="10" Spacing="10">
             <Button x:Name="Btn_CheckIn" Text="CheckIn" 
                     CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
                     Clicked="OnClicked_CheckIn"/>
+            
+            <Button x:Name="Btn_UpdatePass" Text="Update pass" 
+                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
+                    Clicked="OnClicked_UpdatePass"/>
+            
+            <Button x:Name="Btn_UserInfo" Text="User info" 
+                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
+                    Clicked="OnClicked_UserInfo"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

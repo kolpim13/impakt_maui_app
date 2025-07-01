@@ -1,3 +1,5 @@
+using CommunityToolkit.Maui.Views;
+using impakt_maui_app.Popups;
 using impakt_maui_app.Schemas;
 using System.ComponentModel;
 using System.Net.Http.Json;
@@ -50,6 +52,26 @@ public partial class Page_Scanner_QRScanner : ContentPage, INotifyPropertyChange
         }
     }
 
+    /* Properties for Update Pass */
+    public IEnumerable<PassType> PassTypes { get; } = Enum.GetValues(typeof(PassType))
+        .Cast<PassType>()
+        .Where(f => f == PassType.LIMITED_4 || f == PassType.LIMITED_8 || f == PassType.LIMITED_12 || f == PassType.UNLIMITED)
+        .ToList();
+
+    private PassType _selectedPassType = PassType.LIMITED_4;
+    public PassType SelectedPassType
+    {
+        get => _selectedPassType;
+        set
+        {
+            if (_selectedPassType != value)
+            {
+                _selectedPassType = value;
+                OnPropertyChanged(nameof(SelectedPassType));
+            }
+        }
+    }
+
     private void HandleScannedValue(string value)
     {
         // Assume scanned value is user ID (could be a GUID, int, etc.)
@@ -57,6 +79,12 @@ public partial class Page_Scanner_QRScanner : ContentPage, INotifyPropertyChange
         {
             case QRScanMode.CheckIn:
                 ProceedQRScann_CheckIn(value);
+                break;
+            case QRScanMode.UpdatePass:
+                ProceedQRScann_UpdatePass(value);
+                break;
+            case QRScanMode.MemberInfo:
+                ProceedQRScann_MemberInfo(value);
                 break;
             default:
                 DisplayAlert("Error", "Unsupported scan mode.", "OK");
@@ -98,6 +126,53 @@ public partial class Page_Scanner_QRScanner : ContentPage, INotifyPropertyChange
         }
         return;
     }
+    private async void ProceedQRScann_UpdatePass(string card_id)
+    {
+        Req_Members_UpdatePassData req = new Req_Members_UpdatePassData()
+        {
+            card_id = card_id,
+            pass_type = (int)_selectedPassType,
+        }
+
+        ;
+        try
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.PostAsJsonAsync(Network.Post_Member_UpdatePass, req);
+            if (response.IsSuccessStatusCode)
+            {
+                // For probable future usage
+                Resp_Member_UpdatePass pass_info = await response.Content.ReadFromJsonAsync<Resp_Member_UpdatePass>();
+
+                await DisplayAlert("Success", "Members pass updated", "OK");
+                await Navigation.PopAsync();
+            }
+            else
+            {
+                string negative_info = await response.Content.ReadAsStringAsync();
+                await DisplayAlert("Error", negative_info, "OK");
+                await Navigation.PopAsync();
+            }
+        }
+        catch
+        {
+            ;
+        }
+    }
+    private async void ProceedQRScann_MemberInfo(string card_id)
+    {
+        HttpClient client = new HttpClient();
+        HttpResponseMessage response = await client.GetAsync(Network.Get_MemberInfo_Url(card_id));
+        if (response.IsSuccessStatusCode)
+        {
+            Resp_Members_MemberInfo member_info = await response.Content.ReadFromJsonAsync<Resp_Members_MemberInfo>();
+            await Shell.Current.ShowPopupAsync(new MemberInfoPopup(member_info));
+        }
+        else
+        {
+            ;
+        }
+    }
     public Page_Scanner_QRScanner()
 	{
 		InitializeComponent();
@@ -110,6 +185,8 @@ public partial class Page_Scanner_QRScanner : ContentPage, INotifyPropertyChange
             AutoRotate = true,
             Multiple = false,
         };
+
+        OnPropertyChanged(nameof(PassTypes));
     }
 
     protected override void OnAppearing()
@@ -155,7 +232,7 @@ public partial class Page_Scanner_QRScanner : ContentPage, INotifyPropertyChange
             HandleScannedValue(scanned_value);
         });
     }
-    
+
     /* INotifyPropertyChanged Implemantation */
     public event PropertyChangedEventHandler? PropertyChanged;
     protected virtual void OnPropertyChanged(string propertyName) =>
