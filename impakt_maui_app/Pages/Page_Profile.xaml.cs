@@ -12,5 +12,10 @@ namespace impakt_maui_app.Pages
         {
             InitializeComponent();
         }
+
+        private async void Btn_OnExternalProvidersClicked(object? sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("Page_ExternalProvider");
+        }
     }
 }

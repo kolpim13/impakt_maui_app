@@ -130,6 +130,27 @@ namespace impakt_maui_app
 #else
         public static string URL { get; set; } = "http://localhost:8000";
 #endif
+
+        /* Links: ExternalProviders */
+        public static string Post_ExternalProviders_Create
+        {
+            /* Token should be used */
+            get => string.Format("{0}/external_providers", URL);
+        }
+
+        public static string Get_ExternalProviders_All
+        {
+            /* Token should be used */
+            get => string.Format("{0}/external_providers", URL);
+        }
+
+        public static string Put_ExternalProviders_Modify
+        {
+            /* Token should be used */
+            get => string.Format("{0}/external_providers", URL);
+        }
+
+        /* Links: */
         public static string Get_MemberInfo_Url(string member_id) => string.Format("{0}/members/get/info/{1}/{2}", URL, UserInfo.Card_ID, member_id);
 
         public static string Post_Member_UpdatePass

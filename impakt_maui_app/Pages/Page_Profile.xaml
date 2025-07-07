@@ -46,6 +46,11 @@
             <Button Text="Add staff" 
                     CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"/>
 
+            <!--Passes management-->
+            <Button Text="External payment providers" 
+                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
+                    Clicked="Btn_OnExternalProvidersClicked"/>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
