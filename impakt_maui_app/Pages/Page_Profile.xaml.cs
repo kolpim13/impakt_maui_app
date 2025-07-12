@@ -17,5 +17,10 @@ namespace impakt_maui_app.Pages
         {
             await Shell.Current.GoToAsync("Page_ExternalProvider");
         }
+
+        private async void Btn_OnPassTypesClicked(object? sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("Page_PassTypes");
+        }
     }
 }

@@ -18,9 +18,14 @@
 
             <!--Sub tabs invisible by default-->
             <ShellContent ContentTemplate="{DataTemplate pages:Page_ExternalProvider}"
-              Route="Page_ExternalProvider"
-              Title="Page_ExternalProvider manadgement"
-              IsVisible="False"/>
+                          Route="Page_ExternalProvider"
+                          Title="Page_ExternalProvider manadgement"
+                          IsVisible="False"/>
+
+            <ShellContent ContentTemplate="{DataTemplate pages:Page_PassTypes}"
+                          Route="Page_ExternalProvider"
+                          Title="Page_ExternalProvider manadgement"
+                          IsVisible="False"/>
         </Tab>
         
         <Tab Title="Main">

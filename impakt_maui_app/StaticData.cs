@@ -1,10 +1,14 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using impakt_maui_app.Schemas;
+using Microsoft.Maui.Controls;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
-using impakt_maui_app.Schemas;
-using Newtonsoft.Json;
 
 namespace impakt_maui_app
 {
@@ -91,6 +95,85 @@ namespace impakt_maui_app
         public string surname { get; set; }
         public DateTime date_time { get; set; }
     }
+    
+    public static class GeneralResources
+    {
+        /* EXTERNAL PROVIDERS */
+        public static bool IsExternalProvidersObtained = false;
+        private static List<Model_ExternalProvider> ExternalProviders = new List<Model_ExternalProvider>();
+        public static ObservableCollection<Model_ExternalProvider> Get_ExternalProviders_AsCollection() =>
+            new ObservableCollection<Model_ExternalProvider>(ExternalProviders);
+        public static void Get_ExternalProviders_AsCollection(ObservableCollection<Model_ExternalProvider> collection)
+        {
+            foreach (Model_ExternalProvider provider in ExternalProviders)
+            {
+                collection.Add(provider);
+            }
+        }
+            
+        public static void Set_ExernalProviders_FromCollection(ObservableCollection<Model_ExternalProvider> collection) =>
+            ExternalProviders = [.. collection];
+        public static async Task ExternalProviders_FromDataBase()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync(Network.Get_ExternalProviders);
+                if (response.IsSuccessStatusCode)
+                {
+                    ExternalProviders.Clear();
+                    var all_providers = await response.Content.ReadFromJsonAsync<List<Resp_Instance_ExternalProviders>>();
+                    foreach (Resp_Instance_ExternalProviders provider in all_providers)
+                    {
+                        ExternalProviders.Add(Model_ExternalProvider.From_Resp_Inst(provider));
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                ;
+            }
+        }
+
+        /* PASS TYPES */
+        public static bool IsPassTypesObtained = false;
+        private static List<Model_PassType> PassTypes = new List<Model_PassType>();
+        public static ObservableCollection<Model_PassType> Get_PassTypes_AsCollection() =>
+            new ObservableCollection<Model_PassType>(PassTypes);
+        public static void Get_PassTypes_AsCollection(ObservableCollection<Model_PassType> collection)
+        {
+            foreach (Model_PassType pass_type in PassTypes) 
+            { 
+                collection.Add(pass_type); 
+            }
+        }
+        public static void Set_PassTypes_FromCollection(ObservableCollection<Model_PassType> collection) =>
+            PassTypes = [.. collection];
+        public static async Task PassTypes_FromDataBase()
+        { 
+            try
+            {
+                HttpClient _httpClient = new HttpClient();
+                HttpResponseMessage response = await _httpClient.GetAsync(Network.Get_PassTypes);
+                if (response.IsSuccessStatusCode)
+                {
+                    PassTypes.Clear();
+                    var pass_types = await response.Content.ReadFromJsonAsync<List<Resp_PassTypes_Inst>>();
+                    foreach(Resp_PassTypes_Inst pass_type in pass_types)
+                    {
+                        PassTypes.Add(Model_PassType.From_Resp_Inst(pass_type));
+                    }
+                }
+
+                IsPassTypesObtained = true;
+            }
+            catch
+            {
+                ;
+            }
+        }
+    }
     public static class UserInfo
     {
         //public static int? ID { get; set; } = int.MaxValue;
@@ -137,17 +220,31 @@ namespace impakt_maui_app
             /* Token should be used */
             get => string.Format("{0}/external_providers", URL);
         }
-
-        public static string Get_ExternalProviders_All
+        public static string Get_ExternalProviders
+        {
+            /* Token should be used */
+            get => string.Format("{0}/external_providers", URL);
+        }
+        public static string Put_ExternalProviders_Update
         {
             /* Token should be used */
             get => string.Format("{0}/external_providers", URL);
         }
 
-        public static string Put_ExternalProviders_Modify
+        /* Links: PassTypes */
+        public static string Post_PassTypes_Create
+        {
+            get => string.Format("{0}/pass_types", URL);
+        }
+        public static string Get_PassTypes
         {
             /* Token should be used */
-            get => string.Format("{0}/external_providers", URL);
+            get => string.Format("{0}/pass_types", URL);
+        }
+        public static string Put_PassTypes_Update
+        {
+            /* Token should be used */
+            get => string.Format("{0}/pass_types", URL);
         }
 
         /* Links: */

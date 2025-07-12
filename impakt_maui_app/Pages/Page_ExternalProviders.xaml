@@ -48,8 +48,9 @@
                 Margin="6, 0, 12, 6"
                 Text="Delete" Command="{Binding DeleteProviderCommand}"/>
 
+        <!--Add or Edit ExternalProvider form-->
         <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-              RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+              RowDefinitions="Auto,Auto,Auto,Auto"
               ColumnDefinitions="*,*"
               Margin="12"
               IsVisible="{Binding IsNewModifyMenuVisible}">
@@ -68,21 +69,16 @@
             <Entry Grid.Row="1" Grid.ColumnSpan="2"
                    Placeholder="Description" Text="{Binding Description}" />
 
-            <Label Grid.Row="2" Grid.Column="0" 
-                   Text="Is Active" />
-            <Switch Grid.Row="2" Grid.Column="1"
-                    IsToggled="{Binding Active}" />
-
-            <Entry  Grid.Row="3" Grid.Column="0" 
+            <Entry  Grid.Row="2" Grid.Column="0" 
                     Keyboard="Numeric"
                     Placeholder="Partial payment" Text="{Binding PartialPayment, StringFormat='{C2}'}"/>
-            <Switch Grid.Row="3" Grid.Column="1" 
+            <Switch Grid.Row="2" Grid.Column="1" 
                     IsToggled="{Binding IsPartialPayment}" />
 
-            <Button Grid.Row="4" Grid.Column="0" 
+            <Button Grid.Row="3" Grid.Column="0" 
                     Margin="0, 0, 6, 6"
                     Text="OK" Command="{Binding AddOrEdtitProviderCommand}"/>
-            <Button Grid.Row="4" Grid.Column="1" 
+            <Button Grid.Row="3" Grid.Column="1" 
                     Margin="6, 0, 0, 6"
                     Text="Cancel" Command="{Binding CancelAddEditProviderCommand}"/>
         </Grid>
@@ -99,8 +95,8 @@
                         <VerticalStackLayout>
                             <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="18"/>
                             <Label Text="{Binding Description, Converter={StaticResource Converter_Description}}" 
-                                   FontAttributes="Italic" FontSize="14"/>
-                            <Label Text="{Binding Active, StringFormat='Active: {0}'}" FontSize="13"/>
+                                   FontAttributes="Italic" FontSize="14"
+                                   LineBreakMode="WordWrap"/>
                             <Label Text="{Binding PartialPayment, Converter={StaticResource Converter_PartialPayment}, StringFormat='Partial payment: {0}'}" 
                                    FontSize="13"/>
                         </VerticalStackLayout>

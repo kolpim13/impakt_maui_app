@@ -20,13 +20,12 @@ namespace impakt_maui_app.VM
         public ObservableCollection<Model_ExternalProvider> Providers { get; } = new();
 
         [ObservableProperty]
-        Model_ExternalProvider? selectedProvider;
+        private Model_ExternalProvider? selectedProvider;
 
         // New / Modified External Provider 
         [ObservableProperty] private bool isNewModifyMenuVisible = false;
         [ObservableProperty] private string name;
         [ObservableProperty] private string? description;
-        [ObservableProperty] private bool active;
         [ObservableProperty] private bool isPartialPayment;
         [ObservableProperty] private decimal? partialPayment;
 
@@ -40,7 +39,6 @@ namespace impakt_maui_app.VM
             /* Set default fields values */
             Name = "";
             Description = null;
-            Active = true;
             IsPartialPayment = false;
             PartialPayment = null;
 
@@ -56,7 +54,6 @@ namespace impakt_maui_app.VM
             /* Set values of fields according to the chosen provider*/
             Name = provider.Name;
             Description = provider.Description;
-            Active = provider.Active;
             IsPartialPayment = provider.IsPartialPayment;
             PartialPayment = provider.PartialPayment;
 
@@ -104,7 +101,6 @@ namespace impakt_maui_app.VM
             {
                 name = Name,
                 description = Description,
-                active = Active,
                 is_partial_payment = IsPartialPayment,
                 partial_payment = PartialPayment,
             };
@@ -124,9 +120,9 @@ namespace impakt_maui_app.VM
                         Id = provider_details.id,
                         Name = provider_details.name,
                         Description = provider_details.description,
-                        Active = provider_details.active,
                         IsPartialPayment = provider_details.is_partial_payment,
                         PartialPayment = provider_details.partial_payment,
+                        IsDeleted = provider_details.is_deleted,
                     };
                     Providers.Add(new_provider);
                 }
@@ -146,7 +142,6 @@ namespace impakt_maui_app.VM
                 id = SelectedProvider.Id,
                 name = Name,
                 description = Description,
-                active = Active,
                 is_partial_payment = IsPartialPayment,
                 partial_payment = PartialPayment,
             };
@@ -155,7 +150,7 @@ namespace impakt_maui_app.VM
             try
             {
                 HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.PutAsJsonAsync(Network.Put_ExternalProviders_Modify, req);
+                HttpResponseMessage response = await client.PutAsJsonAsync(Network.Put_ExternalProviders_Update, req);
                 if (response.IsSuccessStatusCode)
                 {
                     /* Add newly added provider to a list */
@@ -166,9 +161,9 @@ namespace impakt_maui_app.VM
                         Id = provider_details.id,
                         Name = provider_details.name,
                         Description = provider_details.description,
-                        Active = provider_details.active,
                         IsPartialPayment = provider_details.is_partial_payment,
                         PartialPayment = provider_details.partial_payment,
+                        IsDeleted = provider_details.is_deleted,
                     };
 
                     /* Update collection */
@@ -187,7 +182,7 @@ namespace impakt_maui_app.VM
             try
             {
                 HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.GetAsync(Network.Get_ExternalProviders_All);
+                HttpResponseMessage response = await client.GetAsync(Network.Get_ExternalProviders);
                 if (response.IsSuccessStatusCode)
                 {
                     Providers.Clear();
@@ -199,9 +194,9 @@ namespace impakt_maui_app.VM
                             Id = provider.id,
                             Name = provider.name,
                             Description = provider.description,
-                            Active = provider.active,
                             IsPartialPayment = provider.is_partial_payment,
                             PartialPayment = provider.partial_payment,
+                            IsDeleted = provider.is_deleted,
                         });
                     }
 

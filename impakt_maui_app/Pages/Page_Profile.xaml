@@ -50,6 +50,9 @@
             <Button Text="External payment providers" 
                     CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
                     Clicked="Btn_OnExternalProvidersClicked"/>
+            <Button Text="Pass types" 
+                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
+                    Clicked="Btn_OnPassTypesClicked"/>
 
         </VerticalStackLayout>
     </ScrollView>

@@ -100,6 +100,9 @@
 	  <MauiXaml Update="Pages\Page_ExternalProviders.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\Page_PassTypes.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_Scanner.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
