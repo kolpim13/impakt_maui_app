@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+			   xmlns:local="clr-namespace:impakt_maui_app.Popups"
+			   xmlns:vm="clr-namespace:impakt_maui_app.VM"
+			   x:Class="impakt_maui_app.Popups.Popup_NewMember"
+			   x:DataType="local:Popup_NewMember">
+
+	<!--<ContentPage.BindingContext>
+		<local:Popup_NewMember />
+	</ContentPage.BindingContext>-->
+
+	<ContentPage.Resources>
+		<vm:AccountTypeToBoolConverter x:Key="AccountTypeConverter" />
+	</ContentPage.Resources>
+
+	<VerticalStackLayout Padding="20" Spacing="10">
+
+		<!--Fileds should be filled-->
+		<Entry x:Name="NameEntry" Placeholder="Name" />
+		<Entry x:Name="SurnameEntry" Placeholder="Surname" />
+		<Entry x:Name="EmailEntry" Placeholder="Email" />
+
+		<!--Fields can be left empty-->
+		<Entry x:Name="PhoneEntry" Placeholder="Phone (Optional)"/>
+
+		<HorizontalStackLayout>
+			<CheckBox IsChecked="{Binding IsDateOfBirthVisible}" />
+			<Label Text="Date of birth (Optional)"
+					VerticalOptions="Center"/>
+		</HorizontalStackLayout>
+		<DatePicker x:Name="DateOfBirthPicker"
+					MinimumDate="01/01/1950"
+					MaximumDate="01/01/2050"
+					Date="{Binding SelectedDateOfBirth}"
+					IsVisible="{Binding IsDateOfBirthVisible}"/>
+
+		<Label Text="Member type (Optional)" />
+		<HorizontalStackLayout IsVisible="{Binding IsRadioButtonVisible}">
+			<RadioButton Content="Member" GroupName="AccountType"
+						 IsChecked="{Binding SelectedAccountType, Converter={StaticResource AccountTypeConverter}, ConverterParameter=Member}" />
+			<RadioButton Content="Instructor" GroupName="AccountType"
+						 IsChecked="{Binding SelectedAccountType, Converter={StaticResource AccountTypeConverter}, ConverterParameter=Instructor}" />
+			<RadioButton Content="Admin" GroupName="AccountType"
+						 IsChecked="{Binding SelectedAccountType, Converter={StaticResource AccountTypeConverter}, ConverterParameter=Admin}" />
+			<RadioButton Content="External" GroupName="AccountType"
+						 IsChecked="{Binding SelectedAccountType, Converter={StaticResource AccountTypeConverter}, ConverterParameter=External}" />
+		</HorizontalStackLayout>
+
+		<!--Options-->
+		<HorizontalStackLayout>
+			<CheckBox IsChecked="{Binding SendWelcomeMail}" />
+			<Label Text="Send email"
+				   VerticalOptions ="Center"/>
+		</HorizontalStackLayout>
+		
+		<!--Sending mms is not implemented in back app-->
+		<HorizontalStackLayout IsVisible="false">
+			<CheckBox IsChecked="{Binding SendWelcomeMms}" />
+			<Label Text="Send mms"
+				   VerticalOptions ="Center"/>
+		</HorizontalStackLayout>
+
+		<!--Add new member-->
+		<Button x:Name="ButtonAddMember" Text="Add Member" Clicked="OnAddMemberlicked" IsEnabled="True"/>
+	</VerticalStackLayout>
+
+
+</toolkit:Popup>
+    

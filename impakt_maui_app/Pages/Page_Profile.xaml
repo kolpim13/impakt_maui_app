@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:local="clr-namespace:impakt_maui_app"
              x:Class="impakt_maui_app.Pages.Page_Profile"
              Title="Profile">
 
@@ -29,8 +30,10 @@
 
             <!-- Name and Email
                 To be updated firstly -->
-            <Label Text="John Doe" FontSize="24" HorizontalOptions="Center"/>
-            <Label Text="johndoe@email.com" FontSize="14" TextColor="Gray" HorizontalOptions="Center"/>
+            <!--<Label Text="{x:Static local:User.Account}"/>
+            <Label Text="{x:Static local:User.Account.Name}" FontSize="24" HorizontalOptions="Center"/>
+            <Label Text="{x:Static local:User.Account.SurName}" FontSize="24" HorizontalOptions="Center"/>
+            <Label Text="{x:Static local:User.Account.Email}" FontSize="14" TextColor="Gray" HorizontalOptions="Center"/>-->
 
             <!-- Bio 
                 Can be used as an introduction to every instructor later. -->
@@ -41,10 +44,11 @@
             <!-- Buttons [TBD] -->
             <Button Text="Edit Profile" 
                     CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"/>
+            
+            
             <Button Text="Add member" 
-                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"/>
-            <Button Text="Add staff" 
-                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"/>
+                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
+                    Clicked="Btn_OnAddMemberClicked"/>
 
             <!--Passes management-->
             <Button Text="External payment providers" 

@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using ZXing.Net.Maui;
 using System.Text.Json;
+using impakt_maui_app.Models;
 
 namespace impakt_maui_app.VM
 {

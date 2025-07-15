@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using impakt_maui_app.Models;
 using impakt_maui_app.Schemas;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Maui.Views;
+using impakt_maui_app.Popups;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +23,12 @@ namespace impakt_maui_app.Pages
         private async void Btn_OnPassTypesClicked(object? sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("Page_PassTypes");
+        }
+
+        private async void Btn_OnAddMemberClicked(object? sender, EventArgs e)
+        {
+            Popup_NewMember popup = new Popup_NewMember();
+            await Shell.Current.ShowPopupAsync(popup);
         }
     }
 }

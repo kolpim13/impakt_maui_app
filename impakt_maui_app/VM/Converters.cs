@@ -1,4 +1,5 @@
-﻿using impakt_maui_app.Pages;
+﻿using impakt_maui_app.Models;
+using impakt_maui_app.Pages;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

@@ -5,6 +5,16 @@
 5. Be aligned with names with backend
 6. Add Scanner types [Member`s info, Update Pass].
 
+7. Make code of the ExternalProvider Page be aligned with PassTypes Page!!!
+8. Remake new Member Page (?): Check what is absent and add it.
+9. Add MemberPass scan
+10. CheckIn
+11. Clean "Main Page" completely
+12. [+] Get rid of "John Doe" on profile`s Page
+
+
+
+
 How to invoke event form VM in CodeBehind
 [RelayCommand]
 public void AddProvider()

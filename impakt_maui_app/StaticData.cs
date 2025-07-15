@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using impakt_maui_app.Models;
 using impakt_maui_app.Schemas;
 using Microsoft.Maui.Controls;
 using Newtonsoft.Json;
@@ -24,13 +25,6 @@ namespace impakt_maui_app
         PZU_1          = 41,
         MULTISPORT_1   = 61,
         OTHER_1        = 101,
-    }
-
-    public enum AccountType: ushort
-    {
-        Admin = 0,
-        Instructor = 1,
-        Member = 2,
     }
 
     public class BackendReq_RegisterNewMember
@@ -128,6 +122,7 @@ namespace impakt_maui_app
                         ExternalProviders.Add(Model_ExternalProvider.From_Resp_Inst(provider));
                     }
 
+                    IsExternalProvidersObtained = true;
                 }
             }
             catch (Exception ex)
@@ -164,9 +159,9 @@ namespace impakt_maui_app
                     {
                         PassTypes.Add(Model_PassType.From_Resp_Inst(pass_type));
                     }
-                }
 
-                IsPassTypesObtained = true;
+                    IsPassTypesObtained = true;
+                }
             }
             catch
             {
@@ -174,34 +169,10 @@ namespace impakt_maui_app
             }
         }
     }
-    public static class UserInfo
+
+    public static class User
     {
-        //public static int? ID { get; set; } = int.MaxValue;
-
-        public static string? Card_ID { get; set; }
-        public static string? Name { get; set; } 
-        public static string? SurName { get; set; }
-        public static string? Email { get; set; }
-        public static string? Phone { get; set; }
-        public static DateOnly? DateOfBirth{ get; set; }
-        public static AccountType? AccountType { get; set; }
-        public static string? Token { get; set; }
-        public static bool? Activated { get; set; }
-
-        public static void Fill_FromLogInResp(string json)
-        {
-            Resp_LogIn? user = JsonConvert.DeserializeObject<Resp_LogIn>(json);
-
-            Card_ID = user.card_id;
-            Name = user.name;
-            SurName = user.surname;
-            Email = user.email;
-            Phone = user.phone_number;
-            DateOfBirth = user.date_of_birth;
-            AccountType = (AccountType)user.account_type;
-            Token = user.token;
-            Activated = user.activated; 
-        }
+        public static Model_Member Account { get; set; } = Model_Member.GetDefaultInst();
     }
 
     public static class Network
@@ -247,36 +218,51 @@ namespace impakt_maui_app
             get => string.Format("{0}/pass_types", URL);
         }
 
-        /* Links: */
-        public static string Get_MemberInfo_Url(string member_id) => string.Format("{0}/members/get/info/{1}/{2}", URL, UserInfo.Card_ID, member_id);
+        /* Links: MemberPass */
+        public static string Post_MemberPass_Add
+        {
+            get => string.Format("{0}/member_pass", URL);
+        }
+
+        public static string Get_MemberPass_Active(string member_card_id) =>
+            /* Token should be used */
+            string.Format("{0}/member_pass/active/{1}", URL, member_card_id);
+
+        /* Links: LogIn */
+        public static string Post_LogIn_Username =>
+            string.Format("{0}/login/username", URL);
+
+        /* Links: Members */
+        public static string Post_Member_Add =>
+            string.Format("{0}/members/add", URL);
+        public static string Get_Member_Inst(string member_id) =>
+            string.Format("{0}/members/{1}", URL, member_id);
+
+        /* Links: Statistics */
+
+
+        /* Links: ... */
 
         public static string Post_Member_UpdatePass
         {
-            get => string.Format("{0}/membres/update/pass/{1}", URL, UserInfo.Card_ID);
-        }
-        public static string AddNewMemberUrl
-        {
-            get => string.Format("{0}/members/add/{1}", URL, UserInfo.Card_ID);
+            get => string.Format("{0}/membres/update/pass/{1}", URL, User.Account.CardId);
         }
         public static string CheckInUrl
         {
-            get { return string.Format("{0}/checkin/{1}", URL, UserInfo.Card_ID); }
+            get { return string.Format("{0}/checkin/{1}", URL, User.Account.CardId); }
         }
-        public static string LogInUrl
-        {
-            get { return URL + "/login/username"; }
-        }
+
         public static string CheckInHistoryUrl
         {
             get { return string.Format("{0}/checkin/log/filtered", URL); }
         }
         public static string StatisticInstructorUrl
         {
-            get { return string.Format("{0}/statistics/instructor/entries_amount/{1}", URL, UserInfo.Card_ID); }
+            get { return string.Format("{0}/statistics/instructor/entries_amount/{1}", URL, User.Account.CardId); }
         }
         public static string StatisticAllInstructorsUrl
         {
-            get { return string.Format("{0}/statistics/all_instructors/entries_amount/{1}", URL, UserInfo.Card_ID); }
+            get { return string.Format("{0}/statistics/all_instructors/entries_amount/{1}", URL, User.Account.CardId); }
         }
     }
 }

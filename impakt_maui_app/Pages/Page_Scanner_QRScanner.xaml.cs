@@ -162,10 +162,10 @@ public partial class Page_Scanner_QRScanner : ContentPage, INotifyPropertyChange
     private async void ProceedQRScann_MemberInfo(string card_id)
     {
         HttpClient client = new HttpClient();
-        HttpResponseMessage response = await client.GetAsync(Network.Get_MemberInfo_Url(card_id));
+        HttpResponseMessage response = await client.GetAsync(Network.Get_Member_Inst(card_id));
         if (response.IsSuccessStatusCode)
         {
-            Resp_Members_MemberInfo member_info = await response.Content.ReadFromJsonAsync<Resp_Members_MemberInfo>();
+            var member_info = await response.Content.ReadFromJsonAsync<Resp_Members_Inst>();
             await Shell.Current.ShowPopupAsync(new MemberInfoPopup(member_info));
         }
         else
