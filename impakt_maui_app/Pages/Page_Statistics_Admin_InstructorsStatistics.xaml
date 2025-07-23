@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:datagrid="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
+             xmlns:vm="clr-namespace:impakt_maui_app.VM"
+             x:Class="impakt_maui_app.Pages.Page_Statistics_Admin_InstructorsStatistics"
+             Title="Page_Statistics_Admin_InstructorsStatistics">
+
+    <ContentPage.BindingContext>
+        <vm:VM_Statistics_Admin_InstructorsStatistics />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <Grid RowSpacing="5"
+              ColumnSpacing="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Date selection-->
+            <VerticalStackLayout Grid.Row="0" Grid.Column="0">
+                <Label Text="Date from" />
+                <DatePicker Date="{Binding SelectedDateFrom, Mode=OneWayToSource}" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+                <Label Text="Date to" />
+                <DatePicker Date="{Binding SelectedDateTo, Mode=OneWayToSource}"/>
+            </VerticalStackLayout>
+
+            <Button Grid.Row="1" Grid.Column="0"
+                    Text="Request data"
+                    Command="{Binding RequestDataCommand}"/>
+
+            <Button Grid.Row="1" Grid.Column="1" 
+                    Text="Details"
+                    Command="{Binding RequestDetailedDataCommand}"/>
+
+            <!--Delimited by
+                [Hour, day, week]-->
+            <!--<Picker>
+                
+            </Picker>-->
+
+            <datagrid:DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                               ItemsSource="{Binding TableContent}"
+                               SelectedItem="{Binding SelectedRow}">
+
+                <datagrid:DataGrid.Columns>
+                    <datagrid:DataGridColumn Title="Name" PropertyName="validated_by_name"/>
+                    <datagrid:DataGridColumn Title="Surname" PropertyName="validated_by_surnamename" />
+                    <datagrid:DataGridColumn Title="Count" PropertyName="count" />
+                </datagrid:DataGrid.Columns>
+            </datagrid:DataGrid>
+        </Grid>
+    </ScrollView>
+</ContentPage>

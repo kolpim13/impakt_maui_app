@@ -26,7 +26,8 @@ namespace impakt_maui_app.Models
         required public DateOnly RegistrationDate { get; set; }
         required public AccountType AccountType { get; set; }
         public string? Privileges { get; set; }
-        public DateTime? LastCheckIn { get; set; }
+        public bool? LastCheckInSsuccess { get; set; }
+        public DateTime? LastCheckInDateTime { get; set; }
         public string? Token { get; set; }
         required public bool Activated { get; set; }
         public static Model_Member From_Resp_Inst(Resp_Members_Inst inst) =>
@@ -41,7 +42,8 @@ namespace impakt_maui_app.Models
                 RegistrationDate = inst.registration_date,
                 AccountType = (AccountType)inst.account_type,
                 Privileges = inst.privileges,
-                LastCheckIn = inst.last_check_in,
+                LastCheckInSsuccess = inst.last_checkin_success,
+                LastCheckInDateTime = inst.last_checkin_datetime,
                 Token = inst.token,
                 Activated = inst.activated,
             };
@@ -147,6 +149,51 @@ namespace impakt_maui_app.Models
                 ExtEventCode = inst.ext_event_code,
                 Status = inst.status,
                 IsClosed = inst.is_closed,
+            };
+    }
+
+    public class Model_Checkin
+    {
+        required public int Id { get; set; }
+        public string? ValidatedByCardId { get; set; }
+        public string? ValidatedByName { get; set; }
+        public string? ValidatedBySurname{ get; set; }
+        public string? Hall { get; set; }
+        public int? MemberPassId { get; set; }
+        public int? PassId { get; set; }
+        public string? PassName{ get; set; }
+        public bool? IsExtEventPass{ get; set; }
+        public string? ExtEventCode { get; set; }
+        public int? ExternalProviderId { get; set; }
+        public string? ExternalProviderName { get; set; }
+        required public string MemberCardID { get; set; }
+        required public string MemberName { get; set; }
+        required public string MemberSurname { get; set; }
+        required public DateTime DateTime { get; set; }
+        required public bool IsSuccessful { get; set; }
+        public string? RejectedReason { get; set; }
+
+        public static Model_Checkin From_resp_Inst(Resp_ChecIn_Inst inst) =>
+            new Model_Checkin
+            {
+                Id = inst.id,
+                ValidatedByCardId = inst.validated_by_card_id,
+                ValidatedByName = inst.validated_by_name,
+                ValidatedBySurname = inst.validated_by_surnamename,
+                Hall = inst.hall,
+                MemberPassId = inst.member_pass_id,
+                PassId = inst.pass_id,
+                PassName = inst.pass_name,
+                IsExtEventPass = inst.is_ext_event_pass,
+                ExtEventCode = inst.ext_event_code,
+                ExternalProviderId = inst.external_provider_id,
+                ExternalProviderName = inst.external_provider_name,
+                MemberCardID = inst.member_card_id,
+                MemberName = inst.member_name,
+                MemberSurname = inst.member_surname,
+                DateTime = inst.date_time,
+                IsSuccessful = inst.is_successful,
+                RejectedReason = inst.rejected_reason,
             };
     }
 }

@@ -9,7 +9,8 @@ namespace impakt_maui_app
             InitializeComponent();
 
             /* Register "invisible" route tabs. */
-            Routing.RegisterRoute("Page_Statistics_AdminSummary", typeof(Page_Statistics_AdminSummary));
+            Routing.RegisterRoute("Page_Statistics_Admin_InstructorsStatistics", typeof(Page_Statistics_Admin_InstructorsStatistics));
+            Routing.RegisterRoute("Page_Statistics_InstructorCheckInsDetailed", typeof(Page_Statistics_InstructorCheckInsDetailed));
 
             Routing.RegisterRoute("Page_Scanner_QRScanner", typeof(Page_Scanner_QRScanner));
 

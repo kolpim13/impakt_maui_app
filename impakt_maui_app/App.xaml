@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:impakt_maui_app"
              x:Class="impakt_maui_app.App">
-    
+
     <Application.Resources>
         <!-- Add application resources explicitly -->
         <!--<local:MainPage_Bindings_UserInfo x:Key="MainPage_Bindings_UserInfo" />-->
@@ -13,6 +13,23 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource App_TextColor_LightTheme}" />
+            </Style>
+
+            <!-- Label Global Style: Text Color depends on used theme
+                !!!WORKS!!!-->
+            <!--<Style TargetType="Label">
+                <Setter Property="TextColor">
+                    <Setter.Value>
+                        <AppThemeBinding 
+                            Light="{StaticResource App_TextColor_LightTheme}"
+                            Dark="{StaticResource App_TextColor_DarkTheme}" 
+                            Default="{StaticResource App_TextColor_LightTheme}"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>-->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

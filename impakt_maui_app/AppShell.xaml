@@ -39,9 +39,14 @@
                           Title="Statistics Main"/>
             
             <!--Sub tabs invisible by default-->
-            <ShellContent ContentTemplate="{DataTemplate pages:Page_Statistics_AdminSummary}"
-                          Route="Page_Statistics_AdminSummary"
-                          Title="Statistics Admin summary"
+            <ShellContent ContentTemplate="{DataTemplate pages:Page_Statistics_Admin_InstructorsStatistics}"
+                          Route="Page_Statistics_Admin_InstructorsStatistics"
+                          Title="Instructors Statistics"
+                          IsVisible="False" />
+            
+            <ShellContent ContentTemplate="{DataTemplate pages:Page_Statistics_InstructorCheckInsDetailed}"
+                          Route="Page_Statistics_InstructorCheckInsDetailed"
+                          Title="Instructor Detailed Statistics"
                           IsVisible="False"/>
         </Tab>
         

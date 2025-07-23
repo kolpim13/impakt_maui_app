@@ -2,6 +2,7 @@
 using impakt_maui_app.Models;
 using impakt_maui_app.Schemas;
 using Microsoft.Maui.Controls;
+using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,88 +13,40 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace impakt_maui_app
-{
-    public enum PassType: ushort
-    {
-        NO             = 0,
-        LIMITED_1      = 1,
-        LIMITED_4      = 4,
-        LIMITED_8      = 8,
-        LIMITED_12     = 12,
-        UNLIMITED      = 20,
-        MEDICOVER_1    = 21,
-        PZU_1          = 41,
-        MULTISPORT_1   = 61,
-        OTHER_1        = 101,
-    }
-
-    public class BackendReq_RegisterNewMember
-    {
-        public string name { get; set; }
-        public string surname { get; set; }
-        public string email { get; set; }
-        public string? phone_number { get; set; } // Optional
-        public DateTime? date_of_birth { get; set; } // Optional
-        public string? account_type { get; set; } // Optional
-    }
-
-    public class BackendReq_CheckInMember
-    {
-        public string card_id { get; set; }
-    }
-
-    public class BackendReq_UpdatePassDetails
-    {
-        public string card_id { get; set; }
-        public int pass_type { get; set; }
-        public int entrances_left { get; set; }
-        public DateOnly expiration_date { get; set; }
-    }
-
-    /* The data will be returned from backend when user is logged in */
-
-    public class BackendReq_MemberInfo
-    {
-        public string card_id { get; set; }
-    }
-    public class BackendResp_MemberInfo
-    {
-        public string card_id { get; set; }
-        public string name { get; set; }
-        public string surname { get; set; }
-        public string email { get; set; }
-        public string? phone_number { get; set; }
-        public DateOnly? date_of_birth { get; set; }
-        public int account_type { get; set; }
-    }
-
-    public class BackendReq_CheckInFilters
-    {
-        public int limit { get; set; }
-        public string? control_name { get; set; }
-        public string? control_surname { get; set; }
-        public string? hall { get; set; }
-        public string? card_id { get; set; }
-        public string? name { get; set; }
-        public string? surname { get; set; }
-        public DateTime? date_time_min { get; set; }
-        public DateTime? date_time_max { get; set; }
-    }
-    public class BackendResp_CheckIn
-    {
-        public string control_name { get; set; }
-        public string control_surname { get; set; }
-        public string hall { get; set; }
-        public string card_id { get; set; }
-        public string name { get; set; }
-        public string surname { get; set; }
-        public DateTime date_time { get; set; }
-    }
-    
+{   
     public static class GeneralResources
     {
+        /* MEMBERS */
+        public static async Task<Model_Member> Get_Member_FromDB(string member_id)
+        {
+            Model_Member member = null;
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync(Network.Get_Member_Inst(member_id));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var resp = await response.Content.ReadFromJsonAsync<Resp_Members_Inst>();
+                    member = Model_Member.From_Resp_Inst(resp);
+                }
+            }
+            catch (Exception ex) 
+            {
+                ;
+            }
+            return member;
+        }
+
         /* EXTERNAL PROVIDERS */
         public static bool IsExternalProvidersObtained = false;
+        public static readonly Model_ExternalProvider dummy_provider = new Model_ExternalProvider
+        {
+            Id = -1,
+            Name = "No Provider",
+            IsPartialPayment = false,
+            IsDeleted = true,
+        };
         private static List<Model_ExternalProvider> ExternalProviders = new List<Model_ExternalProvider>();
         public static ObservableCollection<Model_ExternalProvider> Get_ExternalProviders_AsCollection() =>
             new ObservableCollection<Model_ExternalProvider>(ExternalProviders);
@@ -168,6 +121,29 @@ namespace impakt_maui_app
                 ;
             }
         }
+    
+        /* MEMBER PASSES */
+        public static async Task Get_MemberPass_AsCollection_FromDB(ObservableCollection<Model_MemberPass> collection, string member_id)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync(Network.Get_MemberPass_Active(member_id));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var member_passes = await response.Content.ReadFromJsonAsync<List<Resp_MemberPass_Inst>>();
+                    foreach (Resp_MemberPass_Inst member_pass in member_passes)
+                    {
+                        collection.Add(Model_MemberPass.From_Resp_Inst(member_pass));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ;
+            }
+        }
     }
 
     public static class User
@@ -177,13 +153,30 @@ namespace impakt_maui_app
 
     public static class Network
     {
+        /* General */
+        public static string ParseResponse_AsString(HttpResponseMessage response) =>
+            string.Format("Status code: {0} - {1}", (int)response.StatusCode, response.StatusCode);
+
+        public static async Task<string> ParseResponse_AsString_FullInfo(HttpResponseMessage response)
+        {
+            string reason = await response.Content.ReadAsStringAsync();
+            return string.Format("Status code: {0} - {1}\n{2}", (int)response.StatusCode, response.StatusCode, reason);
+        }
+
 #if ANDROID
         // public static string URL { get; set; } = "http://192.168.0.1:8000";  // ZF
         // public static string URL { get; set; } = "http://192.168.0.199:8000";  // Personal
-        public static string URL { get; set; } = "http://192.168.0.6:8000";  // Grzegosz
+        // public static string URL { get; set; } = "http://192.168.0.6:8000";  // Grzegosz
+        public static string URL { get; set; } = "https://e72100d6dae0.ngrok-free.app"; // Local Host through grok
 #else
         public static string URL { get; set; } = "http://localhost:8000";
 #endif
+
+        /* Links: Members */
+        public static string Post_Member_Add =>
+            string.Format("{0}/members/add", URL);
+        public static string Get_Member_Inst(string member_id) =>
+            string.Format("{0}/members/{1}", URL, member_id);
 
         /* Links: ExternalProviders */
         public static string Post_ExternalProviders_Create
@@ -232,37 +225,18 @@ namespace impakt_maui_app
         public static string Post_LogIn_Username =>
             string.Format("{0}/login/username", URL);
 
-        /* Links: Members */
-        public static string Post_Member_Add =>
-            string.Format("{0}/members/add", URL);
-        public static string Get_Member_Inst(string member_id) =>
-            string.Format("{0}/members/{1}", URL, member_id);
+        /* Links: Logging */
+        public static string Post_CheckIn_Add =>
+            string.Format("{0}/logging/checkin", URL);
 
         /* Links: Statistics */
+        public static string Post_Statistics_InstructorsCheckIns =>
+            string.Format("{0}/statistics/instructors_checkins", URL);
 
+        public static string Post_Statistics_InstructorCheckInsDetailed =>
+            $"{URL}/statistics/instructor_checkins/detailed";
 
-        /* Links: ... */
-
-        public static string Post_Member_UpdatePass
-        {
-            get => string.Format("{0}/membres/update/pass/{1}", URL, User.Account.CardId);
-        }
-        public static string CheckInUrl
-        {
-            get { return string.Format("{0}/checkin/{1}", URL, User.Account.CardId); }
-        }
-
-        public static string CheckInHistoryUrl
-        {
-            get { return string.Format("{0}/checkin/log/filtered", URL); }
-        }
-        public static string StatisticInstructorUrl
-        {
-            get { return string.Format("{0}/statistics/instructor/entries_amount/{1}", URL, User.Account.CardId); }
-        }
-        public static string StatisticAllInstructorsUrl
-        {
-            get { return string.Format("{0}/statistics/all_instructors/entries_amount/{1}", URL, User.Account.CardId); }
-        }
+        /* Links: Combined */
+        // ...
     }
 }

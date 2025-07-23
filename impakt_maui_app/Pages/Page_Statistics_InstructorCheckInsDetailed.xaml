@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:datagrid="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
+             xmlns:vm="clr-namespace:impakt_maui_app.VM"
+             x:Class="impakt_maui_app.Pages.Page_Statistics_InstructorCheckInsDetailed"
+             Title="Page_Statistics_InstructorCheckInsDetailed">
+
+    <ContentPage.BindingContext>
+        <vm:VM_Statistics_InstructorCheckInsDetailed />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <vm:RejectReasonConverter x:Key="RejectReasonConverter"/>
+
+        <DataTemplate x:Key="GroupHeaderTemplate">
+            <Grid RowDefinitions="Auto,Auto"
+                  ColumnDefinitions="*,*,*,*"
+                  BackgroundColor="#f0f0f0">
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
+                       Text="{Binding Header}" 
+                       FontAttributes="Bold" FontSize="16"
+                       HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+
+                <Label Grid.Row="1" Grid.Column="0" 
+                       Text="Name" 
+                       FontAttributes="Bold" FontSize="16"/>
+                <Label Grid.Row="1" Grid.Column="1" 
+                       Text="Surname" 
+                       FontAttributes="Bold" FontSize="16"/>
+                <Label Grid.Row="1" Grid.Column="2" 
+                       Text="Date and Time" 
+                       FontAttributes="Bold" FontSize="16"/>
+                <Label Grid.Row="1" Grid.Column="3" 
+                       Text="Reject reason" 
+                       FontAttributes="Bold" FontSize="16"/>
+            </Grid>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <Grid RowSpacing="5"
+              ColumnSpacing="5"
+              Padding="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <CollectionView x:Name="CollView_Table"
+                        Grid.Row="1"  Grid.Column="0"
+                        ItemsSource="{Binding Table}"
+                        IsGrouped="True"
+                        GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
+                        RemainingItemsThreshold="1"
+                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreDataInTableCommand}">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="*,*,*,*"
+                          Padding="10, 5, 10, 5">
+                        <Label Grid.Column="0" 
+                               Text="{Binding name}" 
+                               VerticalTextAlignment="Center"/>
+                        <Label Grid.Column="1" 
+                               Text="{Binding surname}"
+                               VerticalTextAlignment="Center"/>
+                        <Label Grid.Column="2" 
+                               Text="{Binding date_time}"
+                               VerticalTextAlignment="Center"/>
+                        <Label Grid.Column="3" 
+                               Text="{Binding rejected_reason, Converter={StaticResource RejectReasonConverter}}"
+                               VerticalTextAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
