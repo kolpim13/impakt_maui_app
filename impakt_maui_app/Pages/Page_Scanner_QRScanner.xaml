@@ -3,11 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
              xmlns:vm="clr-namespace:impakt_maui_app.VM"
+             xmlns:pages="clr-namespace:impakt_maui_app.Pages"
              x:Class="impakt_maui_app.Pages.Page_Scanner_QRScanner"
              Title="QR Scanner">
 
+    <!--<ContentPage.BindingContext>
+        <pages:Page_Scanner_QRScanner/>
+    </ContentPage.BindingContext>-->
+
     <ContentPage.Resources>
-        <vm:ExternalPaymentToRadioButtonConverter x:Key="ExternalPaymentConverter"/>
         <vm:QRScanModeToIsVisibleConverter x:Key="QRScanModeConverter"/>
     </ContentPage.Resources>
 
@@ -36,20 +40,11 @@
         <VerticalStackLayout Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" 
                              IsVisible="{Binding ScanMode, Mode=OneWay, Converter={StaticResource QRScanModeConverter}, ConverterParameter=CheckIn}">
 
-            <HorizontalStackLayout>
-                <CheckBox x:Name="CheckIn_ChB_ExternalPayment"
-                          VerticalOptions="Center"/>
-                <Label Text="External payment" 
-                       VerticalOptions="Center"/>
-            </HorizontalStackLayout>
-            <HorizontalStackLayout IsVisible="{Binding Source={x:Reference CheckIn_ChB_ExternalPayment}, Path=IsChecked}">
-                <RadioButton Content="One time pass" GroupName="CheckIn_ExternalPaymentSource"
-                             IsChecked="{Binding ExternalPaymentType, Converter={StaticResource ExternalPaymentConverter}, ConverterParameter=OneTimePass}"/>
-                <RadioButton Content="PZU" GroupName="CheckIn_ExternalPaymentSource"
-                             IsChecked="{Binding ExternalPaymentType, Converter={StaticResource ExternalPaymentConverter}, ConverterParameter=PZU}"/>
-                <RadioButton Content="Medicover" GroupName="CheckIn_ExternalPaymentSource"
-                             IsChecked="{Binding ExternalPaymentType, Converter={StaticResource ExternalPaymentConverter}, ConverterParameter=Medicover}"/>
-            </HorizontalStackLayout>
+            <Picker Title="Choose ExternalProvider"
+                    ItemsSource="{Binding ExternalProviders}"
+                    SelectedItem="{Binding SelectedExternalProvider}"
+                    ItemDisplayBinding="{Binding Name}"/>
+            
 
             <Button Text="Test" 
                     Clicked="OnTestClicked"/>
@@ -62,7 +57,7 @@
             <Picker Title="Choose a PassType"
                     ItemsSource="{Binding PassTypes}"
                     SelectedItem="{Binding SelectedPassType}"
-                    ItemDisplayBinding="{Binding .}"/>
+                    ItemDisplayBinding="{Binding Name}"/>
             
             <Button Text="Test" 
                     Clicked="OnTestClicked"/>
