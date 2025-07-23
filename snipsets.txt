@@ -1,0 +1,50 @@
+<ScrollView>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Date selection-->
+        <VerticalStackLayout Grid.Row="0" Grid.Column="0"
+                             Margin="5">
+            <Label Text="Date start" />
+            <DatePicker Date="{Binding SelectedDateStart, Mode=OneWayToSource}"/>
+        </VerticalStackLayout>
+        
+        <VerticalStackLayout Grid.Row="0" Grid.Column="1"
+                             Margin="5">
+            <Label Text="Date end" />
+            <DatePicker Date="{Binding SelectedDateEnd, Mode=OneWayToSource}"/>
+        </VerticalStackLayout>
+        
+        <!--Get Data from database-->
+        <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                Margin="5"
+                Text="Get data"
+                Clicked="OnClicked_GetData"/>
+        
+        <!--Table with the data about all instructors-->
+        <datagrid:DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                           Padding="10"
+                           ItemsSource="{Binding TableContent}">
+
+            <datagrid:DataGrid.Columns>
+                <datagrid:DataGridColumn Title="Name" PropertyName="name" />
+                <datagrid:DataGridColumn Title="Surname" PropertyName="surname" />
+                <datagrid:DataGridColumn Title="Pass" PropertyName="entries_pass" />
+                <datagrid:DataGridColumn Title="PZU" PropertyName="entries_pzu" />
+                <datagrid:DataGridColumn Title="Medicover" PropertyName="entries_medicover" />
+                <datagrid:DataGridColumn Title="Multisport" PropertyName="entries_multisport" 
+                                         IsVisible="False"/>
+                <datagrid:DataGridColumn Title="Other" PropertyName="entries_other" 
+                                         IsVisible="False"/>
+                <datagrid:DataGridColumn Title="Total" PropertyName="entries_total" />
+            </datagrid:DataGrid.Columns>
+        </datagrid:DataGrid>
+    </Grid>
