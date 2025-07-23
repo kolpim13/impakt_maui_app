@@ -66,16 +66,19 @@
 	<ItemGroup>
 		<PackageReference Include="akgul.Maui.DataGrid" Version="4.0.6" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="Syncfusion.Maui.Core" Version="29.2.10" />
-		<PackageReference Include="Syncfusion.Maui.DataGrid" Version="29.2.10" />
+		<PackageReference Include="Syncfusion.Maui.Core" Version="30.1.38" />
 		<PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
 		<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\Page_ExternalProviders.xaml.cs">
+	    <DependentUpon>Page_ExternalProviders.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\Page_Scanner_QRScanner.xaml.cs">
 	    <DependentUpon>Page_Scanner_QRScanner.xaml</DependentUpon>
 	  </Compile>
@@ -92,6 +95,12 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="CheckinHistory.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Page_ExternalProviders.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Page_PassTypes.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_Scanner.xaml">
@@ -116,9 +125,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Popups\MemberInfoPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="QRScanner.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

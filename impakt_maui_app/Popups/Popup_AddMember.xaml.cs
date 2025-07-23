@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
+using impakt_maui_app.Models;
 using impakt_maui_app.Schemas;
 using Microsoft.Maui.Controls;
 using Newtonsoft.Json;
@@ -14,14 +16,12 @@ using System.Threading.Tasks;
 
 namespace impakt_maui_app.Popups
 {
-    public class Popup_NewMember_VM
-    {
-        // [TBD] For future NVM pattern implementation
-    }
     public partial class Popup_NewMember : Popup, INotifyPropertyChanged
     {
         // Bound properties
-        private bool is_radio_button_visible = (UserInfo.AccountType == AccountType.Admin) ? true : false;
+        private bool is_radio_button_visible = (
+            User.Account.AccountType == AccountType.Root ||
+            User.Account.AccountType == AccountType.Admin) ? true : false;
         public bool IsRadioButtonVisible { get => is_radio_button_visible; }
 
         private AccountType selected_account_type = AccountType.Member;
@@ -65,6 +65,34 @@ namespace impakt_maui_app.Popups
                 }
             }
         }
+     
+        private bool sendWelcomeMail = true;
+        public bool SendWelcomeMail
+        {
+            get => sendWelcomeMail;
+            set
+            {
+                if (sendWelcomeMail != value)
+                {
+                    sendWelcomeMail = value;
+                    OnPropertyChanged(nameof(SendWelcomeMail));
+                }
+            }
+        }
+
+        private bool sendWelcomeMms = false;
+        public bool SendWelcomeMms
+        {
+            get => sendWelcomeMms;
+            set
+            {
+                if (sendWelcomeMms != value)
+                {
+                    sendWelcomeMms = value;
+                    OnPropertyChanged(nameof(SendWelcomeMms));
+                }
+            }
+        }
 
         public Popup_NewMember()
         {
@@ -94,7 +122,7 @@ namespace impakt_maui_app.Popups
             ButtonAddMember.IsEnabled = false;
 
             // Coolect data --> validate them --> prepare to be sent
-            Req_Members_AddNewMember new_member = new Req_Members_AddNewMember
+            Req_Member_Add new_member = new Req_Member_Add
             {
                 // Properties
                 name = NameEntry.Text,
@@ -107,23 +135,23 @@ namespace impakt_maui_app.Popups
                 account_type = (int)selected_account_type,
 
                 // Options
-                send_welcome_email = SendEmailCheckBox.IsChecked,
-                send_welcome_mms = false, // Temporlarly
+                send_welcome_email = SendWelcomeMail,
+                send_welcome_mms = SendWelcomeMms, // Temporlarly
             };
 
             // Establish connection --> Send collected data --> react on response
             try
             {
                 HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.PostAsJsonAsync(Network.AddNewMemberUrl, new_member);
+                HttpResponseMessage response = await client.PostAsJsonAsync(Network.Post_Member_Add, new_member);
                 if (response.IsSuccessStatusCode)
                 {
                     await Shell.Current.DisplayAlert("success", "member added!", "ok");
                 }
                 else
                 {
-                    // add some reaction later
-                    ;
+                    var error = await response.Content.ReadAsStringAsync();
+                    await Shell.Current.DisplayAlert("Error", error, "OK");
                 }
             }
             catch (Exception ex)

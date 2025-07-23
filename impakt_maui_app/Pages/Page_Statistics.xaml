@@ -6,9 +6,9 @@
 
     <ScrollView>
         <VerticalStackLayout>
-            <Button x:Name="Btn_AdminSummary" Text="Admin summary" 
+            <Button Text="Instructors CheckIns" 
                     CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
-                    Clicked="OnClicked_AdminSummary"/>
+                    Clicked="OnClicked_InstructorsCheckIns"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

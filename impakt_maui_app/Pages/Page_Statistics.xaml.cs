@@ -7,8 +7,8 @@ public partial class Page_Statistics : ContentPage
 		InitializeComponent();
 	}
 
-    private async void OnClicked_AdminSummary(object? sender, EventArgs e)
-	{
-        await Shell.Current.GoToAsync("Page_Statistics_AdminSummary");
+    private async void OnClicked_InstructorsCheckIns(object? sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("Page_Statistics_Admin_InstructorsStatistics");
     }
 }

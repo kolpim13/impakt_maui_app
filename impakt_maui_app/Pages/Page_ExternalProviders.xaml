@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:impakt_maui_app.VM"
+             x:Class="impakt_maui_app.Pages.Page_ExternalProvider"
+             x:Name="Page_ExternalProvider_Inst"
+             Title="Page_ExternalProviders">
+
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Clicked="OnAddProvider" />
+    </ContentPage.ToolbarItems>-->
+
+    <ContentPage.BindingContext>
+        <vm:VM_ExternalProviders />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <!--Converters-->
+        <vm:Converter_ExternalProviders_Description x:Key="Converter_Description" />
+        <vm:Converter_ExternalProviders_PartialPayment x:Key="Converter_PartialPayment" />
+        
+        <!--Text related - colors, fonts, etc.-->
+        <ResourceDictionary>
+            <Color x:Key="ProviderBorderBackground">#f7f7f7</Color>
+            <Color x:Key="ProviderBorderStroke">#B0B0B0</Color>
+            <Color x:Key="ProviderText">#222222</Color>
+
+            <!--Make all labels on the page be with such text color-->
+            <!--<Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource ProviderText}" />
+            </Style>-->
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*"
+          ColumnDefinitions="*,*">
+
+        <!--Buttons-->         
+        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                Margin="12, 0, 12, 6"
+                Text="Add External Provider" Command="{Binding AddProviderCommand}"/>
+
+        <Button Grid.Row="1" Grid.Column="0"
+                Margin="12, 0, 6, 6"
+                Text="Edit" Command="{Binding EditProviderCommand}" CommandParameter="{Binding SelectedProvider}"/>
+        <Button Grid.Row="1" Grid.Column="1"
+                Margin="6, 0, 12, 6"
+                Text="Delete" Command="{Binding DeleteProviderCommand}"/>
+
+        <!--Add or Edit ExternalProvider form-->
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+              RowDefinitions="Auto,Auto,Auto,Auto"
+              ColumnDefinitions="*,*"
+              Margin="12"
+              IsVisible="{Binding IsNewModifyMenuVisible}">
+
+            <Entry Grid.Row="0" Grid.ColumnSpan="2"
+                   x:Name="Etry_Name"
+                   Placeholder="Name" Text="{Binding Name}">
+                <!--To highlight data with red color that should be filled-->
+                <Entry.Triggers>
+                    <DataTrigger TargetType="Entry" Binding="{Binding Text, Source={x:Reference Etry_Name}}" Value="">
+                        <Setter Property="BackgroundColor" Value="LightPink" />
+                    </DataTrigger>
+                </Entry.Triggers>
+            </Entry>
+
+            <Entry Grid.Row="1" Grid.ColumnSpan="2"
+                   Placeholder="Description" Text="{Binding Description}" />
+
+            <Entry  Grid.Row="2" Grid.Column="0" 
+                    Keyboard="Numeric"
+                    Placeholder="Partial payment" Text="{Binding PartialPayment, StringFormat='{C2}'}"/>
+            <Switch Grid.Row="2" Grid.Column="1" 
+                    IsToggled="{Binding IsPartialPayment}" />
+
+            <Button Grid.Row="3" Grid.Column="0" 
+                    Margin="0, 0, 6, 6"
+                    Text="OK" Command="{Binding AddOrEdtitProviderCommand}"/>
+            <Button Grid.Row="3" Grid.Column="1" 
+                    Margin="6, 0, 0, 6"
+                    Text="Cancel" Command="{Binding CancelAddEditProviderCommand}"/>
+        </Grid>
+
+        <!--CollectionView itself-->
+        <CollectionView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                        Margin="12, 0, 12, 0"
+                        ItemsSource="{Binding Providers, Mode=TwoWay}" 
+                        SelectionMode="Single"
+                        SelectedItem="{Binding SelectedProvider}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="Gray" StrokeThickness="1" Background="#f7f7f7" Padding="12" Margin="6" StrokeShape="RoundRectangle 12">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="18"/>
+                            <Label Text="{Binding Description, Converter={StaticResource Converter_Description}}" 
+                                   FontAttributes="Italic" FontSize="14"
+                                   LineBreakMode="WordWrap"/>
+                            <Label Text="{Binding PartialPayment, Converter={StaticResource Converter_PartialPayment}, StringFormat='Partial payment: {0}'}" 
+                                   FontSize="13"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

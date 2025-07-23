@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:impakt_maui_app.VM"
+             x:Class="impakt_maui_app.Reusable.CollectionView_MemberPass"
+             x:Name="Root">
+
+    <Border Stroke="Gray" StrokeThickness="1" Background="#f7f7f7" Padding="12" Margin="6" StrokeShape="RoundRectangle 12">
+        <VerticalStackLayout>
+            <Label Text="{Binding PassTypeName}" FontAttributes="Bold" FontSize="18"/>
+            <Label Text="{Binding EntriesLeft, StringFormat='Entries Left: {0}'}"/>
+            <Label Text="{Binding ExpirationDate, StringFormat='Valid till: {0}'}"/>
+            <Label Text="{Binding ExternalProviderName}"/>
+            <Label Text="{Binding ExtEventCode, StringFormat='Event Code: {0}'}"/>
+        </VerticalStackLayout>
+    </Border>
+</ContentView>

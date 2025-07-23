@@ -1,4 +1,5 @@
-﻿using impakt_maui_app.Schemas;
+﻿using impakt_maui_app.Models;
+using impakt_maui_app.Schemas;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -49,15 +50,15 @@ namespace impakt_maui_app.Pages
                 }
 #endif
                 // Assemble post request --> send it.
-                Req_LogIn req = new Req_LogIn
+                Req_LogIn_Username req = new Req_LogIn_Username
                 {
                     username = username,
                     password = password,
                 };
 
                 HttpClient _httpClient = new HttpClient();
-                HttpResponseMessage response = await _httpClient.PostAsJsonAsync(Network.LogInUrl, req);
-                string response_body = await response.Content.ReadAsStringAsync();
+                HttpResponseMessage response = await _httpClient.PostAsJsonAsync(Network.Post_LogIn_Username, req);
+                var member_info = await response.Content.ReadFromJsonAsync<Resp_Members_Inst>();
 
                 // Validate the response
                 if (response.IsSuccessStatusCode)
@@ -65,18 +66,28 @@ namespace impakt_maui_app.Pages
                     // response.Content.ReadFromJsonAsync
 
                     // Get data about the user from the backend response
-                    UserInfo.Fill_FromLogInResp(response_body);
+                    User.Account = Model_Member.From_Resp_Inst(member_info);
 
                     // Dispatch all used resources
                     _httpClient.Dispose();
 
-                    // Free all resources --> navigate to the main page
-                    await Shell.Current.GoToAsync("//Page_Profile");
+                    // Navigate to the main page (If has access).
+                    if (User.Account.AccountType == AccountType.Member)
+                    {
+                        await DisplayAlert("Error", "Just members can not use this application", "OK");
+                    }
+                    else
+                    {
+                        // Clear fields firstly
+                        UsernameEntry.Text = "";
+                        PasswordEntry.Text = "";
+                        await Shell.Current.GoToAsync("//Page_Profile");
+                    }
                 }
                 else
                 {
                     string header = "Problem during Login";
-                    string message = string.Format("Status code: {0} - {1}\n{2}", (int)response.StatusCode, response.StatusCode, response_body);
+                    string message = string.Format("Status code: {0} - {1}\n{2}", (int)response.StatusCode, response.StatusCode, response.Content.ToString());
                     await DisplayAlert(header, message, "OK");
                     await Navigation.PopAsync();
                 }

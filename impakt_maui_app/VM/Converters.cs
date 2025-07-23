@@ -1,4 +1,5 @@
-﻿using impakt_maui_app.Pages;
+﻿using impakt_maui_app.Models;
+using impakt_maui_app.Pages;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -23,28 +24,6 @@ namespace impakt_maui_app.VM
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return false;
-        }
-    }
-
-    public class ExternalPaymentToRadioButtonConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is ExternalPaymentType selected && parameter is string param)
-                return selected.ToString() == param;
-
-            return false;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is bool isChecked && isChecked && parameter is string param &&
-                Enum.TryParse(typeof(ExternalPaymentType), param, out var result))
-            {
-                return result!;
-            }
-         
-            return Binding.DoNothing;
         }
     }
 

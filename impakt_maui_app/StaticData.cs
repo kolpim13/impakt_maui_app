@@ -1,164 +1,242 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using impakt_maui_app.Models;
+using impakt_maui_app.Schemas;
+using Microsoft.Maui.Controls;
+using Microsoft.VisualBasic;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
-using impakt_maui_app.Schemas;
-using Newtonsoft.Json;
 
 namespace impakt_maui_app
-{
-    public enum PassType: ushort
+{   
+    public static class GeneralResources
     {
-        NO             = 0,
-        LIMITED_1      = 1,
-        LIMITED_4      = 4,
-        LIMITED_8      = 8,
-        LIMITED_12     = 12,
-        UNLIMITED      = 20,
-        MEDICOVER_1    = 21,
-        PZU_1          = 41,
-        MULTISPORT_1   = 61,
-        OTHER_1        = 101,
-    }
-
-    public enum AccountType: ushort
-    {
-        Admin = 0,
-        Instructor = 1,
-        Member = 2,
-    }
-
-    public class BackendReq_RegisterNewMember
-    {
-        public string name { get; set; }
-        public string surname { get; set; }
-        public string email { get; set; }
-        public string? phone_number { get; set; } // Optional
-        public DateTime? date_of_birth { get; set; } // Optional
-        public string? account_type { get; set; } // Optional
-    }
-
-    public class BackendReq_CheckInMember
-    {
-        public string card_id { get; set; }
-    }
-
-    public class BackendReq_UpdatePassDetails
-    {
-        public string card_id { get; set; }
-        public int pass_type { get; set; }
-        public int entrances_left { get; set; }
-        public DateOnly expiration_date { get; set; }
-    }
-
-    /* The data will be returned from backend when user is logged in */
-
-    public class BackendReq_MemberInfo
-    {
-        public string card_id { get; set; }
-    }
-    public class BackendResp_MemberInfo
-    {
-        public string card_id { get; set; }
-        public string name { get; set; }
-        public string surname { get; set; }
-        public string email { get; set; }
-        public string? phone_number { get; set; }
-        public DateOnly? date_of_birth { get; set; }
-        public int account_type { get; set; }
-    }
-
-    public class BackendReq_CheckInFilters
-    {
-        public int limit { get; set; }
-        public string? control_name { get; set; }
-        public string? control_surname { get; set; }
-        public string? hall { get; set; }
-        public string? card_id { get; set; }
-        public string? name { get; set; }
-        public string? surname { get; set; }
-        public DateTime? date_time_min { get; set; }
-        public DateTime? date_time_max { get; set; }
-    }
-    public class BackendResp_CheckIn
-    {
-        public string control_name { get; set; }
-        public string control_surname { get; set; }
-        public string hall { get; set; }
-        public string card_id { get; set; }
-        public string name { get; set; }
-        public string surname { get; set; }
-        public DateTime date_time { get; set; }
-    }
-    public static class UserInfo
-    {
-        //public static int? ID { get; set; } = int.MaxValue;
-
-        public static string? Card_ID { get; set; }
-        public static string? Name { get; set; } 
-        public static string? SurName { get; set; }
-        public static string? Email { get; set; }
-        public static string? Phone { get; set; }
-        public static DateOnly? DateOfBirth{ get; set; }
-        public static AccountType? AccountType { get; set; }
-        public static string? Token { get; set; }
-        public static bool? Activated { get; set; }
-
-        public static void Fill_FromLogInResp(string json)
+        /* MEMBERS */
+        public static async Task<Model_Member> Get_Member_FromDB(string member_id)
         {
-            Resp_LogIn? user = JsonConvert.DeserializeObject<Resp_LogIn>(json);
+            Model_Member member = null;
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync(Network.Get_Member_Inst(member_id));
 
-            Card_ID = user.card_id;
-            Name = user.name;
-            SurName = user.surname;
-            Email = user.email;
-            Phone = user.phone_number;
-            DateOfBirth = user.date_of_birth;
-            AccountType = (AccountType)user.account_type;
-            Token = user.token;
-            Activated = user.activated; 
+                if (response.IsSuccessStatusCode)
+                {
+                    var resp = await response.Content.ReadFromJsonAsync<Resp_Members_Inst>();
+                    member = Model_Member.From_Resp_Inst(resp);
+                }
+            }
+            catch (Exception ex) 
+            {
+                ;
+            }
+            return member;
         }
+
+        /* EXTERNAL PROVIDERS */
+        public static bool IsExternalProvidersObtained = false;
+        public static readonly Model_ExternalProvider dummy_provider = new Model_ExternalProvider
+        {
+            Id = -1,
+            Name = "No Provider",
+            IsPartialPayment = false,
+            IsDeleted = true,
+        };
+        private static List<Model_ExternalProvider> ExternalProviders = new List<Model_ExternalProvider>();
+        public static ObservableCollection<Model_ExternalProvider> Get_ExternalProviders_AsCollection() =>
+            new ObservableCollection<Model_ExternalProvider>(ExternalProviders);
+        public static void Get_ExternalProviders_AsCollection(ObservableCollection<Model_ExternalProvider> collection)
+        {
+            foreach (Model_ExternalProvider provider in ExternalProviders)
+            {
+                collection.Add(provider);
+            }
+        }
+            
+        public static void Set_ExernalProviders_FromCollection(ObservableCollection<Model_ExternalProvider> collection) =>
+            ExternalProviders = [.. collection];
+        public static async Task ExternalProviders_FromDataBase()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync(Network.Get_ExternalProviders);
+                if (response.IsSuccessStatusCode)
+                {
+                    ExternalProviders.Clear();
+                    var all_providers = await response.Content.ReadFromJsonAsync<List<Resp_Instance_ExternalProviders>>();
+                    foreach (Resp_Instance_ExternalProviders provider in all_providers)
+                    {
+                        ExternalProviders.Add(Model_ExternalProvider.From_Resp_Inst(provider));
+                    }
+
+                    IsExternalProvidersObtained = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ;
+            }
+        }
+
+        /* PASS TYPES */
+        public static bool IsPassTypesObtained = false;
+        private static List<Model_PassType> PassTypes = new List<Model_PassType>();
+        public static ObservableCollection<Model_PassType> Get_PassTypes_AsCollection() =>
+            new ObservableCollection<Model_PassType>(PassTypes);
+        public static void Get_PassTypes_AsCollection(ObservableCollection<Model_PassType> collection)
+        {
+            foreach (Model_PassType pass_type in PassTypes) 
+            { 
+                collection.Add(pass_type); 
+            }
+        }
+        public static void Set_PassTypes_FromCollection(ObservableCollection<Model_PassType> collection) =>
+            PassTypes = [.. collection];
+        public static async Task PassTypes_FromDataBase()
+        { 
+            try
+            {
+                HttpClient _httpClient = new HttpClient();
+                HttpResponseMessage response = await _httpClient.GetAsync(Network.Get_PassTypes);
+                if (response.IsSuccessStatusCode)
+                {
+                    PassTypes.Clear();
+                    var pass_types = await response.Content.ReadFromJsonAsync<List<Resp_PassTypes_Inst>>();
+                    foreach(Resp_PassTypes_Inst pass_type in pass_types)
+                    {
+                        PassTypes.Add(Model_PassType.From_Resp_Inst(pass_type));
+                    }
+
+                    IsPassTypesObtained = true;
+                }
+            }
+            catch
+            {
+                ;
+            }
+        }
+    
+        /* MEMBER PASSES */
+        public static async Task Get_MemberPass_AsCollection_FromDB(ObservableCollection<Model_MemberPass> collection, string member_id)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync(Network.Get_MemberPass_Active(member_id));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var member_passes = await response.Content.ReadFromJsonAsync<List<Resp_MemberPass_Inst>>();
+                    foreach (Resp_MemberPass_Inst member_pass in member_passes)
+                    {
+                        collection.Add(Model_MemberPass.From_Resp_Inst(member_pass));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ;
+            }
+        }
+    }
+
+    public static class User
+    {
+        public static Model_Member Account { get; set; } = Model_Member.GetDefaultInst();
     }
 
     public static class Network
     {
+        /* General */
+        public static string ParseResponse_AsString(HttpResponseMessage response) =>
+            string.Format("Status code: {0} - {1}", (int)response.StatusCode, response.StatusCode);
+
+        public static async Task<string> ParseResponse_AsString_FullInfo(HttpResponseMessage response)
+        {
+            string reason = await response.Content.ReadAsStringAsync();
+            return string.Format("Status code: {0} - {1}\n{2}", (int)response.StatusCode, response.StatusCode, reason);
+        }
+
 #if ANDROID
         // public static string URL { get; set; } = "http://192.168.0.1:8000";  // ZF
         // public static string URL { get; set; } = "http://192.168.0.199:8000";  // Personal
-        public static string URL { get; set; } = "http://192.168.0.6:8000";  // Grzegosz
+        // public static string URL { get; set; } = "http://192.168.0.6:8000";  // Grzegosz
+        public static string URL { get; set; } = "https://e72100d6dae0.ngrok-free.app"; // Local Host through grok
 #else
         public static string URL { get; set; } = "http://localhost:8000";
 #endif
-        public static string Get_MemberInfo_Url(string member_id) => string.Format("{0}/members/get/info/{1}/{2}", URL, UserInfo.Card_ID, member_id);
 
-        public static string Post_Member_UpdatePass
+        /* Links: Members */
+        public static string Post_Member_Add =>
+            string.Format("{0}/members/add", URL);
+        public static string Get_Member_Inst(string member_id) =>
+            string.Format("{0}/members/{1}", URL, member_id);
+
+        /* Links: ExternalProviders */
+        public static string Post_ExternalProviders_Create
         {
-            get => string.Format("{0}/membres/update/pass/{1}", URL, UserInfo.Card_ID);
+            /* Token should be used */
+            get => string.Format("{0}/external_providers", URL);
         }
-        public static string AddNewMemberUrl
+        public static string Get_ExternalProviders
         {
-            get => string.Format("{0}/members/add/{1}", URL, UserInfo.Card_ID);
+            /* Token should be used */
+            get => string.Format("{0}/external_providers", URL);
         }
-        public static string CheckInUrl
+        public static string Put_ExternalProviders_Update
         {
-            get { return string.Format("{0}/checkin/{1}", URL, UserInfo.Card_ID); }
+            /* Token should be used */
+            get => string.Format("{0}/external_providers", URL);
         }
-        public static string LogInUrl
+
+        /* Links: PassTypes */
+        public static string Post_PassTypes_Create
         {
-            get { return URL + "/login/username"; }
+            get => string.Format("{0}/pass_types", URL);
         }
-        public static string CheckInHistoryUrl
+        public static string Get_PassTypes
         {
-            get { return string.Format("{0}/checkin/log/filtered", URL); }
+            /* Token should be used */
+            get => string.Format("{0}/pass_types", URL);
         }
-        public static string StatisticInstructorUrl
+        public static string Put_PassTypes_Update
         {
-            get { return string.Format("{0}/statistics/instructor/entries_amount/{1}", URL, UserInfo.Card_ID); }
+            /* Token should be used */
+            get => string.Format("{0}/pass_types", URL);
         }
-        public static string StatisticAllInstructorsUrl
+
+        /* Links: MemberPass */
+        public static string Post_MemberPass_Add
         {
-            get { return string.Format("{0}/statistics/all_instructors/entries_amount/{1}", URL, UserInfo.Card_ID); }
+            get => string.Format("{0}/member_pass", URL);
         }
+
+        public static string Get_MemberPass_Active(string member_card_id) =>
+            /* Token should be used */
+            string.Format("{0}/member_pass/active/{1}", URL, member_card_id);
+
+        /* Links: LogIn */
+        public static string Post_LogIn_Username =>
+            string.Format("{0}/login/username", URL);
+
+        /* Links: Logging */
+        public static string Post_CheckIn_Add =>
+            string.Format("{0}/logging/checkin", URL);
+
+        /* Links: Statistics */
+        public static string Post_Statistics_InstructorsCheckIns =>
+            string.Format("{0}/statistics/instructors_checkins", URL);
+
+        public static string Post_Statistics_InstructorCheckInsDetailed =>
+            $"{URL}/statistics/instructor_checkins/detailed";
+
+        /* Links: Combined */
+        // ...
     }
 }

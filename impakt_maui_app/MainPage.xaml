@@ -12,19 +12,6 @@
 
             <Label Text="{Binding SurName}"
                    Style="{StaticResource Headline}" />
-
-            <Button x:Name="ButtonAddMember"
-                    Text="Add new member"
-                    Clicked="OnAddMemberClicked"/>
-
-            <Button x:Name="ButtonQRScanner"
-                    Text="Go to QRScanner" 
-                    Clicked="OnTempClicked" />
-
-            <Button x:Name="ButtonCheckInHistory"
-                    Text="Go to CheckIn history"
-                    Clicked="OnCheckInHistoryClicked" />
-
         </VerticalStackLayout>
     </ScrollView>
 

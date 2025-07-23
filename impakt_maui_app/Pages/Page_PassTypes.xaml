@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:impakt_maui_app.VM"
+             x:Class="impakt_maui_app.Pages.Page_PassTypes"
+             x:Name="Page_PassTypes_Inst"
+             Title="Page_PassTypes">
+
+    <ContentPage.BindingContext>
+        <vm:VM_PassTypes />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <!--Converters-->
+        <vm:Converter_PassTypes_NullToString x:Key="Converter_NullToString" />
+
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*"
+          ColumnDefinitions="*,*">
+          
+         <!--Buttons-->         
+        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                Margin="12, 0, 12, 6"
+                Text="Add pass" Command="{Binding AddPassTypeFormCommand}"/>
+
+        <Button Grid.Row="1" Grid.Column="0"
+                Margin="12, 0, 6, 6"
+                Text="Edit" Command="{Binding EditPassTypeFormCommand}"/>
+        <Button Grid.Row="1" Grid.Column="1"
+                Margin="6, 0, 12, 6"
+                Text="Delete" Command="{Binding DeletePassTypeCommand}"/>
+        
+        <!--Add or Edit new Pass Type form-->
+        <VerticalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                             Margin="12" Spacing="6"
+                             IsVisible="{Binding IsFormVisible}">
+            <Entry Placeholder="Name" 
+                   Text="{Binding Name}"/>
+            <Entry Placeholder="Description" 
+                   Text="{Binding Description}"/>
+            <Entry Placeholder="Price" 
+                   Keyboard="Numeric"
+                   Text="{Binding Price, StringFormat='{C2}'}"/>
+            <Entry Placeholder="Validity days" 
+                   Text="{Binding ValidityDays}"/>
+            <Entry Placeholder="Maximum entries" 
+                   Text="{Binding MaximumEntries}"/>
+
+            <Picker Title="Choose ExternalProvider"
+                    ItemsSource="{Binding ExternalProviders}"
+                    SelectedItem="{Binding SelectedExternalProvider}"
+                    ItemDisplayBinding="{Binding Name}"/>
+
+            <Grid ColumnDefinitions="*,*">
+                <Button Grid.Column="0"
+                    Margin="0, 0, 6, 6"
+                    Text="OK" Command="{Binding BtnOkCommand}"/>
+                <Button Grid.Column="1"
+                    Margin="6, 0, 0, 6"
+                    Text="Cancel" Command="{Binding BtnCancelCommand}"/>
+            </Grid>
+        </VerticalStackLayout>
+
+        <!--CollectionView itself-->
+        <CollectionView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                Margin="12, 0, 12, 0"
+                ItemsSource="{Binding PassTypes, Mode=TwoWay}" 
+                SelectionMode="Single"
+                SelectedItem="{Binding SelectedPassType}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="Gray" StrokeThickness="1" Background="#f7f7f7" Padding="12" Margin="6" StrokeShape="RoundRectangle 12">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="18"/>
+                            <Label Text="{Binding Description, Converter={StaticResource Converter_NullToString}}" 
+                                   FontAttributes="Italic" FontSize="14"
+                                   LineBreakMode="WordWrap"/>
+                            <Label Text="{Binding Price, StringFormat='Price: {0}'}"/>
+                            <Label Text="{Binding ValidityDays, StringFormat='Validity period in days: {0}'}"/>
+                            <Label Text="{Binding MaximumEntries, StringFormat='Maximum entries: {0}'}"/>
+                            <Label Text="{Binding ExternalProviderName, Converter={StaticResource Converter_NullToString}, ConverterParameter=No External Provider assinged, StringFormat='External Provider: {0}'}"/>
+                            <Label Text="{Binding ExtEventCode, Converter={StaticResource Converter_NullToString}, ConverterParameter=No specific event code, StringFormat='External event code: {0}'}"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

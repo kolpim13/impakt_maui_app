@@ -1,9 +1,12 @@
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-               x:Class="impakt_maui_app.Popups.MemberInfoPopup">
+			   xmlns:controls="clr-namespace:impakt_maui_app.Reusable"
+			   xmlns:vm="clr-namespace:impakt_maui_app.VM"
+               x:Class="impakt_maui_app.Popups.Popup_MemberInfo"
+			   x:Name="Popup_MemberInfo_Inst">
 
-	<ContentPage.Resources>
+	<toolkit:Popup.Resources>
 		<!-- 1) Define two styles -->
 		<Style x:Key="StaticLabelStyle" TargetType="Label">
 			<Setter Property="FontAttributes" Value="Bold" />
@@ -23,25 +26,25 @@
 			<Setter Property="BackgroundColor" Value="#F5F5F5" />
 			<Setter Property="Padding" Value="4,2" />
 		</Style>
-	</ContentPage.Resources>
+
+		<!--<Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource App_TextColor_LightTheme}" />
+        </Style>-->
+	</toolkit:Popup.Resources>
 	
     <VerticalStackLayout Padding="20" Spacing="10">
-		<Label Text="Name:"
-			   Style="{StaticResource StaticLabelStyle}"/>
-        <Label x:Name="LB_Name"
-			   Style="{StaticResource DynamicLabelStyle}"/>
+		<Label Text="{Binding FullName}" />
 
-		<Label Text="Surname"/>
-        <Label x:Name="LB_Surname"/>
-
-		<Label Text="Pass type"/>
-		<Label x:Name="LB_PassType"/>
-		
-		<Label Text="Entrances left"/>
-		<Label x:Name="LB_EntrancesLeft"/>
-		
-		<Label Text="Pass expiration date"/>
-		<Label x:Name="LB_PassExpirationDate"/>
+		<CollectionView ItemsSource="{Binding MemberPasses}"
+						SelectionMode="None">
+			<CollectionView.ItemTemplate>
+				<DataTemplate>
+					<controls:CollectionView_MemberPass BindingContext="{Binding}" />
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
     </VerticalStackLayout>
     
 </toolkit:Popup>
+
+<!--Style="{StaticResource StaticLabelStyle}"-->

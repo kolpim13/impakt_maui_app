@@ -10,8 +10,8 @@ namespace impakt_maui_app
         private static readonly Lazy<MainPage_Bindings_UserInfo> _instance = new(() => new MainPage_Bindings_UserInfo());
         public static MainPage_Bindings_UserInfo Instance => _instance.Value;
 
-        public string Name { get => UserInfo.Name; }
-        public string SurName { get => UserInfo.SurName; }
+        public string Name { get => User.Account.Name; }
+        public string SurName { get => User.Account.Surname; }
 
         // INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
@@ -26,24 +26,6 @@ namespace impakt_maui_app
             InitializeComponent();
 
             BindingContext = MainPage_Bindings_UserInfo.Instance;
-        }
-
-        private async void OnTempClicked(object? sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("//QRScanner");
-            return;
-        }
-
-        private async void OnAddMemberClicked(object? sender, EventArgs e)
-        {
-            Popup_NewMember popup = new Popup_NewMember();
-            await Shell.Current.ShowPopupAsync(popup);
-        }
-
-        private async void OnCheckInHistoryClicked(object? sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("//ChecInHistory");
-            return;
         }
     }
 }

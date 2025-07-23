@@ -7,31 +7,49 @@
        Title="impakt_maui_app">
 
     <!--Login-->
-    <ShellContent Title="Login Page"
+    <!--<ShellContent Title="Login Page"
                   ContentTemplate="{DataTemplate pages:Page_Login}"
-                  Route="Page_Login"/>
+                  Route="Page_Login"/>-->
 
     <TabBar>
-        <Tab Title="Profile"
-             Icon="shell_tab_profile_32x32.jpg">
+        <Tab Title="Profile">
             <ShellContent ContentTemplate="{DataTemplate pages:Page_Profile}"
                           Route="Page_Profile"/>
+
+            <!--Sub tabs invisible by default-->
+            <ShellContent ContentTemplate="{DataTemplate pages:Page_ExternalProvider}"
+                          Route="Page_ExternalProvider"
+                          Title="Page_ExternalProvider manadgement"
+                          IsVisible="False"/>
+
+            <ShellContent ContentTemplate="{DataTemplate pages:Page_PassTypes}"
+                          Route="Page_ExternalProvider"
+                          Title="Page_ExternalProvider manadgement"
+                          IsVisible="False"/>
         </Tab>
+        
         <Tab Title="Main">
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}"
                           Route="Page_Main"/>
         </Tab>
+        
         <Tab Title="Statistics">
             <ShellContent ContentTemplate="{DataTemplate pages:Page_Statistics}"
                           Route="Page_Statistics"
                           Title="Statistics Main"/>
             
             <!--Sub tabs invisible by default-->
-            <ShellContent ContentTemplate="{DataTemplate pages:Page_Statistics_AdminSummary}"
-                          Route="Page_Statistics_AdminSummary"
-                          Title="Statistics Admin summary"
+            <ShellContent ContentTemplate="{DataTemplate pages:Page_Statistics_Admin_InstructorsStatistics}"
+                          Route="Page_Statistics_Admin_InstructorsStatistics"
+                          Title="Instructors Statistics"
+                          IsVisible="False" />
+            
+            <ShellContent ContentTemplate="{DataTemplate pages:Page_Statistics_InstructorCheckInsDetailed}"
+                          Route="Page_Statistics_InstructorCheckInsDetailed"
+                          Title="Instructor Detailed Statistics"
                           IsVisible="False"/>
         </Tab>
+        
         <Tab Title="Scanner">
             <ShellContent ContentTemplate="{DataTemplate pages:Page_Scanner}"
                           Route="Page_Scanner"

@@ -1,3 +1,5 @@
+using impakt_maui_app.VM;
+
 namespace impakt_maui_app.Pages;
 
 public enum QRScanMode : ushort
@@ -14,6 +16,14 @@ public partial class Page_Scanner : ContentPage
 	{
 		InitializeComponent();
 	}
+    
+    protected override async void OnAppearing()
+    {
+        /* Load Pass Types from DB */
+        base.OnAppearing();
+        if (BindingContext is VM_Scanner vm)
+            await vm.InitializeAsync();
+    }
 
     private async void OnClicked_CheckIn(object? sender, EventArgs e)
     {
