@@ -58,6 +58,10 @@
                     CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
                     Clicked="Btn_OnPassTypesClicked"/>
 
+            <Button Text="Log Out" 
+                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
+                    Clicked="Btn_OnLogOutClicked"/>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

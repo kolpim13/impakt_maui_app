@@ -22,7 +22,8 @@ namespace impakt_maui_app.Schemas
         required public DateOnly registration_date { get; set; }
         required public int account_type { get; set; }
         public string? privileges { get; set; }
-        public DateTime? last_check_in { get; set; }
+        public bool? last_checkin_success { get; set; }
+        public DateTime? last_checkin_datetime { get; set; }
         public string? token { get; set; }
         required public bool activated { get; set; }
     }

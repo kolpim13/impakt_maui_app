@@ -33,8 +33,7 @@
                 Text="Delete" Command="{Binding DeletePassTypeCommand}"/>
         
         <!--Add or Edit new Pass Type form-->
-        <ScrollView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-        <VerticalStackLayout 
+        <VerticalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                              Margin="12" Spacing="6"
                              IsVisible="{Binding IsFormVisible}">
             <Entry Placeholder="Name" 
@@ -48,22 +47,21 @@
                    Text="{Binding ValidityDays}"/>
             <Entry Placeholder="Maximum entries" 
                    Text="{Binding MaximumEntries}"/>
-            
-                <Picker Title="Choose ExternalProvider"
-                        ItemsSource="{Binding ExternalProviders}"
-                        SelectedItem="{Binding SelectedExternalProvider}"
-                        ItemDisplayBinding="{Binding Name}"/>
 
-                <Grid ColumnDefinitions="*,*">
+            <Picker Title="Choose ExternalProvider"
+                    ItemsSource="{Binding ExternalProviders}"
+                    SelectedItem="{Binding SelectedExternalProvider}"
+                    ItemDisplayBinding="{Binding Name}"/>
+
+            <Grid ColumnDefinitions="*,*">
                 <Button Grid.Column="0"
-                        Margin="0, 0, 6, 6"
-                        Text="OK" Command="{Binding BtnOkCommand}"/>
+                    Margin="0, 0, 6, 6"
+                    Text="OK" Command="{Binding BtnOkCommand}"/>
                 <Button Grid.Column="1"
-                        Margin="6, 0, 0, 6"
-                        Text="Cancel" Command="{Binding BtnCancelCommand}"/>
+                    Margin="6, 0, 0, 6"
+                    Text="Cancel" Command="{Binding BtnCancelCommand}"/>
             </Grid>
         </VerticalStackLayout>
-        </ScrollView>
 
         <!--CollectionView itself-->
         <CollectionView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"

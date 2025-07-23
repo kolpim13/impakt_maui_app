@@ -42,4 +42,11 @@
     <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
     <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
+    
+    <!--Global resources-->
+    <!--Text colors-->
+    <Color x:Key="App_TextColor_LightTheme">#222222</Color>
+    <Color x:Key="App_TextColor_DarkTheme">#F2F2F2</Color>
+        
+    
 </ResourceDictionary>

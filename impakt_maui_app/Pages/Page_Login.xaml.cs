@@ -71,8 +71,18 @@ namespace impakt_maui_app.Pages
                     // Dispatch all used resources
                     _httpClient.Dispose();
 
-                    // Free all resources --> navigate to the main page
-                    await Shell.Current.GoToAsync("//Page_Profile");
+                    // Navigate to the main page (If has access).
+                    if (User.Account.AccountType == AccountType.Member)
+                    {
+                        await DisplayAlert("Error", "Just members can not use this application", "OK");
+                    }
+                    else
+                    {
+                        // Clear fields firstly
+                        UsernameEntry.Text = "";
+                        PasswordEntry.Text = "";
+                        await Shell.Current.GoToAsync("//Page_Profile");
+                    }
                 }
                 else
                 {

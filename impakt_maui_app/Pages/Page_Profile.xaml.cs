@@ -30,5 +30,10 @@ namespace impakt_maui_app.Pages
             Popup_NewMember popup = new Popup_NewMember();
             await Shell.Current.ShowPopupAsync(popup);
         }
+
+        private async void Btn_OnLogOutClicked(object? sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("///Page_Login");
+        }
     }
 }
