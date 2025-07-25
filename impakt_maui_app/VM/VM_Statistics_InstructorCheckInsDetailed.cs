@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
@@ -22,16 +23,30 @@ namespace impakt_maui_app.VM
     public class Group_InstructorCheckInsDetailed : ObservableCollection<Resp_Statistics_InstructorCheckInsDetailed>
     {
         public string Header { get; private set; }
-        public Group_InstructorCheckInsDetailed(string header, ObservableCollection<Resp_Statistics_InstructorCheckInsDetailed> items) : base(items)
+        public string Footer { get; private set; }
+
+        public Group_InstructorCheckInsDetailed(string header, string footer,
+            ObservableCollection<Resp_Statistics_InstructorCheckInsDetailed> items) : base(items)
         {
             Header = header;
+            Footer = footer;
         }
+
+        // [To Be Added]
+        // public void Add_FromGroup()
     }
     public partial class VM_Statistics_InstructorCheckInsDetailed : ObservableObject
     {
+        private enum GroupData : ushort
+        {
+            Hours,
+            Days,
+            Weeks,
+        } 
+
         /* PRIVATE */
         private int page = 0;
-        private readonly int page_size = 50;
+        private readonly int page_size = 200;
         private int total = 0;
         private int remaining = 0;
         private bool is_loading = false;
@@ -81,7 +96,9 @@ namespace impakt_maui_app.VM
             ObservableCollection<Group_InstructorCheckInsDetailed> new_data = new();
             foreach (var group in grouped)
             {
-                new_data.Add(new Group_InstructorCheckInsDetailed(group.Key.ToString(), group.ToObservableCollection()));
+                string header = group.Key.ToString();
+                string footer = $"Entries Positive / Total: [{group.Count(i => i.is_successful)}/{group.Count()}]";
+                new_data.Add(new Group_InstructorCheckInsDetailed(header, footer, group.ToObservableCollection()));
             }
 
             // If last data and new have same Key --> merge its data into one
@@ -132,17 +149,19 @@ namespace impakt_maui_app.VM
                 .OrderBy(g => g.Key)
                 .ToList();
 
-            // Create temporar table --> and write everything into it. {due to a bug}
-            foreach (var group in grouped)
-            {
-                last_data.Add(new Group_InstructorCheckInsDetailed(group.Key.ToString(), group.ToObservableCollection()));
-            }
-
+                // Create temporar table --> and write everything into it. {due to a bug}
+                foreach (var group in grouped)
+                {
+                    string header = group.Key.ToString();
+                    string footer = $"Entries Positive / Total: [{group.Count(i => i.is_successful)}/{group.Count()}]";
+                    last_data.Add(new Group_InstructorCheckInsDetailed(header, footer, group.ToObservableCollection()));
+                }
+            
             ObservableCollection<Group_InstructorCheckInsDetailed> temp = new();
             foreach (var item in last_data)
                 temp.Add(item);
 
-                // Update main table
+            // Update main table
             Table = temp;
             OnPropertyChanged(nameof(Table));
 
@@ -183,29 +202,10 @@ namespace impakt_maui_app.VM
             return result;
         }
 
-        /* PROPERTIES NOTIFICATIONS */
-        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            base.OnPropertyChanged(e);
+        //private Group_InstructorCheckInsDetailed group_input_data(var data)
+        //{
 
-            /* Update Command: Btn OK */
-            if (e.PropertyName == nameof(CardId) ||
-                e.PropertyName == nameof(DateFrom) ||
-                e.PropertyName == nameof(DateTo))
-            {
-                if (CardId is null ||
-                    DateFrom is null ||
-                    DateTo is null)
-                {
-                    return;
-                }
-                else
-                {
-                    // LoadMoreDataInTableCommand.Execute(null);
-                    ;
-                }
-            }
-        }
+        //}
     }
 
     public class RejectReasonConverter : IValueConverter
@@ -217,19 +217,3 @@ namespace impakt_maui_app.VM
             value is bool b ? !b : value;
     }
 }
-
-
-//MainThread.BeginInvokeOnMainThread(() =>
-//{
-
-//});
-
-//var header = "GOWNO!";
-//var entries = new ObservableCollection<Resp_Statistics_InstructorCheckInsDetailed>()
-//{
-//    new Resp_Statistics_InstructorCheckInsDetailed() { name = "A", surname = "B", date_time = DateTime.Now, is_successful = false },
-//    new Resp_Statistics_InstructorCheckInsDetailed() { name = "A", surname = "B", date_time = DateTime.Now, is_successful = false },
-//    new Resp_Statistics_InstructorCheckInsDetailed() { name = "A", surname = "B", date_time = DateTime.Now, is_successful = false },
-//    new Resp_Statistics_InstructorCheckInsDetailed() { name = "A", surname = "B", date_time = DateTime.Now, is_successful = false },
-//};
-//Table.Add(new Group_InstructorCheckInsDetailed(header, entries));

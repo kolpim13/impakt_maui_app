@@ -1,17 +1,29 @@
-1. Remake Popup ¨NewMember¨ as Page.
-2. Profile Page | ? [Edit profile; Add member; Add stuff member]
-3. Clean Up old but unused code anymore [Checkin History]
-4. Add statistics windows [Self statistic during the day | ]
-5. Be aligned with names with backend
-6. Add Scanner types [Member`s info, Update Pass].
-
-7. Make code of the ExternalProvider Page be aligned with PassTypes Page!!!
-8. Remake new Member Page (?): Check what is absent and add it.
-9. Add MemberPass scan
-10. CheckIn
-11. Clean "Main Page" completely
-12. [+] Get rid of "John Doe" on profile`s Page
-
+ToDo:
+1. BugFixes:
+    * Page_Statistics_Admin_InstructorsStatistics:
+        * Not allow to get data of DateFrom less than DateTo
+        * Validate on empty data if returned so.
+2. New Functionalities:
+    * Add mail verification.
+    * Add personal tokens to send before every request.
+    * Add privilage / access / whatever system. So every user will have its personal allowance written in DB.
+    * New "Statistics" Views:
+        * For the instructor, so he can validate himself.
+    * Give possibility to generate QR code straight away in application.
+    * 
+3. Updates:
+    * Update Profile Page - Add possibility to update personal data || change password || change mail.
+    * Statistics: Page with CheckIn Details should be able to:
+        * Regroup data [hour / day / week / month]
+        * Color data - for example, red row for rejected entries.
+        * Show short summary in footer - total, accepted, rejected. [+]
+        * When view is empty [No data was taken from DB], shows some text or progress bar.
+    * QR Codes:
+        * Different colors for different roles (Members - Black, Instructors - Green, etc.).
+4. Refacrtoring
+    *
+5. Ideas
+    * Think about what data can be moved under "toolbar".
 
 
 

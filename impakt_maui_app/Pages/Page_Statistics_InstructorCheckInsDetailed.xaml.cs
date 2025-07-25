@@ -26,7 +26,7 @@ public partial class Page_Statistics_InstructorCheckInsDetailed : ContentPage
 
     public string CardId
     {
-        get => BindingContext is VM_Statistics_InstructorCheckInsDetailed vm ? vm.CardId : null;
+        get => null;
         set { if (BindingContext is VM_Statistics_InstructorCheckInsDetailed vm) vm.CardId = value; }
     }
     public string DateFrom
