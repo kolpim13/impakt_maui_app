@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:datagrid="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
              xmlns:vm="clr-namespace:impakt_maui_app.VM"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="impakt_maui_app.Pages.Page_Statistics_InstructorCheckInsDetailed"
-             Title="Page_Statistics_InstructorCheckInsDetailed">
+             Title="Page_Statistics_InstructorCheckInsDetailed"
+             x:Name="Page_Statistics_InstructorCheckInsDetailed_Inst">
 
     <ContentPage.BindingContext>
         <vm:VM_Statistics_InstructorCheckInsDetailed />
@@ -12,6 +13,7 @@
 
     <ContentPage.Resources>
         <vm:RejectReasonConverter x:Key="RejectReasonConverter"/>
+        <vm:GroupEntriesByConverter x:Key="GroupEntriesByConverter" />
 
         <DataTemplate x:Key="GroupHeaderTemplate">
             <Border >
@@ -52,6 +54,41 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <HorizontalStackLayout RadioButtonGroup.GroupName="RBG_GroupBy">
+            <RadioButton Content="Hours" 
+                         IsChecked="{Binding GroupBy, Mode=TwoWay, 
+                                             Converter={StaticResource GroupEntriesByConverter}, ConverterParameter=Hours}">
+                <RadioButton.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        BindingContext="{Binding Source={x:Reference Page_Statistics_InstructorCheckInsDetailed_Inst}, Path=BindingContext}"
+                        EventName="CheckedChanged"
+                        Command="{Binding GouppingEntriesChangedCommand}" />
+                </RadioButton.Behaviors>
+            </RadioButton>
+            
+            <RadioButton Content="Days" 
+                         IsChecked="{Binding GroupBy, Mode=TwoWay, 
+                                             Converter={StaticResource GroupEntriesByConverter}, ConverterParameter=Days}">
+                <RadioButton.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        BindingContext="{Binding Source={x:Reference Page_Statistics_InstructorCheckInsDetailed_Inst}, Path=BindingContext}"
+                        EventName="CheckedChanged"
+                        Command="{Binding GouppingEntriesChangedCommand}" />
+                </RadioButton.Behaviors>
+            </RadioButton>
+
+            <RadioButton Content="Month"
+                         IsChecked="{Binding GroupBy, Mode=TwoWay, 
+                                             Converter={StaticResource GroupEntriesByConverter}, ConverterParameter=Month}">
+                <RadioButton.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        BindingContext="{Binding Source={x:Reference Page_Statistics_InstructorCheckInsDetailed_Inst}, Path=BindingContext}"
+                        EventName="CheckedChanged"
+                        Command="{Binding GouppingEntriesChangedCommand}" />
+                </RadioButton.Behaviors>
+            </RadioButton>
+        </HorizontalStackLayout>
+        
         <CollectionView Grid.Row="1"  Grid.Column="0"
                         ItemsSource="{Binding Table}"
                         IsGrouped="True"
