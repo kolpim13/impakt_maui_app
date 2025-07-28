@@ -4,15 +4,18 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="impakt_maui_app.MainPage">
 
-    <ScrollView>
+    <WebView Source="https://learn.microsoft.com/dotnet/maui" />
+    <!--<ScrollView>
         <VerticalStackLayout Padding="30" Spacing="25">
 
-            <Label Text="{Binding Name}"
+            --><!--<Label Text="{Binding Name}"
                    Style="{StaticResource Headline}" />
 
             <Label Text="{Binding SurName}"
-                   Style="{StaticResource Headline}" />
+                   Style="{StaticResource Headline}" />--><!--
+
+            <WebView Source="https://www.microsoft.com/" />
         </VerticalStackLayout>
-    </ScrollView>
+    </ScrollView>-->
 
 </ContentPage>

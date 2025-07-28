@@ -14,8 +14,6 @@ namespace impakt_maui_app.Pages
 {
     public partial class Page_Login : ContentPage
     {
-        //private readonly HttpClient _httpClient = new HttpClient();
-
         public Page_Login()
         {
             InitializeComponent();
@@ -23,9 +21,6 @@ namespace impakt_maui_app.Pages
 
         private async void OnLoginClicked(object? sender, EventArgs e)
         {
-            // Temporarly --> jump on main page
-            //await Shell.Current.GoToAsync("//MainPage");
-            //return;
 
             // Collect data from forms
             string? username = UsernameEntry.Text?.Trim();
@@ -35,7 +30,6 @@ namespace impakt_maui_app.Pages
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
                 await DisplayAlert("Error", "Fill both: username and password", "OK");
-                await Navigation.PopAsync();
                 return;
             }
 
@@ -89,13 +83,11 @@ namespace impakt_maui_app.Pages
                     string header = "Problem during Login";
                     string message = string.Format("Status code: {0} - {1}\n{2}", (int)response.StatusCode, response.StatusCode, response.Content.ToString());
                     await DisplayAlert(header, message, "OK");
-                    await Navigation.PopAsync();
                 }
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Exception", "random error", "OK");
-                await Navigation.PopAsync();
             }
         }
     }

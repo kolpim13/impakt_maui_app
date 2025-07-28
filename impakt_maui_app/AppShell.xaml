@@ -7,9 +7,9 @@
        Title="impakt_maui_app">
 
     <!--Login-->
-    <!--<ShellContent Title="Login Page"
+    <ShellContent Title="Login Page"
                   ContentTemplate="{DataTemplate pages:Page_Login}"
-                  Route="Page_Login"/>-->
+                  Route="Page_Login"/>
 
     <TabBar>
         <Tab Title="Profile">

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using impakt_maui_app.Schemas;
+using Maui.DataGrid;
 using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,14 @@ namespace impakt_maui_app.VM
 {
     public partial class VM_Statistics_Admin_InstructorsStatistics : ObservableObject
     {
+        // EVENTS
+        public event EventHandler TableContentRefreshed;
+
+        // PROPERTIES
         [ObservableProperty] private DateTime selectedDateFrom;
         [ObservableProperty] private DateTime selectedDateTo;
-        public ObservableCollection<Resp_Statistics_InstructorsCheckIns> TableContent { get; set; } = new();
+        public ObservableCollection<Resp_Statistics_InstructorsCheckIns> TableContent { get; set; } =
+            new ObservableCollection<Resp_Statistics_InstructorsCheckIns>();
         [ObservableProperty] private Resp_Statistics_InstructorsCheckIns? selectedRow;
 
         [RelayCommand]
@@ -35,12 +41,14 @@ namespace impakt_maui_app.VM
                 HttpResponseMessage response = await client.PostAsJsonAsync(Network.Post_Statistics_InstructorsCheckIns, req);
                 if (response.IsSuccessStatusCode)
                 {
-                    TableContent.Clear();
+                    var data = await response.Content
+                        .ReadFromJsonAsync<List<Resp_Statistics_InstructorsCheckIns>>();
 
-                    var results = await response.Content.ReadFromJsonAsync<List<Resp_Statistics_InstructorsCheckIns>>();
-                    foreach (Resp_Statistics_InstructorsCheckIns instructor in results)
+                    if (data != null)
                     {
-                        TableContent.Add(instructor);
+                        TableContent.Clear();
+                        foreach (var instructor in data)
+                            TableContent.Add(instructor);
                     }
                 }
             }

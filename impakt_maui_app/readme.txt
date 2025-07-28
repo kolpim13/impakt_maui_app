@@ -10,7 +10,7 @@ ToDo:
     * New "Statistics" Views:
         * For the instructor, so he can validate himself.
     * Give possibility to generate QR code straight away in application.
-    * 
+    * Generation of the QR Code [self, for the user].
 3. Updates:
     * Update Profile Page - Add possibility to update personal data || change password || change mail.
     * Statistics: Page with CheckIn Details should be able to:

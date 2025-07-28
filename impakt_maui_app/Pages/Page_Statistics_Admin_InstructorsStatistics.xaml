@@ -43,22 +43,50 @@
                     Text="Details"
                     Command="{Binding RequestDetailedDataCommand}"/>
 
-            <!--Delimited by
-                [Hour, day, week]-->
-            <!--<Picker>
-                
-            </Picker>-->
+            <CollectionView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                            ItemsSource="{Binding TableContent}"
+                            SelectedItem="{Binding SelectedRow}"
+                            SelectionMode="Single"
+                            IsGrouped="False">
 
-            <datagrid:DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                               ItemsSource="{Binding TableContent}"
-                               SelectedItem="{Binding SelectedRow}">
+                <CollectionView.HeaderTemplate>
 
-                <datagrid:DataGrid.Columns>
-                    <datagrid:DataGridColumn Title="Name" PropertyName="validated_by_name"/>
-                    <datagrid:DataGridColumn Title="Surname" PropertyName="validated_by_surnamename" />
-                    <datagrid:DataGridColumn Title="Count" PropertyName="count" />
-                </datagrid:DataGrid.Columns>
-            </datagrid:DataGrid>
+                    <DataTemplate>
+                        <Border>
+                            <Grid RowDefinitions="*"
+                                  ColumnDefinitions="*,*,*"
+                                  BackgroundColor="#f0f0f0">
+
+                                <Label Grid.Column="0" Grid.ColumnSpan="5"
+                                       Text="Name" />
+                                <Label Grid.Column="1" 
+                                       Text="Name" />
+                                <Label Grid.Column="2" 
+                                       Text="Count" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.HeaderTemplate>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border>
+                            <Grid ColumnDefinitions="*,*,*"
+                                  Padding="10, 5, 10, 5">
+
+                                <Label Grid.Column="0" 
+                                       Text="{Binding validated_by_name}" 
+                                       VerticalTextAlignment="Center"/>
+                                <Label Grid.Column="1" 
+                                       Text="{Binding validated_by_surnamename}"
+                                       VerticalTextAlignment="Center"/>
+                                <Label Grid.Column="2" 
+                                       Text="{Binding count}"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </Grid>
     </ScrollView>
 </ContentPage>
