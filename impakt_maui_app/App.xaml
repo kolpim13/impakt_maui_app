@@ -9,14 +9,19 @@
         <!--<local:MainPage_Bindings_UserInfo x:Key="MainPage_Bindings_UserInfo" />-->
 
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+            
+            <!--Main colors-->
+            <Color x:Key="PrimaryOrange">#F59124</Color>
+            <Color x:Key="PrimaryWhity">#FFEAD8</Color>
 
             <Style TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource App_TextColor_LightTheme}" />
             </Style>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
             <!-- Label Global Style: Text Color depends on used theme
                 !!!WORKS!!!-->
