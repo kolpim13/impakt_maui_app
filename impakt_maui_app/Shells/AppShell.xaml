@@ -3,18 +3,9 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:impakt_maui_app"
        xmlns:pages="clr-namespace:impakt_maui_app.Pages"
+       xmlns:pages_startup="clr-namespace:impakt_maui_app.Pages.StratUp"
        x:Class="impakt_maui_app.AppShell"
        Title="impakt_maui_app">
-
-    <!--Login-->
-    <ShellContent ContentTemplate="{DataTemplate pages:Page_Start}"
-                  Route="Page_Start"
-                  Title="Sart"/>
-
-    <ShellContent ContentTemplate="{DataTemplate pages:Page_Login}"
-                  Route="Page_Login"
-                  Title="Login"
-                  IsVisible="False"/>
 
     <TabBar>
         <Tab Title="Profile">

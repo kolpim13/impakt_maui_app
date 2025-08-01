@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:impakt_maui_app.VM.StartUp"
+             xmlns:reusable="clr-namespace:impakt_maui_app.Reusable"
+             x:Class="impakt_maui_app.Pages.StratUp.Page_SignUp"
+             BackgroundColor="{StaticResource PrimeWhite}"
+             Title="Page_SignUp">
+
+    <ContentPage.BindingContext>
+        <vm:VM_SignUp />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="36,80,36,36"
+                             Spacing="20"
+                             VerticalOptions="Start">
+
+            <reusable:RoundedEntry Placeholder="Name"
+                                   Text="{Binding Name, Mode=TwoWay}" />
+            <reusable:RoundedEntry Placeholder="Surname"
+                                   Text="{Binding Surname, Mode=TwoWay}"/>
+            <reusable:RoundedEntry Placeholder="Email"
+                                   Text="{Binding Email, Mode=TwoWay}"/>
+            <reusable:RoundedEntry Placeholder="Username"
+                                   Text="{Binding Username, Mode=TwoWay}"/>
+            <reusable:RoundedEntry Placeholder="Password"
+                                   Text="{Binding Password, Mode=TwoWay}"
+                                   IsPassword="True"/>
+            <reusable:RoundedEntry Placeholder="Repeat password"
+                                   Text="{Binding RepeatedPassword, Mode=TwoWay}"
+                                   IsPassword="True"/>
+            <reusable:RoundedEntry Placeholder="Phone number (optional)"
+                                   Text="{Binding PhoneNumber, Mode=TwoWay}"/>
+
+            <Button Text="Sign Up"
+                    BackgroundColor="{StaticResource PrimeOrange}"
+                    Style="{StaticResource PrimeButton}"
+                    Command="{Binding SignUpCommand}"/>
+
+            <Button Text="Test Verify" 
+                    Command="{Binding TestCommand}"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

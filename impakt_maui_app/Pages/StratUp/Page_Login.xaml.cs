@@ -35,14 +35,6 @@ namespace impakt_maui_app.Pages
 
             try
             {
-                // Save URL
-#if ANDROID
-                string? ip = IpEntry.Text?.Trim();
-                if (string.IsNullOrEmpty(ip) == false)
-                {
-                    Network.URL = "http://" + ip + ":8000";
-                }
-#endif
                 // Assemble post request --> send it.
                 Req_LogIn_Username req = new Req_LogIn_Username
                 {
@@ -51,7 +43,7 @@ namespace impakt_maui_app.Pages
                 };
 
                 HttpClient _httpClient = new HttpClient();
-                HttpResponseMessage response = await _httpClient.PostAsJsonAsync(Network.Post_LogIn_Username, req);
+                HttpResponseMessage response = await _httpClient.PostAsJsonAsync(Network.Post_LogIn, req);
                 var member_info = await response.Content.ReadFromJsonAsync<Resp_Members_Inst>();
 
                 // Validate the response
@@ -65,17 +57,19 @@ namespace impakt_maui_app.Pages
                     // Dispatch all used resources
                     _httpClient.Dispose();
 
+                    // Clear fields firstly
+                    UsernameEntry.Text = "";
+                    PasswordEntry.Text = "";
+
                     // Navigate to the main page (If has access).
                     if (User.Account.AccountType == AccountType.Member)
                     {
-                        await DisplayAlert("Error", "Just members can not use this application", "OK");
+                        Application.Current.MainPage = new MemberShell();
                     }
                     else
                     {
-                        // Clear fields firstly
-                        UsernameEntry.Text = "";
-                        PasswordEntry.Text = "";
-                        await Shell.Current.GoToAsync("//Page_Profile");
+                        Application.Current.MainPage = new AppShell();
+                        // await Shell.Current.GoToAsync("//Page_Profile");
                     }
                 }
                 else

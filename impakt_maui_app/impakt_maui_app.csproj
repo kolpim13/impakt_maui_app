@@ -80,6 +80,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Shells\LogInShell.xaml.cs">
+	    <DependentUpon>LogInShell.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Shells\MemberShell.xaml.cs">
+	    <DependentUpon>MemberShell.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\Page_ExternalProviders.xaml.cs">
 	    <DependentUpon>Page_ExternalProviders.xaml</DependentUpon>
 	  </Compile>
@@ -89,7 +95,7 @@
 	  <Compile Update="Pages\Page_Statistics_Admin_InstructorsStatistics.xaml.cs">
 	    <DependentUpon>Page_Statistics_Admin_InstructorsStatistics.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Pages\Page_Login.xaml.cs">
+	  <Compile Update="Pages\StratUp\Page_Login.xaml.cs">
 	    <DependentUpon>Page_Login.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Popups\Popup_MemberInfo.xaml.cs">
@@ -101,6 +107,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Shells\LogInShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Shells\MemberShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_ExternalProviders.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -119,13 +131,19 @@
 	  <MauiXaml Update="Pages\Page_Scanner_QRScanner.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\Profile\Page_ProfileMember.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\StratUp\Page_SignUp.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\StratUp\Page_Start.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_Statistics_Admin_InstructorsStatistics.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\Page_Login.xaml">
+	  <MauiXaml Update="Pages\StratUp\Page_Login.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_Profile.xaml">
@@ -147,6 +165,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Reusable\CollectionView_MemberPass.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Reusable\RoundedEntry.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

@@ -2,20 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="impakt_maui_app.Pages.Page_Start"
-             BackgroundColor="{StaticResource PrimaryWhity}">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style TargetType="Button">
-                <!-- common form -->
-                <Setter Property="CornerRadius" Value="25" />
-                <Setter Property="HeightRequest" Value="48" />
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="Margin" Value="0,8" />
-                <Setter Property="TextColor" Value="Black" />
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
+             BackgroundColor="{StaticResource PrimeWhite}">
 
     <VerticalStackLayout Padding="36,80,36,36"
                          VerticalOptions="Start">
@@ -26,11 +13,12 @@
                HorizontalOptions="Center"/>-->
 
         <Button Text="Log In"
-                BackgroundColor="{StaticResource PrimaryOrange}"
+                BackgroundColor="{StaticResource PrimeOrange}"
+                Style="{StaticResource PrimeButton}"
                 Clicked="BTN_LogIn_Clicked"/>
 
         <Button Text="Sign Up"
-                BackgroundColor="#FFD9C2"
+                Style="{StaticResource AlternateButton}"
                 Clicked="BTN_SignUp_Clicked" />
 
         <Label Text="Forgot Password?"

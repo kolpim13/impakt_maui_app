@@ -167,7 +167,7 @@ namespace impakt_maui_app
         // public static string URL { get; set; } = "http://192.168.0.1:8000";  // ZF
         // public static string URL { get; set; } = "http://192.168.0.199:8000";  // Personal
         // public static string URL { get; set; } = "http://192.168.0.6:8000";  // Grzegosz
-        public static string URL { get; set; } = "https://e72100d6dae0.ngrok-free.app"; // Local Host through grok
+        public static string URL { get; set; } = "https://bda238d32ade.ngrok-free.app"; // Local Host through grok
 #else
         public static string URL { get; set; } = "http://localhost:8000";
 #endif
@@ -221,9 +221,15 @@ namespace impakt_maui_app
             /* Token should be used */
             string.Format("{0}/member_pass/active/{1}", URL, member_card_id);
 
-        /* Links: LogIn */
-        public static string Post_LogIn_Username =>
+        /* Links: User Management */
+        public static string Post_LogIn =>
             string.Format("{0}/login/username", URL);
+
+        public static string Post_SignUp =>
+            $"{URL}/signup";
+
+        public static string Get_ConfimEmail(string token) =>
+            $"{URL}/confirm/{token}";
 
         /* Links: Logging */
         public static string Post_CheckIn_Add =>

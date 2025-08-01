@@ -33,7 +33,7 @@ namespace impakt_maui_app.Pages
 
         private async void Btn_OnLogOutClicked(object? sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("///Page_Login");
+            Application.Current.MainPage = new LogInShell();
         }
     }
 }

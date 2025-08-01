@@ -1,0 +1,29 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:reusable="clr-namespace:impakt_maui_app.Reusable"
+             x:Class="impakt_maui_app.Pages.Page_Login"
+             Background="{StaticResource PrimeWhite}">
+
+    <VerticalStackLayout Padding="30" Spacing="20">
+        <Label Text="Login" FontSize="32" HorizontalOptions="Center" />
+
+        <reusable:RoundedEntry x:Name="UsernameEntry" Placeholder="Username"/>
+        <reusable:RoundedEntry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
+
+        <Button Text="Login"
+                BackgroundColor="{StaticResource PrimeOrange}"
+                Style="{StaticResource PrimeButton}"
+                Clicked="OnLoginClicked" />
+
+        <!--Example of conditional view depends on platform-->
+        <!--<Entry x:Name="IpEntry" Placeholder="Connection IP">
+                 <Entry.IsVisible>
+                     <OnPlatform x:TypeArguments="x:Boolean">
+                         <On Platform="Android" Value="True"/>
+                     </OnPlatform>
+                 </Entry.IsVisible>
+            </Entry>-->
+
+    </VerticalStackLayout>
+
+</ContentPage>

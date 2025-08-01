@@ -38,4 +38,19 @@ namespace impakt_maui_app.Schemas
         public bool? send_welcome_email { get; set; }
         public bool? send_welcome_mms { get; set; }
     }
+    public class Req_SignUp
+    {
+        required public string name { get; set; }
+        required public string surname { get; set; }
+        required public string email { get; set; }
+        public string? phone_number { get; set; }
+        public DateOnly? date_of_birth { get; set; }
+        required public string username { get; set; }
+        required public string password { get; set; }
+    }
+    public class Resp_Generic
+    {
+        required public string details { get; set; }
+    }
+
 }

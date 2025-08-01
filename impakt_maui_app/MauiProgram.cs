@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using impakt_maui_app.VM;
 using Microsoft.Extensions.Logging;
 using ZXing.Net.Maui;
 using ZXing.Net.Maui.Controls;
@@ -18,9 +19,10 @@ namespace impakt_maui_app
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+            builder.Services.AddSingleton<IAlertService, AlertService>();
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
             builder.UseMauiApp<App>().UseMauiCommunityToolkit();
 

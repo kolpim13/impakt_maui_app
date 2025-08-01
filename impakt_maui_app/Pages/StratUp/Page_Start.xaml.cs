@@ -14,11 +14,10 @@ public partial class Page_Start : ContentPage
 
     private async void BTN_SignUp_Clicked(object sender, EventArgs e)
     {
-        // await Shell.Current.GoToAsync("//Page_Profile");
-        ;
+        await Shell.Current.GoToAsync("Page_SignUp");
     }
 
-    private void LB_ForgotPassword_Tapped(object sender, TappedEventArgs e)
+    private async void LB_ForgotPassword_Tapped(object sender, TappedEventArgs e)
     {
 
     }

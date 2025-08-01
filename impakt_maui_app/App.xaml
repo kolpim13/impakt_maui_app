@@ -11,11 +11,75 @@
         <ResourceDictionary>
             
             <!--Main colors-->
-            <Color x:Key="PrimaryOrange">#F59124</Color>
-            <Color x:Key="PrimaryWhity">#FFEAD8</Color>
+            <Color x:Key="PrimeOrange">#F59124</Color>
+            <Color x:Key="PrimeDarkOrange">#F59124</Color>
+            <Color x:Key="PrimeWhite">#FFEAD8</Color>
+
+            <Color x:Key="ButtonAlternate">#FFD9C2</Color>
+            <Color x:Key="ButtonDisable">#CCCCCC</Color>
 
             <Style TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource App_TextColor_LightTheme}" />
+            </Style>
+
+            <!--Buttons look across the project-->
+            <Style x:Key="PrimeButton"
+                   TargetType="Button">
+                
+                <Setter Property="CornerRadius" Value="25" />
+                <Setter Property="HeightRequest" Value="48" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Margin" Value="0,8" />
+                <Setter Property="TextColor" Value="Black" />
+
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+
+                            <!-- Normal state -->
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1.0" />
+                                    <Setter Property="BackgroundColor" Value="{StaticResource PrimeOrange}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            
+                            <!-- Pressed state -->
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.95" />
+                                    <Setter Property="BackgroundColor" Value="{StaticResource PrimeDarkOrange}" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <!-- Disabled state -->
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1.0" />
+                                    <Setter Property="BackgroundColor" Value="{StaticResource ButtonDisable}" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style x:Key="AlternateButton"
+                   TargetType="Button"
+                   BasedOn="{StaticResource PrimeButton}">
+                
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource ButtonAlternate}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
             </Style>
 
             <ResourceDictionary.MergedDictionaries>

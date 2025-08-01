@@ -49,4 +49,23 @@ namespace impakt_maui_app.VM
             return Binding.DoNothing;
         }
     }
+
+    /* Show DisplayAllert from a VM */
+    public interface IAlertService
+    {
+        Task ShowAlertAsync(string title, string message, string cancel);
+    }
+
+    public class AlertService : IAlertService
+    {
+        [Obsolete]
+        public async Task ShowAlertAsync(string title, string message, string cancel)
+        {
+            var currentPage = Application.Current?.MainPage;
+            if (currentPage != null)
+            {
+                await currentPage.DisplayAlert(title, message, cancel);
+            }
+        }
+    }
 }

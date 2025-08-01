@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:impakt_maui_app"
+       xmlns:startup="clr-namespace:impakt_maui_app.Pages.StratUp"
+       xmlns:pages="clr-namespace:impakt_maui_app.Pages"
+       x:Class="impakt_maui_app.LogInShell"
+       Title="impakt_maui_app">
+
+    <ShellContent ContentTemplate="{DataTemplate pages:Page_Start}"
+              Route="Page_Start"
+              Title="Start"/>
+   
+    <ShellContent ContentTemplate="{DataTemplate pages:Page_Login}"
+                  Route="Page_Login"
+                  Title="Login"
+                  IsVisible="False"/>
+
+    <ShellContent ContentTemplate="{DataTemplate startup:Page_SignUp}"
+                  Route="Page_SignUp"
+                  Title="SignUp"
+                  IsVisible="False"/>
+</Shell>
