@@ -16,6 +16,7 @@ namespace impakt_maui_app
 
             Routing.RegisterRoute("Page_ExternalProvider", typeof(Page_ExternalProvider));
             Routing.RegisterRoute("Page_PassTypes", typeof(Page_PassTypes));
+            // Routing.RegisterRoute("Page_QRCode", typeof(Page_QRCode));
         }
     }
 }

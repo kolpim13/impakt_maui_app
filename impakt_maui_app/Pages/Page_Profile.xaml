@@ -62,6 +62,9 @@
                     CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
                     Clicked="Btn_OnLogOutClicked"/>
 
+            <Button Text="Show QR Code"
+                    Clicked="Btn_OnShowQrCodeClicked"/>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

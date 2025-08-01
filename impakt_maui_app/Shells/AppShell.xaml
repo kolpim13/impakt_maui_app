@@ -15,13 +15,18 @@
             <!--Sub tabs invisible by default-->
             <ShellContent ContentTemplate="{DataTemplate pages:Page_ExternalProvider}"
                           Route="Page_ExternalProvider"
-                          Title="Page_ExternalProvider manadgement"
+                          Title="External Providers"
                           IsVisible="False"/>
 
             <ShellContent ContentTemplate="{DataTemplate pages:Page_PassTypes}"
                           Route="Page_ExternalProvider"
-                          Title="Page_ExternalProvider manadgement"
+                          Title="Pass Types"
                           IsVisible="False"/>
+
+            <!--<ShellContent ContentTemplate="{DataTemplate pages:Page_QRCode}"
+                          Route="Page_QRCode"
+                          Title="QR Code"
+                          IsVisible="False"/>-->
         </Tab>
         
         <Tab Title="Main">

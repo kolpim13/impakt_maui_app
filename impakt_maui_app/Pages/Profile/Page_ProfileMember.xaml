@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="impakt_maui_app.Pages.Profile.Page_ProfileMember"
+             Title="Page_ProfileMember">
+    
+    <VerticalStackLayout>
+        <Button Text="Show QR Code"
+                Clicked="Btn_OnShowQrCodeClicked"/>
+
+        <Button Text="Log Out" 
+                CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
+                Clicked="Btn_OnLogOutClicked"/>
+    </VerticalStackLayout>
+</ContentPage>

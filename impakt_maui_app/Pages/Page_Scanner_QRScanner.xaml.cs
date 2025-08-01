@@ -265,7 +265,7 @@ public partial class Page_Scanner_QRScanner : ContentPage, INotifyPropertyChange
 
     private void OnTestClicked(object sender, EventArgs e)
     {
-        string scanned_value = "Dd95JAwm1xpy";
+        string scanned_value = "RQosADrP8Rzq";
         MainThread.BeginInvokeOnMainThread(() =>
         {
             HandleScannedValue(scanned_value);
