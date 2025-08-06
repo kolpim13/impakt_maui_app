@@ -33,8 +33,8 @@ public partial class Page_Scanner_QRScanner : ContentPage, INotifyPropertyChange
     }
 
     /* Properties for CheckIn */
-    private ObservableCollection<Model_ExternalProvider> externalProviders;
-    public ObservableCollection<Model_ExternalProvider> ExternalProviders
+    private ObservableCollection<ExternalProvider> externalProviders;
+    public ObservableCollection<ExternalProvider> ExternalProviders
     {
         get { return externalProviders; }
         set 
@@ -47,8 +47,8 @@ public partial class Page_Scanner_QRScanner : ContentPage, INotifyPropertyChange
         }
     }
 
-    private Model_ExternalProvider selectedExternalProvider;
-    public Model_ExternalProvider SelectedExternalProvider
+    private ExternalProvider selectedExternalProvider;
+    public ExternalProvider SelectedExternalProvider
     {
         get => selectedExternalProvider;
         set
