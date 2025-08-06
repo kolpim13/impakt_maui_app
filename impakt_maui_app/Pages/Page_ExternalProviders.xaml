@@ -68,8 +68,8 @@
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="16"/>
                             </Border.StrokeShape>
-                            
-                            <Image Source="icon_external_providers.jpg"
+
+                            <Image Source="icon_external_providers_white.png"
                                    WidthRequest="24"
                                    HeightRequest="24"
                                    VerticalOptions="Center"
