@@ -2,14 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="impakt_maui_app.Pages.Profile.Page_ProfileMember"
-             Title="Page_ProfileMember">
+             Background="{StaticResource PrimeWhite}"
+             Title="Profile">
     
-    <VerticalStackLayout>
+    <VerticalStackLayout Style="{StaticResource PrimeVerticalStack}">
         <Button Text="Show QR Code"
+                Style="{StaticResource PrimeButton}"
                 Clicked="Btn_OnShowQrCodeClicked"/>
 
         <Button Text="Log Out" 
-                CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
+                Style="{StaticResource PrimeButton}"
                 Clicked="Btn_OnLogOutClicked"/>
     </VerticalStackLayout>
 </ContentPage>

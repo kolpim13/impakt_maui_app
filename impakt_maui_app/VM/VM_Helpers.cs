@@ -1,4 +1,5 @@
-﻿using impakt_maui_app.Models;
+﻿using CommunityToolkit.Maui.Views;
+using impakt_maui_app.Models;
 using impakt_maui_app.Pages;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,7 @@ namespace impakt_maui_app.VM
     public interface IAlertService
     {
         Task ShowAlertAsync(string title, string message, string cancel);
+        Task<string> ShowActionSHeet(string title, string cancel, string destruction, params string[] buttons);
     }
 
     public class AlertService : IAlertService
@@ -66,6 +68,23 @@ namespace impakt_maui_app.VM
             {
                 await currentPage.DisplayAlert(title, message, cancel);
             }
+        }
+
+        [Obsolete]
+        public async Task<bool> ShowAlertAsync(string title, string message, string accept, string cancel)
+        {
+            var currentPage = Application.Current?.MainPage;
+            if (currentPage != null)
+            {
+                return await currentPage.DisplayAlert(title, message, accept, cancel);
+            }
+            return false;
+        }
+
+        public async Task<string> ShowActionSHeet(string title, string cancel, string destruction, params string[] buttons)
+        {
+            var currentPage = Application.Current?.MainPage;
+            return await currentPage.DisplayActionSheet(title, cancel, destruction, buttons);
         }
     }
 }

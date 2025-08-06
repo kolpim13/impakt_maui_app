@@ -10,13 +10,14 @@
             HeightRequest="50"
             VerticalOptions="Center"
             HorizontalOptions="Fill">
-        
+
         <Entry x:Name="entry"
                BackgroundColor="Transparent"
                TextColor="Black"
                Text="{Binding Text, Source={x:Reference this}}"
                Placeholder="{Binding Placeholder, Source={x:Reference this}}"
                Keyboard="{Binding Keyboard, Source={x:Reference this}}"
-               IsPassword="{Binding IsPassword, Source={x:Reference this}}" />
+               IsPassword="{Binding IsPassword, Source={x:Reference this}}" >
+        </Entry>
     </Border>
 </ContentView>

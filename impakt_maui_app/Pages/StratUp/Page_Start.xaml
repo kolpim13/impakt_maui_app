@@ -4,8 +4,7 @@
              x:Class="impakt_maui_app.Pages.Page_Start"
              BackgroundColor="{StaticResource PrimeWhite}">
 
-    <VerticalStackLayout Padding="36,80,36,36"
-                         VerticalOptions="Start">
+    <VerticalStackLayout Style="{StaticResource PrimeVerticalStack}">
         
         <!--Add logo later-->
         <!--<Image Source="logo.png"

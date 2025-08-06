@@ -4,10 +4,11 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:local="clr-namespace:impakt_maui_app"
              x:Class="impakt_maui_app.Pages.Page_Profile"
+             Background="{StaticResource PrimeWhite}"
              Title="Profile">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
+        <VerticalStackLayout Style="{StaticResource PrimeVerticalStack}">
 
             <!-- Header -->
             <Label Text="Profile"
@@ -43,27 +44,29 @@
 
             <!-- Buttons [TBD] -->
             <Button Text="Edit Profile" 
-                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"/>
-            
-            
+                    Style="{StaticResource PrimeButton}" 
+                    IsEnabled="False"/>
+
+
             <Button Text="Add member" 
-                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
+                    Style="{StaticResource PrimeButton}"
                     Clicked="Btn_OnAddMemberClicked"/>
 
             <!--Passes management-->
             <Button Text="External payment providers" 
-                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
+                    Style="{StaticResource PrimeButton}"
                     Clicked="Btn_OnExternalProvidersClicked"/>
             <Button Text="Pass types" 
-                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
+                    Style="{StaticResource PrimeButton}"
                     Clicked="Btn_OnPassTypesClicked"/>
 
-            <Button Text="Log Out" 
-                    CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
-                    Clicked="Btn_OnLogOutClicked"/>
-
             <Button Text="Show QR Code"
+                    Style="{StaticResource PrimeButton}"
                     Clicked="Btn_OnShowQrCodeClicked"/>
+
+            <Button Text="Log Out" 
+                    Style="{StaticResource PrimeButton}"
+                    Clicked="Btn_OnLogOutClicked"/>
 
         </VerticalStackLayout>
     </ScrollView>

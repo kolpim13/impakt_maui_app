@@ -16,7 +16,7 @@ namespace impakt_maui_app.VM
 {
     public partial class VM_PassTypes : ObservableObject
     {
-        private readonly Model_ExternalProvider dummy_provider = new Model_ExternalProvider
+        private readonly ExternalProvider dummy_provider = new ExternalProvider
         {
             Id = -1,
             Name = "No Provider",
@@ -39,8 +39,8 @@ namespace impakt_maui_app.VM
         [ObservableProperty] private int? maximumEntries;
 
         [ObservableProperty] private bool requiresExernalAuth;
-        public ObservableCollection<Model_ExternalProvider> ExternalProviders { get; } = new();
-        [ObservableProperty] private Model_ExternalProvider? selectedExternalProvider;
+        public ObservableCollection<ExternalProvider> ExternalProviders { get; } = new();
+        [ObservableProperty] private ExternalProvider? selectedExternalProvider;
 
         [ObservableProperty] private bool isExtEventPass;
         [ObservableProperty] private string? extEventCode;
@@ -216,7 +216,7 @@ namespace impakt_maui_app.VM
         }
 
         /* PROPERTIES NOTIFICATIONS */
-        partial void OnSelectedExternalProviderChanged(Model_ExternalProvider? value) =>
+        partial void OnSelectedExternalProviderChanged(ExternalProvider? value) =>
             RequiresExernalAuth = SelectedExternalProvider.Id != dummy_provider.Id;
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)

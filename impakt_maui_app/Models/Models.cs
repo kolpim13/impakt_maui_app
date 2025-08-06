@@ -1,4 +1,5 @@
-﻿using impakt_maui_app.Schemas;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using impakt_maui_app.Schemas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +61,7 @@ namespace impakt_maui_app.Models
             };
     }
 
-    public class Model_ExternalProvider
+    public class ExternalProvider
     {
         required public int Id { get; set; }
         required public string Name { get; set; }
@@ -69,8 +70,8 @@ namespace impakt_maui_app.Models
         public decimal? PartialPayment { get; set; }
         required public bool IsDeleted { get; set; }
 
-        public static Model_ExternalProvider From_Resp_Inst(Resp_Instance_ExternalProviders inst) =>
-           new Model_ExternalProvider
+        public static ExternalProvider From_Resp_Inst(Resp_Instance_ExternalProviders inst) =>
+           new ExternalProvider
            {
                Id = inst.id,
                Name = inst.name,

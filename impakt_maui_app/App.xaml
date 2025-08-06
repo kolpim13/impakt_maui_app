@@ -82,6 +82,14 @@
                 </Setter>
             </Style>
 
+            <!--StackLayout-->
+            <Style x:Key="PrimeVerticalStack"
+                   TargetType="VerticalStackLayout">
+                <Setter Property="Padding" Value="36,80,36,36" />
+                <Setter Property="VerticalOptions" Value="Start" />
+            </Style>
+
+            <!--Import defdined styles-->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />

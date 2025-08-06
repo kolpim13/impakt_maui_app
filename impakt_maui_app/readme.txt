@@ -14,9 +14,9 @@ ToDo:
 3. Updates:
     * Update Profile Page - Add possibility to update personal data || change password || change mail.
     * Statistics: Page with CheckIn Details should be able to:
-        * Regroup data [hour / day / week / month]
+        * [+] Regroup data [hour / day / week / month]                  
         * Color data - for example, red row for rejected entries.
-        * Show short summary in footer - total, accepted, rejected. [+]
+        * [+] Show short summary in footer - total, accepted, rejected.
         * When view is empty [No data was taken from DB], shows some text or progress bar.
     * QR Codes:
         * Different colors for different roles (Members - Black, Instructors - Green, etc.).
@@ -31,17 +31,17 @@ How to invoke event form VM in CodeBehind
 [RelayCommand]
 public void AddProvider()
 {
-    Model_ExternalProvider provider = new Model_ExternalProvider();
+    ExternalProvider provider = new ExternalProvider();
     OnAddNewProviderRequested?.Invoke(this, provider);
 }
-public event EventHandler<Model_ExternalProvider>? OnAddNewProviderRequested;
+public event EventHandler<ExternalProvider>? OnAddNewProviderRequested;
 
-public void ShowContextMenu(Model_ExternalProvider provider)
+public void ShowContextMenu(ExternalProvider provider)
 {
     if (provider is null) return;
     OnShowContextMenuRequested?.Invoke(this, provider);
 }
-public event EventHandler<Model_ExternalProvider>? OnShowContextMenuRequested;
+public event EventHandler<ExternalProvider>? OnShowContextMenuRequested;
 
 How to add long press to the CollectionView
 <Border.Behaviors>

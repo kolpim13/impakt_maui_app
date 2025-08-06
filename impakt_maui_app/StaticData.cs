@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using impakt_maui_app.Models;
 using impakt_maui_app.Schemas;
+using impakt_maui_app.VM;
 using Microsoft.Maui.Controls;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
@@ -40,25 +41,25 @@ namespace impakt_maui_app
 
         /* EXTERNAL PROVIDERS */
         public static bool IsExternalProvidersObtained = false;
-        public static readonly Model_ExternalProvider dummy_provider = new Model_ExternalProvider
+        public static readonly ExternalProvider dummy_provider = new ExternalProvider
         {
             Id = -1,
             Name = "No Provider",
             IsPartialPayment = false,
             IsDeleted = true,
         };
-        private static List<Model_ExternalProvider> ExternalProviders = new List<Model_ExternalProvider>();
-        public static ObservableCollection<Model_ExternalProvider> Get_ExternalProviders_AsCollection() =>
-            new ObservableCollection<Model_ExternalProvider>(ExternalProviders);
-        public static void Get_ExternalProviders_AsCollection(ObservableCollection<Model_ExternalProvider> collection)
+        private static List<ExternalProvider> ExternalProviders = new List<ExternalProvider>();
+        public static ObservableCollection<ExternalProvider> Get_ExternalProviders_AsCollection() =>
+            new ObservableCollection<ExternalProvider>(ExternalProviders);
+        public static void Get_ExternalProviders_AsCollection(ObservableCollection<ExternalProvider> collection)
         {
-            foreach (Model_ExternalProvider provider in ExternalProviders)
+            foreach (ExternalProvider provider in ExternalProviders)
             {
                 collection.Add(provider);
             }
         }
             
-        public static void Set_ExernalProviders_FromCollection(ObservableCollection<Model_ExternalProvider> collection) =>
+        public static void Set_ExernalProviders_FromCollection(ObservableCollection<ExternalProvider> collection) =>
             ExternalProviders = [.. collection];
         public static async Task ExternalProviders_FromDataBase()
         {
@@ -72,7 +73,7 @@ namespace impakt_maui_app
                     var all_providers = await response.Content.ReadFromJsonAsync<List<Resp_Instance_ExternalProviders>>();
                     foreach (Resp_Instance_ExternalProviders provider in all_providers)
                     {
-                        ExternalProviders.Add(Model_ExternalProvider.From_Resp_Inst(provider));
+                        ExternalProviders.Add(ExternalProvider.From_Resp_Inst(provider));
                     }
 
                     IsExternalProvidersObtained = true;
@@ -150,7 +151,7 @@ namespace impakt_maui_app
     {
         public static Model_Member Account { get; set; } = Model_Member.GetDefaultInst();
     }
-
+        
     public static class Network
     {
         /* General */
@@ -167,7 +168,10 @@ namespace impakt_maui_app
         // public static string URL { get; set; } = "http://192.168.0.1:8000";  // ZF
         // public static string URL { get; set; } = "http://192.168.0.199:8000";  // Personal
         // public static string URL { get; set; } = "http://192.168.0.6:8000";  // Grzegosz
-        public static string URL { get; set; } = "https://bda238d32ade.ngrok-free.app"; // Local Host through grok
+        // public static string URL { get; set; } = "http://192.168.0.1:8080"; // Local Host HTTP
+        // public static string URL { get; set; } = "https://bda238d32ade.ngrok-free.app"; // Local Host through grok
+        // public static string URL { get; set; } = "http://209.38.198.242:8000"; // HTTP hosting
+        public static string URL { get; set; } = "https://lmapkt.com"; // HTTPS hosting
 #else
         public static string URL { get; set; } = "http://localhost:8000";
 #endif

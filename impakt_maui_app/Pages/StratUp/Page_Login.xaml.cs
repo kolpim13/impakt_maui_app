@@ -81,7 +81,7 @@ namespace impakt_maui_app.Pages
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Exception", "random error", "OK");
+                await DisplayAlert("Exception", ex.Message, "OK");
             }
         }
     }
