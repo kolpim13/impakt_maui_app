@@ -249,4 +249,51 @@ namespace impakt_maui_app
         /* Links: Combined */
         // ...
     }
+
+    public interface IScreenBrightness
+    {
+        void SetValue(float level);
+        void SetMaximum();
+        void RestorePreviousValue();
+    }
+
+    public sealed class ScreenBrightnessService : IScreenBrightness
+    {
+        float _previous = -1f;
+
+        public void SetValue(float value)
+        {
+#if ANDROID
+            var activity = Platform.CurrentActivity!;
+            var win = activity.Window!;
+            var attrs = win.Attributes!;
+            _previous = attrs.ScreenBrightness;
+
+            attrs.ScreenBrightness = Math.Clamp(value, 0f, 1f);
+            win.Attributes = attrs;
+#else
+            return;
+#endif
+
+        }
+
+        public void SetMaximum()
+        {
+            this.SetValue(1.0f);
+        }
+        public void RestorePreviousValue()
+        {
+#if ANDROID
+            var activity = Platform.CurrentActivity!;
+            var win = activity.Window!;
+            var attrs = win.Attributes!;
+            attrs.ScreenBrightness = _previous;
+            win.Attributes = attrs;
+
+            _previous = -1f;
+#else
+            return;
+#endif
+        }
+    }
 }

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.1">
 	
-	<application android:label="Impakt App"
+	<application android:label="Impact Max"
 				 android:icon="@mipmap/appicon"
 				 android:theme="@style/Maui.SplashTheme"
 				 android:allowBackup="true"
