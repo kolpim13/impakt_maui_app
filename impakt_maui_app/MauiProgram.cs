@@ -13,6 +13,7 @@ namespace impakt_maui_app
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .UseBarcodeReader()
                 .ConfigureFonts(fonts =>
                 {
@@ -24,8 +25,6 @@ namespace impakt_maui_app
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-            builder.UseMauiApp<App>().UseMauiCommunityToolkit();
-
             return builder.Build();
         }
     }

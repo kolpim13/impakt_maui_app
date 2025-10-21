@@ -173,7 +173,8 @@ namespace impakt_maui_app
         // public static string URL { get; set; } = "http://209.38.198.242:8000"; // HTTP hosting
         public static string URL { get; set; } = "https://lmapkt.com"; // HTTPS hosting
 #else
-        public static string URL { get; set; } = "http://localhost:8000";
+        // public static string URL { get; set; } = "http://localhost:8000";
+        public static string URL { get; set; } = "https://lmapkt.com"; // HTTPS hosting
 #endif
 
         /* Links: Members */
@@ -181,6 +182,8 @@ namespace impakt_maui_app
             string.Format("{0}/members/add", URL);
         public static string Get_Member_Inst(string member_id) =>
             string.Format("{0}/members/{1}", URL, member_id);
+        public static string Get_Members_Instances(int page, int page_size) =>
+            $"{URL}/members?page={page}&page_size={page_size}";
 
         /* Links: ExternalProviders */
         public static string Post_ExternalProviders_Create
@@ -250,6 +253,7 @@ namespace impakt_maui_app
         // ...
     }
 
+    /* Brightness regulation */
     public interface IScreenBrightness
     {
         void SetValue(float level);

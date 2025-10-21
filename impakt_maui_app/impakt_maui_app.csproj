@@ -81,6 +81,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\Profile\QRCode.xaml.cs">
+	    <DependentUpon>QRCode.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\Profile\Profile.xaml.cs">
+	    <DependentUpon>Profile.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Shells\LogInShell.xaml.cs">
 	    <DependentUpon>LogInShell.xaml</DependentUpon>
 	  </Compile>
@@ -108,7 +114,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Pages\Page_QRCode.xaml">
+	  <MauiXaml Update="Pages\Profile\QRCode.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Profile\Profile.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Statistics\Page_AllMembers.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Shells\LogInShell.xaml">
@@ -150,13 +162,10 @@
 	  <MauiXaml Update="Pages\StratUp\Page_Login.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\Page_Profile.xaml">
+	  <MauiXaml Update="Pages\Profile\Page_Profile.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\Page_Statistics.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\Page_Statistics_AllMembers.xaml">
+	  <MauiXaml Update="Pages\Statistics\Page_Statistics.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_Statistics_InstructorCheckInsDetailed.xaml">

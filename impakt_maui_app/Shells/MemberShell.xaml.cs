@@ -1,5 +1,4 @@
 ﻿using impakt_maui_app.Pages;
-using impakt_maui_app.Pages.StratUp;
 
 namespace impakt_maui_app
 {
@@ -8,6 +7,8 @@ namespace impakt_maui_app
         public MemberShell()
         {
             InitializeComponent();
+
+            Routing.RegisterRoute(nameof(Pages.Profile.QRCode), typeof(Pages.Profile.QRCode));
         }
     }
 }

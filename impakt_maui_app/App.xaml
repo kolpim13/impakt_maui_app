@@ -12,7 +12,7 @@
             
             <!--Main colors-->
             <Color x:Key="PrimeOrange">#F59124</Color>
-            <Color x:Key="PrimeDarkOrange">#F59124</Color>
+            <Color x:Key="PrimeDarkOrange">#C4741D</Color>
             <Color x:Key="PrimeWhite">#FFEAD8</Color>
 
             <Color x:Key="ButtonAlternate">#FFD9C2</Color>

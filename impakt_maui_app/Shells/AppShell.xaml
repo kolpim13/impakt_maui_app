@@ -3,13 +3,15 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:impakt_maui_app"
        xmlns:pages="clr-namespace:impakt_maui_app.Pages"
+       xmlns:pages_profile="clr-namespace:impakt_maui_app.Pages.Profile"
        xmlns:pages_startup="clr-namespace:impakt_maui_app.Pages.StratUp"
+       xmlns:pages_statistics="clr-namespace:impakt_maui_app.Pages.Statistics"
        x:Class="impakt_maui_app.AppShell"
        Title="impakt_maui_app">
 
     <TabBar>
         <Tab Title="Profile">
-            <ShellContent ContentTemplate="{DataTemplate pages:Page_Profile}"
+            <ShellContent ContentTemplate="{DataTemplate pages_profile:Page_Profile}"
                           Route="Page_Profile"/>
 
             <!--Sub tabs invisible by default-->
@@ -22,11 +24,6 @@
                           Route="Page_ExternalProvider"
                           Title="Pass Types"
                           IsVisible="False"/>
-
-            <!--<ShellContent ContentTemplate="{DataTemplate pages:Page_QRCode}"
-                          Route="Page_QRCode"
-                          Title="QR Code"
-                          IsVisible="False"/>-->
         </Tab>
         
         <Tab Title="Main">
@@ -35,7 +32,7 @@
         </Tab>
         
         <Tab Title="Statistics">
-            <ShellContent ContentTemplate="{DataTemplate pages:Page_Statistics}"
+            <ShellContent ContentTemplate="{DataTemplate pages_statistics:Page_Statistics}"
                           Route="Page_Statistics"
                           Title="Statistics Main"/>
             
@@ -49,6 +46,11 @@
                           Route="Page_Statistics_InstructorCheckInsDetailed"
                           Title="Instructor Detailed Statistics"
                           IsVisible="False"/>
+
+            <ShellContent ContentTemplate="{DataTemplate pages_statistics:Page_AllMembers}"
+                          Route="Page_AllMembers"
+                          Title="Information about all available members"
+                          IsVisible="False"/>       
         </Tab>
         
         <Tab Title="Scanner">
