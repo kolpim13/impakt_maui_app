@@ -146,7 +146,10 @@ namespace impakt_maui_app.Popups
                 HttpResponseMessage response = await client.PostAsJsonAsync(Network.Post_Member_Add, new_member);
                 if (response.IsSuccessStatusCode)
                 {
+                    // Get the member info from the server --> notify about success --> return value to a caller.
+                    var member = await response.Content.ReadFromJsonAsync<Resp_Members_Inst>();
                     await Shell.Current.DisplayAlert("success", "member added!", "ok");
+                    Close(member);
                 }
                 else
                 {
@@ -156,7 +159,7 @@ namespace impakt_maui_app.Popups
             }
             catch (Exception ex)
             {
-                ;
+                Close(null);
             }
             
             // Restore button disregardless result

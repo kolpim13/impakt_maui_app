@@ -54,7 +54,7 @@
 			<Label Text="Send email"
 				   VerticalOptions ="Center"/>
 		</HorizontalStackLayout>
-		
+
 		<!--Sending mms is not implemented in back app-->
 		<HorizontalStackLayout IsVisible="false">
 			<CheckBox IsChecked="{Binding SendWelcomeMms}" />

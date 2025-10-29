@@ -9,7 +9,8 @@ public partial class Page_ProfileMember : ContentPage
 
     private async void Btn_OnShowQrCodeClicked(object? sender, EventArgs e)
     {
-        await Navigation.PushAsync(new Page_QRCode(User.Account.CardId));
+        var route = $"{nameof(QRCode)}?CardId={User.Account.CardId}";
+        await Shell.Current.GoToAsync(route);
     }
 
     private async void Btn_OnLogOutClicked(object? sender, EventArgs e)

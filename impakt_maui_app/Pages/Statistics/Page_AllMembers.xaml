@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="impakt_maui_app.Pages.Statistics.Page_AllMembers"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:reusable="clr-namespace:impakt_maui_app.Reusable"
+             xmlns:vm="clr-namespace:impakt_maui_app.VM.Statistics"
+             x:Name="This"
+             Background="{StaticResource PrimeWhite}"
+             Title="Statistics: All Members">
+
+    <ContentPage.BindingContext>
+        <vm:VM_AllMembers />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add new member"          Order="Secondary" Command="{Binding AddMemberCommand}"/>
+        <ToolbarItem Text="Change privalege"        Order="Secondary" Command="{Binding ChangePrivilageCommand}"/>
+        <ToolbarItem Text="Delete chosen member"    Order="Secondary" Command="{Binding DeleteMemberCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto,*"
+          ColumnDefinitions="*"
+          RowSpacing="5" ColumnSpacing="5"
+          Margin="10">
+
+        <SearchBar Grid.Row="0" Grid.Column="0"
+                   Placeholder="Search for person by name or email"
+                   Text="{Binding SearchText}"
+                   SearchCommand="{Binding ApplySearchFilterCommand}"
+                   SearchCommandParameter="{x:Int32 0}"
+                   BackgroundColor="White"
+                   TextColor="Black"
+                   Keyboard="Default" 
+                   TextChanged="SearchBar_TextChanged">
+            <SearchBar.Behaviors>
+                <toolkit:EventToCommandBehavior
+                    EventName="TextChanged"
+                    Command="{Binding TestCommand}" />
+            </SearchBar.Behaviors>
+        </SearchBar>
+
+        <ActivityIndicator Grid.Row="0" Grid.Column="0"
+                           IsRunning="{Binding IsLoading}"
+                           IsVisible="{Binding IsLoading}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+
+        <CollectionView Grid.Row="1" Grid.Column="0"
+                        ItemsSource="{Binding Members, Mode=TwoWay}"
+                        SelectedItem="{Binding SelectedMember}"
+                        SelectionMode="None"
+                        IsGrouped="False"
+                        EmptyView="No members found"
+                        RemainingItemsThreshold="1"
+                        RemainingItemsThresholdReachedCommand="{Binding LoadTableDataCommand}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="#F9E7DD"
+                            Margin="5"
+                            Padding="10"
+                            StrokeThickness="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20"/>
+                        </Border.StrokeShape>
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border"
+                                         Binding="{Binding IsExpanded}"
+                                         Value="True">
+                            </DataTrigger>
+                        </Border.Triggers>
+
+                        <Grid ColumnDefinitions="Auto,*,Auto"
+                              RowDefinitions="Auto,Auto"
+                              ColumnSpacing="8"
+                              RowSpacing="5"
+                              VerticalOptions="Center">
+
+                            <!--Expand / Collaps-->
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={x:Reference This}, Path=BindingContext.ExpandCollapsMemberCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Grid.GestureRecognizers>
+
+                            <!--Photo-->
+                            <Border Grid.Row="0" Grid.Column="0"
+                                    WidthRequest="60"
+                                    HeightRequest="60"
+                                    Background="#7A4A27"
+                                    StrokeThickness="0"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="30"/>
+                                </Border.StrokeShape>
+
+                                <Image Source="no_user_icon.png"
+                                       Aspect="AspectFill"
+                                       WidthRequest="48"
+                                       HeightRequest="48"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"/>
+                            </Border>
+                            
+                            <!--Personal info-->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+                                
+                                <Label Text="{Binding FullName}" 
+                                       FontSize="Medium"/>
+                                
+                                <Label Text="{Binding AccountType, StringFormat='{0}'}" 
+                                       FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                            
+                            <!--Image butotn with "QR"-->
+                            <ImageButton Grid.Row="0" Grid.Column="2"
+                                         WidthRequest="60"
+                                         HeightRequest="60"
+                                         Source="qr_icon.png"
+                                         Command="{Binding Source={x:Reference This}, Path=BindingContext.OpenQrCodePageCommand}"
+                                         CommandParameter="{Binding CardId}"/>
+                            
+                            <!--Initially hidden data-->
+                            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                                  RowDefinitions="*"
+                                  ColumnDefinitions="4,*"
+                                  IsVisible="{Binding IsExpanded}">
+
+                                <BoxView Grid.Row="0" Grid.Column="0" 
+                                         Color="{StaticResource PrimeDarkOrange}"/>
+
+                                <Grid Grid.Row="0" Grid.Column="1"
+                                      Padding="6"
+                                      ColumnDefinitions="Auto,*"
+                                      RowDefinitions="Auto,Auto,Auto"
+                                      ColumnSpacing="12" RowSpacing="2">
+
+                                    <Label Text="Phone" Opacity="0.65" />
+                                    <Label Grid.Column="1" Text="{Binding Phone}" />
+
+                                    <Label Grid.Row="1" Text="Email" Opacity="0.65" />
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Email}" />
+
+                                    <Label Grid.Row="2" Text="Signup" Opacity="0.65" />
+                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding RegistrationDate, StringFormat='{0:dd-MM-yyyy}'}" />
+                                </Grid>
+
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
+    

@@ -27,6 +27,14 @@ namespace impakt_maui_app.Schemas
         public string? token { get; set; }
         required public bool activated { get; set; }
     }
+    public class Resp_Paginated_Members_Instances
+    {
+        public int total { get; set; }
+        public int page { get; set; }
+        public int page_size { get; set; }
+        public int remaining { get; set; }
+        public List<Resp_Members_Inst> items { get; set; }
+    }
     public class Req_Member_Add
     {
         required public string name { get; set; }

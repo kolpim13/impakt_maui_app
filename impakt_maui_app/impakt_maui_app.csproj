@@ -114,6 +114,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Pages\Profile\MyProfile.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Profile\QRCode.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
