@@ -51,7 +51,7 @@ public partial class QRCode : ContentPage
             using var pngStream = await screenshot.OpenReadAsync();
 
             // 2) Persist to a temporary file (so other apps can read it via FileProvider)
-            var fileName = $"impact_member_qr_{DateTime.UtcNow:yyyyMMdd_HHmmssfff}.png";
+            var fileName = $"impact_qr_{CardId}_{DateTime.UtcNow:yyyyMMdd_HHmmssfff}.png";
             var filePath = Path.Combine(FileSystem.CacheDirectory, fileName);
 
             using (var fs = File.Open(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
