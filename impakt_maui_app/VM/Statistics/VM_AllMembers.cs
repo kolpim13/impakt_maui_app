@@ -55,6 +55,7 @@ namespace impakt_maui_app.VM.Statistics
 
         private bool is_initialized = false;
         private bool is_data_filtered = false;
+        private string previous_search_text;
 
         private int page = 0;
         private readonly int page_size = 100;
@@ -66,6 +67,8 @@ namespace impakt_maui_app.VM.Statistics
         public ObservableCollection<CV_Model_Member> Members { get; private set; } = new();
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(ChangePrivilegeCommand))]
+        [NotifyCanExecuteChangedFor(nameof(DeleteMemberCommand))]
         private CV_Model_Member selectedMember;
 
         [ObservableProperty]
@@ -97,38 +100,30 @@ namespace impakt_maui_app.VM.Statistics
         }
 
         [RelayCommand]
-        private void ApplySearchFilter(int source)
+        private void ApplySearchFilter(string query)
         {
-            // Source of the coomand is text was changed --> check only for empty string
-            if (source == 1 &&
-                string.IsNullOrEmpty(SearchText))
+            // Search was clicked && text len < 3 --> Show all data
+            if (string.IsNullOrEmpty(query) ||
+                query.Length < minimal_search_length)
             {
-                // Data was filtered --> reset all filtered data
-                Members = _allMembers;
-                OnPropertyChanged(nameof(Members));
-
-                is_data_filtered = false;
+                SearchBar_CleanSearchFilter();
                 return;
             }
+            
+            // Filter data
+            if (string.Equals(query, previous_search_text, StringComparison.InvariantCultureIgnoreCase) is true) 
+                { return; }
 
-            // Search was clicked && there is no text --> do nothing
-            if (string.IsNullOrEmpty(SearchText) ||
-                SearchText.Length < minimal_search_length)
-            {
-                return;
-            }
-
-            // Get all data filtered
-            IEnumerable<CV_Model_Member> filtered;
-            filtered = _allMembers.Where(m =>
-                (m.FullName?.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) == true) ||
-                (m.AccountType.ToString().Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) == true)
+            IEnumerable<CV_Model_Member> filtered = _allMembers.Where(m =>
+                (m.FullName?.Contains(query, StringComparison.InvariantCultureIgnoreCase) == true) ||
+                (m.AccountType.ToString().Contains(query, StringComparison.InvariantCultureIgnoreCase) == true)
                 );
 
             Members = filtered.ToObservableCollection();
-            OnPropertyChanged(nameof(Members));
-
+            previous_search_text = query;
             is_data_filtered = true;
+
+            OnPropertyChanged(nameof(Members));
         }
 
         [RelayCommand]
@@ -174,16 +169,101 @@ namespace impakt_maui_app.VM.Statistics
             OnPropertyChanged(nameof(Members));
         }
 
-        [RelayCommand]
-        private async Task ChangePrivilage()
+        [RelayCommand(CanExecute = nameof(can_execute_change_privalege_or_delete_member_command))]
+        private async Task ChangePrivilege()
         {
+            // Filter all roles that are can not be set [should be less than current role of the user].
+            string[] exclude = { };
+            foreach (AccountType type in Enum.GetValues(typeof(AccountType)))
+            {
+                if (User.Account.AccountType <= type)
+                {
+                    exclude.Append(type.ToString());
+                }
+            }
 
+            // Get all names of possible account roles exluding filtered values
+            string[] roles = Enum.GetNames(typeof(AccountType))
+                .Where(v => !exclude.Contains(v))
+                .ToArray();
+
+            // Show PopUp with possible variants
+            string chosen_variant = await Shell.Current.DisplayActionSheet("Choose Account type:", "Cancel", null, roles);
+
+            // Finish command if cancelled was clicked
+            if (chosen_variant is null) { return; }
+
+            // Parse chosen variant --> Send request to backend
+            int new_account_type = (int)Enum.Parse(typeof(AccountType), chosen_variant);
+            try
+            {
+                // Assemble request (Only account type is implemented for now).
+                Req_Members_ChangePrivileges req = new Req_Members_ChangePrivileges
+                {
+                    card_id = SelectedMember.CardId,
+                    account_type = new_account_type,
+                };
+
+                // Send request --> process result
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.PutAsJsonAsync(Network.Put_Members_Privileges, req);
+                if (response.IsSuccessStatusCode)
+                {
+                    // Update changed member in the List
+                    var updated_member = await response.Content.ReadFromJsonAsync<Resp_Members_Inst>();
+                    SelectedMember = CV_Model_Member.FromRespMemberModel(updated_member);
+                }
+                else
+                {
+                    ;
+                }
+            }
+            catch (Exception ex)
+            {
+                ;
+            }
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(can_execute_change_privalege_or_delete_member_command))]
         private async Task DeleteMember()
         {
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.DeleteAsync(Network.Delete_Members(SelectedMember.CardId));
+                if (response.IsSuccessStatusCode)
+                {
+                    // Delete a member from a list
+                    _allMembers.Remove(SelectedMember);
+                    Members = _allMembers;
+                    OnPropertyChanged(nameof(Members));
 
+                    SelectedMember = null;
+                    OnPropertyChanged(nameof(SelectedMember));
+                }
+                else
+                {
+                    ;
+                }
+            }
+            catch (Exception ex)
+            {
+                ;
+            }
+        }
+
+        /* COMMANDS CONDITIONS */
+        private bool can_execute_change_privalege_or_delete_member_command()
+        {
+            // Can be executed only if any member was chosen
+            if (SelectedMember is null) { return false; }
+
+            // Only ADMINs and ROOTs can cahnge privileges of others
+            if (User.Account.AccountType == AccountType.Instructor)
+            {
+                return false;
+            }
+            return true;
         }
 
         public VM_AllMembers() 
@@ -209,6 +289,18 @@ namespace impakt_maui_app.VM.Statistics
             _allMembers.Clear();
             SearchText = string.Empty;
             is_initialized = false;
+        }
+
+        public void SearchBar_CleanSearchFilter()
+        {
+            // Data already filtered
+            if (is_data_filtered is false)
+            { return; }
+
+            Members = _allMembers;
+            OnPropertyChanged(nameof(Members));
+
+            is_data_filtered = false;
         }
 
         /* PRIVATE METHODS */

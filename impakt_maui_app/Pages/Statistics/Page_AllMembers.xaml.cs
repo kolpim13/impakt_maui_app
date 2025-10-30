@@ -11,8 +11,16 @@ public partial class Page_AllMembers : ContentPage
 
     void SearchBar_TextChanged(object s, TextChangedEventArgs e)
     {
-       
-        System.Diagnostics.Debug.WriteLine($"Changed -> '{e.NewTextValue}'");
+        // System.Diagnostics.Debug.WriteLine($"Changed -> '{e.NewTextValue}'");
+
+        SearchBar searchBar = (SearchBar)s;
+        if (string.IsNullOrEmpty(searchBar.Text))
+        {
+            if (BindingContext is VM_AllMembers vm)
+            {
+                vm.SearchBar_CleanSearchFilter();
+            }
+        }
     }
 
     protected override async void OnAppearing()

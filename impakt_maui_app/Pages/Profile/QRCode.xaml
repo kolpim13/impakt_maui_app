@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
              x:Class="impakt_maui_app.Pages.Profile.QRCode"
+             Background="{StaticResource PrimeWhite}"
              Title="QR Code">
 
     <Grid
@@ -30,7 +31,7 @@
         <Button Grid.Row="2"
                 Text="Share QR Code"
                 Style="{StaticResource PrimeButton}"
-                WidthRequest="400"
+                WidthRequest="300"
                 Clicked="OnShareQrClicked"/>
     </Grid>
 </ContentPage>

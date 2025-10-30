@@ -46,6 +46,28 @@ namespace impakt_maui_app.Schemas
         public bool? send_welcome_email { get; set; }
         public bool? send_welcome_mms { get; set; }
     }
+
+    public class Req_Members_Put
+    {
+        required public string card_id { get; set; }
+        public string? name { get; set; }
+        public string? surname { get; set; }
+        public string? phone_number { get; set; }
+        public DateOnly? date_of_birth { get; set; }
+        public string? username { get; set; }
+    }
+    public class Req_Members_ChangePassword
+    {
+        required public string card_id { get; set; }
+        required public string old_password { get; set; }
+        required public string new_password { get; set; }
+    }
+    public class Req_Members_ChangePrivileges
+    {
+        required public string card_id { get; set; }
+        required public int account_type { get; set; }
+        public string? privileges { get; set; }
+    }
     public class Req_SignUp
     {
         required public string name { get; set; }

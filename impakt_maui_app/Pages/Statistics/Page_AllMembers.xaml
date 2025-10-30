@@ -14,9 +14,9 @@
     </ContentPage.BindingContext>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add new member"          Order="Secondary" Command="{Binding AddMemberCommand}"/>
-        <ToolbarItem Text="Change privalege"        Order="Secondary" Command="{Binding ChangePrivilageCommand}"/>
-        <ToolbarItem Text="Delete chosen member"    Order="Secondary" Command="{Binding DeleteMemberCommand}"/>
+        <ToolbarItem Text="Add new member"          Order="Secondary" Command="{Binding AddMemberCommand}" />
+        <ToolbarItem Text="Change privalege"        Order="Secondary" Command="{Binding ChangePrivilegeCommand}" />
+        <ToolbarItem Text="Delete chosen member"    Order="Secondary" Command="{Binding DeleteMemberCommand}" />
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="Auto,*"
@@ -25,14 +25,15 @@
           Margin="10">
 
         <SearchBar Grid.Row="0" Grid.Column="0"
-                   Placeholder="Search for person by name or email"
+                   Placeholder="Search for person by name, email or account type"
                    Text="{Binding SearchText}"
-                   SearchCommand="{Binding ApplySearchFilterCommand}"
-                   SearchCommandParameter="{x:Int32 0}"
                    BackgroundColor="White"
                    TextColor="Black"
-                   Keyboard="Default" 
-                   TextChanged="SearchBar_TextChanged">
+                   Keyboard="Default"
+                   SearchCommand="{Binding ApplySearchFilterCommand}"
+                   SearchCommandParameter="{Binding Text, Source={RelativeSource Self}}"
+                   TextChanged="SearchBar_TextChanged" >
+
             <SearchBar.Behaviors>
                 <toolkit:EventToCommandBehavior
                     EventName="TextChanged"

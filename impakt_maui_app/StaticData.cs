@@ -179,11 +179,19 @@ namespace impakt_maui_app
 
         /* Links: Members */
         public static string Post_Member_Add =>
-            string.Format("{0}/members/add", URL);
+            $"{URL}/members/add";
+
+        public static string Put_Members_Privileges =>
+            $"{URL}/members/privileges/{User.Account.CardId}";
+
         public static string Get_Member_Inst(string member_id) =>
-            string.Format("{0}/members/{1}", URL, member_id);
+            $"{URL}/members/{member_id}";
+
         public static string Get_Members_Instances(int page, int page_size) =>
             $"{URL}/members?page={page}&page_size={page_size}";
+
+        public static string Delete_Members(string member_id) =>
+            $"{URL}/members/{User.Account.CardId}_{member_id}";
 
         /* Links: ExternalProviders */
         public static string Post_ExternalProviders_Create
