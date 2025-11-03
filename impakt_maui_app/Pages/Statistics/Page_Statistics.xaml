@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="impakt_maui_app.Pages.Statistics.Page_Statistics"
+             Background="{StaticResource PrimeWhite}"
+             Title="Statistics">
+
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource PrimeVerticalStack}">
+            <Button Text="Instructors CheckIns" 
+                    Style="{StaticResource PrimeButton}"
+                    Clicked="OnClicked_InstructorsCheckIns"/>
+
+            <Button Text="All Members" 
+                    Style="{StaticResource PrimeButton}"
+                    Clicked="OnClicked_AllMembers"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

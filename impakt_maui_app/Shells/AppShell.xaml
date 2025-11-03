@@ -11,8 +11,8 @@
 
     <TabBar>
         <Tab Title="Profile">
-            <ShellContent ContentTemplate="{DataTemplate pages_profile:Page_Profile}"
-                          Route="Page_Profile"/>
+            <ShellContent ContentTemplate="{DataTemplate pages_profile:MyProfile}"
+                          Route="MyProfile"/>
 
             <!--Sub tabs invisible by default-->
             <ShellContent ContentTemplate="{DataTemplate pages:Page_ExternalProvider}"

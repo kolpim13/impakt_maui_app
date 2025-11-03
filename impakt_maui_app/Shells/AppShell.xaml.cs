@@ -21,6 +21,7 @@ namespace impakt_maui_app
 
             /* Profile related pages. */
             Routing.RegisterRoute(nameof(Pages.Profile.QRCode), typeof(Pages.Profile.QRCode));
+            Routing.RegisterRoute(nameof(Pages.Profile.MemberProfile), typeof(Pages.Profile.MemberProfile));
         }
     }
 }
