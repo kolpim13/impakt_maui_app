@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="impakt_maui_app.Pages.Profile.MemberProfile"
+             xmlns:vm="clr-namespace:impakt_maui_app.VM"
+             Background="{StaticResource PrimeWhite}"
+             Title="Member Profile">
+
+    <ContentPage.Resources>
+        <!--Converters-->
+        <vm:Converter_AcoountTypeIntToString x:Key="Converter_EnumToString" />
+
+        <!--Border between elements-->
+        <Style x:Key="SplitBorder" TargetType="Border">
+            <Setter Property="HeightRequest"    Value="2" />
+            <Setter Property="BackgroundColor"  Value="{AppThemeBinding Light=#EEE, Dark=#333}" />
+        </Style>
+
+        <!--Border as section frame-->
+        <Style x:Key="SectionBorder" TargetType="Border">
+            <Setter Property="StrokeShape"      Value="RoundRectangle 16" />
+            <Setter Property="BackgroundColor"  Value="White" />
+            <Setter Property="StrokeThickness"  Value="0" />
+            <Setter Property="Padding"          Value="3" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto,Auto,Auto" 
+              ColumnDefinitions="*,*" 
+              RowSpacing="8" ColumnSpacing="8"
+              Margin="6" Padding="5">
+
+            <!-- Generic information -->
+            <Border Grid.Row="0" Grid.ColumnSpan="2"
+                    Style="{StaticResource SectionBorder}">
+                
+                <Grid RowDefinitions="Auto,Auto,Auto"
+                      ColumnDefinitions="*,Auto"
+                      RowSpacing="6"
+                      Margin="5" Padding="1">
+
+                    <!--Full Name-->
+                    <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="1">
+                        <Label FontSize="Medium">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="Member.name" />
+                                    <Binding Path="Member.surname"/>
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+
+                        <!--Account type-->
+                        <Label Text="{Binding Member.account_type,
+                                              Mode=OneWay,
+                                              Converter={StaticResource Converter_EnumToString},
+                                              StringFormat='{0}'}" 
+                               FontAttributes="Bold" />
+
+                        <!-- Is account is active 
+                            [TBD - Now is always active] -->
+                        <Border BackgroundColor="#10B981" 
+                                Padding="8,4" 
+                                StrokeThickness="1" 
+                                HorizontalOptions="Start" StrokeShape="RoundRectangle 8">
+                            <Label Text="Active" FontSize="12" TextColor="White" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Photo 
+                    [TBD - Now no photo is stored in DB] -->
+                    <Border Grid.Row="0" Grid.Column="1"
+                            Background="#7A4A27"
+                            StrokeThickness="3"
+                            StrokeShape="RoundRectangle 32">
+
+                        <Image Source="no_user_icon.png" 
+                               WidthRequest="80" HeightRequest="80"
+                               Aspect="AspectFit" />
+                    </Border>
+                
+                    <!--Other information-->
+                    <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="6">
+                    
+                        <BoxView Grid.Row="1" Grid.ColumnSpan="2"
+                                 Style="{StaticResource SplitBorder}"/>
+                        <Label Text="{Binding Member.card_id, 
+                                              StringFormat='Member ID: {0}'}" />
+                        
+                        <BoxView Grid.Row="1" Grid.ColumnSpan="2"
+                                 Style="{StaticResource SplitBorder}"/>
+                        <Label Text="{Binding Member.email, 
+                                              StringFormat='Email: {0}'}" />
+
+                        <BoxView Grid.Row="1" Grid.ColumnSpan="2"
+                                 Style="{StaticResource SplitBorder}"/>
+                        <Label Text="{Binding Member.phone_number, 
+                                              StringFormat='Phone number: {0}'}" />
+
+                        <BoxView Grid.Row="1" Grid.ColumnSpan="2"
+                                 Style="{StaticResource SplitBorder}"/>
+                        <Label Text="{Binding Member.registration_date, 
+                                              StringFormat='Registered since: {0:dd-MM-yyyy}'}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!-- Go to QR Code Generation -->
+            <Border Grid.Row="1" Grid.ColumnSpan="2"
+                    Style="{StaticResource SectionBorder}">
+
+                <VerticalStackLayout Grid.Row="1"
+                                     HorizontalOptions="Center"
+                                     Spacing="4">
+                    
+                    <ImageButton 
+                        Source="qr_icon.png"        
+                        WidthRequest="128" 
+                        HeightRequest="128"
+                        BackgroundColor="Transparent"
+                        Command="{Binding ShowQrCommand}"
+                        CommandParameter="{Binding Member}"
+                        AutomationId="QrNavigateButton" 
+                        HorizontalOptions="Center"/>
+                    
+                    <Label Text="QR Code"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Button: Manage privilages -->
+            <Border Grid.Row="2" Grid.Column="0"
+                    Style="{StaticResource SectionBorder}">
+
+                <VerticalStackLayout Grid.Column="0"
+                                     HorizontalOptions="Center"
+                                     Spacing="1">
+
+                    <ImageButton Source="key_accesses_icon_2.png"
+                                 WidthRequest="64" 
+                                 HeightRequest="64"
+                                 Rotation="45"
+                                 BackgroundColor="Aqua"
+                                 CornerRadius="64"
+                                 Padding="5"
+                                 HorizontalOptions="Center"/>
+
+                    <Label Text="Change Privileges"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Button: Delete member -->
+            <Border Grid.Row="2" Grid.Column="1"
+                    Style="{StaticResource SectionBorder}">
+                
+                <VerticalStackLayout Grid.Column="1"
+                                     HorizontalOptions="Center"
+                                     Spacing="1">
+
+                    <ImageButton Source="trash_icon_1_red.png" 
+                                 WidthRequest="64" 
+                                 HeightRequest="64" 
+                                 Rotation="0"
+                                 BackgroundColor="#FEE2E2"
+                                 CornerRadius="64"
+                                 Padding="5"
+                                 HorizontalOptions="Center" />
+
+                    <Label Text="Delete this user"
+                            HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </ScrollView>
+</ContentPage>

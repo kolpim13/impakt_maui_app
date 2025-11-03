@@ -51,6 +51,26 @@ namespace impakt_maui_app.VM
         }
     }
 
+    public class Converter_EnumToString : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is null)
+                return string.Empty;
+
+            // Default fallback: just return the enum name
+            return value.ToString();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string str && targetType.IsEnum)
+                return Enum.Parse(targetType, str, ignoreCase: true);
+
+            return BindableProperty.UnsetValue;
+        }
+    }
+
     /* Show DisplayAllert from a VM */
     public interface IAlertService
     {

@@ -24,7 +24,6 @@
         <vm:Converter_ExternalProviders_PartialPayment x:Key="Converter_PartialPayment" />
         <vm:Converter_ExternalProviders_IsDeleted x:Key="Converter_ExternalProviders_IsDeleted" />
 
-        <!--Text related - colors, fonts, etc.-->
         <ResourceDictionary>
             <Color x:Key="ProviderBorderBackground">#f7f7f7</Color>
             <Color x:Key="ProviderBorderStroke">#B0B0B0</Color>

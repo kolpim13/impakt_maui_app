@@ -1,4 +1,4 @@
-namespace impakt_maui_app.Pages.Profile;
+ namespace impakt_maui_app.Pages.Profile;
 
 [QueryProperty(nameof(CardId), "CardId")]
 public partial class QRCode : ContentPage

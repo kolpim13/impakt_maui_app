@@ -36,8 +36,6 @@ namespace impakt_maui_app.VM
     {
         private readonly IAlertService _alertService;
 
-       
-
         public ObservableCollection<CV_Model_ExternalProvider> Providers { get; } = new();
 
         [NotifyCanExecuteChangedFor(nameof(EditProviderCommand))]

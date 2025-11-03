@@ -30,7 +30,6 @@ namespace impakt_maui_app.VM.Statistics
             public AccountType AccountType { get; set; }
             public string? Phone { get; set; }
             public string Email { get; set; }
-            public DateOnly RegistrationDate { get; set; }
 
             [ObservableProperty]
             private bool isExpanded;
@@ -44,7 +43,6 @@ namespace impakt_maui_app.VM.Statistics
                     AccountType = (AccountType)resp_model.account_type,
                     Phone = resp_model.phone_number,
                     Email = resp_model.email,
-                    RegistrationDate = resp_model.registration_date,
                     IsExpanded = false,
                 };
             }
@@ -127,21 +125,16 @@ namespace impakt_maui_app.VM.Statistics
         }
 
         [RelayCommand]
-        private void Test(int source)
+        private async Task OpenMemberProfile(string CardId)
         {
-            if (string.IsNullOrEmpty(SearchText) ||
-                SearchText.Length < minimal_search_length)
+            // Get Info from DB about the user --> navigate to corresponding page
+            Resp_Members_Inst member = await fetch_member(CardId);
+            var route = $"{nameof(Pages.Profile.MemberProfile)}";
+            var args = new Dictionary<string, object>
             {
-                return;
-            }
-            return;
-        }
-
-        [RelayCommand]
-        private async Task OpenQrCodePage(string CardId)
-        {
-            var route = $"{nameof(Pages.Profile.QRCode)}?CardId={CardId}";
-            await Shell.Current.GoToAsync(route);
+                { "Member", member },
+            };
+            await Shell.Current.GoToAsync(route, args);
         }
 
         [RelayCommand]
@@ -149,6 +142,7 @@ namespace impakt_maui_app.VM.Statistics
         {
             if (member is null) 
                 return;
+
             member.IsExpanded = !member.IsExpanded;
         }
 
@@ -304,6 +298,32 @@ namespace impakt_maui_app.VM.Statistics
         }
 
         /* PRIVATE METHODS */
+        private async Task<Resp_Members_Inst> fetch_member(string card_id)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync(Network.Get_Member_Inst(card_id));
+                if (response.IsSuccessStatusCode)
+                {
+                    Resp_Members_Inst member = await response.Content.ReadFromJsonAsync<Resp_Members_Inst>();
+                    return member;
+                }
+                else
+                {
+                    ;
+                }
+            }
+            catch (Exception ex)
+            {
+                ;
+            }
+            finally
+            {
+                ;
+            }
+            return null;
+        }
         private async Task<List<Resp_Members_Inst>> fetch_members()
         {
             List<Resp_Members_Inst> result = new();

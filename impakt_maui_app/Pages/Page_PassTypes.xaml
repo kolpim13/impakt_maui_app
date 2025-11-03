@@ -15,6 +15,20 @@
         <!--Converters-->
         <vm:Converter_PassTypes_NullToString x:Key="Converter_NullToString" />
 
+        <ResourceDictionary>
+            <DataTemplate x:Key="CV_ItemTemp_PassTypes">
+                <Border Background="#F9E7DD"
+                        Margin="5,10,5,10"
+                        Padding="10"
+                        StrokeThickness="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20"/>
+                    </Border.StrokeShape>
+
+                </Border>
+            </DataTemplate>
+        </ResourceDictionary>
+
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,Auto,Auto,*"
@@ -69,6 +83,7 @@
                 ItemsSource="{Binding PassTypes, Mode=TwoWay}" 
                 SelectionMode="Single"
                 SelectedItem="{Binding SelectedPassType}">
+            
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border Stroke="Gray" StrokeThickness="1" Background="#f7f7f7" Padding="12" Margin="6" StrokeShape="RoundRectangle 12">

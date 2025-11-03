@@ -64,7 +64,7 @@
                     <Border Background="#F9E7DD"
                             Margin="5"
                             Padding="10"
-                            StrokeThickness="1">
+                            StrokeThickness="2">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -75,11 +75,11 @@
                             </DataTrigger>
                         </Border.Triggers>
 
-                        <Grid ColumnDefinitions="Auto,*,Auto"
+                        <Grid ColumnDefinitions="*,Auto"
                               RowDefinitions="Auto,Auto"
                               ColumnSpacing="8"
                               RowSpacing="5"
-                              VerticalOptions="Center">
+                              VerticalOptions="Center" >
 
                             <!--Expand / Collaps-->
                             <Grid.GestureRecognizers>
@@ -88,28 +88,8 @@
                                     CommandParameter="{Binding .}" />
                             </Grid.GestureRecognizers>
 
-                            <!--Photo-->
-                            <Border Grid.Row="0" Grid.Column="0"
-                                    WidthRequest="60"
-                                    HeightRequest="60"
-                                    Background="#7A4A27"
-                                    StrokeThickness="0"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="30"/>
-                                </Border.StrokeShape>
-
-                                <Image Source="no_user_icon.png"
-                                       Aspect="AspectFill"
-                                       WidthRequest="48"
-                                       HeightRequest="48"
-                                       VerticalOptions="Center"
-                                       HorizontalOptions="Center"/>
-                            </Border>
-                            
                             <!--Personal info-->
-                            <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0">
                                 
                                 <Label Text="{Binding FullName}" 
                                        FontSize="Medium"/>
@@ -119,15 +99,15 @@
                             </VerticalStackLayout>
                             
                             <!--Image butotn with "QR"-->
-                            <ImageButton Grid.Row="0" Grid.Column="2"
+                            <ImageButton Grid.Row="0" Grid.Column="1"
                                          WidthRequest="60"
                                          HeightRequest="60"
-                                         Source="qr_icon.png"
-                                         Command="{Binding Source={x:Reference This}, Path=BindingContext.OpenQrCodePageCommand}"
-                                         CommandParameter="{Binding CardId}"/>
+                                         Source="full_screen_icon.png"
+                                         Command="{Binding Source={x:Reference This}, Path=BindingContext.OpenMemberProfileCommand}"
+                                         CommandParameter="{Binding CardId}" />
                             
                             <!--Initially hidden data-->
-                            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                                   RowDefinitions="*"
                                   ColumnDefinitions="4,*"
                                   IsVisible="{Binding IsExpanded}">
@@ -146,11 +126,7 @@
 
                                     <Label Grid.Row="1" Text="Email" Opacity="0.65" />
                                     <Label Grid.Row="1" Grid.Column="1" Text="{Binding Email}" />
-
-                                    <Label Grid.Row="2" Text="Signup" Opacity="0.65" />
-                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding RegistrationDate, StringFormat='{0:dd-MM-yyyy}'}" />
                                 </Grid>
-
                             </Grid>
                         </Grid>
                     </Border>
