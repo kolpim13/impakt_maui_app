@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="impakt_maui_app.Pages.Page_Scanner"
              xmlns:vm="clr-namespace:impakt_maui_app.VM"
-             x:Name="Page_Scanner_Inst"
+             x:Name="this"
+             Background="{StaticResource PrimeWhite}"
              Title="QR Scanner">
 
     <ContentPage.BindingContext>
@@ -11,7 +12,28 @@
     </ContentPage.BindingContext>
 
     <ScrollView>
-        <VerticalStackLayout Padding="10" Spacing="10">
+        <Grid
+            RowDefinitions="Auto,Auto,Auto"
+            ColumnDefinitions="*,*"
+            RowSpacing="8" ColumnSpacing="8"
+            Margin="6" Padding="5">
+
+            <!--Scan-->
+            <Border>
+                
+            </Border>
+
+            <!--Buy pass-->
+            <Border>
+
+            </Border>
+
+            <!--Member info-->
+            <Border>
+
+            </Border>
+        </Grid>
+        <!--<VerticalStackLayout Padding="10" Spacing="10">
             <Button x:Name="Btn_CheckIn" Text="CheckIn" 
                     CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
                     Clicked="OnClicked_CheckIn"/>
@@ -23,6 +45,6 @@
             <Button x:Name="Btn_UserInfo" Text="User info" 
                     CornerRadius="10" BackgroundColor="#007AFF" TextColor="White"
                     Clicked="OnClicked_UserInfo"/>
-        </VerticalStackLayout>
+        </VerticalStackLayout>-->
     </ScrollView>
 </ContentPage>

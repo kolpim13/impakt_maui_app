@@ -3,15 +3,16 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:impakt_maui_app"
        xmlns:pages="clr-namespace:impakt_maui_app.Pages"
-       xmlns:pages_profile="clr-namespace:impakt_maui_app.Pages.Profile"
        xmlns:pages_startup="clr-namespace:impakt_maui_app.Pages.StratUp"
+       xmlns:pages_profile="clr-namespace:impakt_maui_app.Pages.Profile"
        xmlns:pages_statistics="clr-namespace:impakt_maui_app.Pages.Statistics"
+       xmlns:pages_scanner="clr-namespace:impakt_maui_app.Pages.Scanner"
        x:Class="impakt_maui_app.AppShell"
        Title="impakt_maui_app">
 
     <TabBar>
         <Tab Title="Profile">
-            <ShellContent ContentTemplate="{DataTemplate pages_profile:Page_Profile}"
+            <ShellContent ContentTemplate="{DataTemplate pages_profile:MyProfile}"
                           Route="Page_Profile"/>
 
             <!--Sub tabs invisible by default-->
@@ -32,7 +33,7 @@
         </Tab>
         
         <Tab Title="Statistics">
-            <ShellContent ContentTemplate="{DataTemplate pages_statistics:Page_Statistics}"
+            <ShellContent ContentTemplate="{DataTemplate pages:Page_Statistics}"
                           Route="Page_Statistics"
                           Title="Statistics Main"/>
             
@@ -54,9 +55,9 @@
         </Tab>
         
         <Tab Title="Scanner">
-            <ShellContent ContentTemplate="{DataTemplate pages:Page_Scanner}"
-                          Route="Page_Scanner"
-                          Title="Scanning"/>
+            <ShellContent ContentTemplate="{DataTemplate pages_scanner:Scanner}"
+                          Route="Scanner"
+                          Title="Scanner"/>
 
             <!--Sub tabs invisible by default-->
             <ShellContent ContentTemplate="{DataTemplate pages:Page_Scanner_QRScanner}"

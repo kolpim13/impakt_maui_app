@@ -123,6 +123,9 @@
 	  <MauiXaml Update="Pages\Profile\Profile.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\Scanner\Scanner.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Statistics\Page_AllMembers.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
