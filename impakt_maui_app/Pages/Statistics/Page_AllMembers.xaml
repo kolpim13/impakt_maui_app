@@ -15,8 +15,6 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add new member"          Order="Secondary" Command="{Binding AddMemberCommand}" />
-        <ToolbarItem Text="Change privalege"        Order="Secondary" Command="{Binding ChangePrivilegeCommand}" />
-        <ToolbarItem Text="Delete chosen member"    Order="Secondary" Command="{Binding DeleteMemberCommand}" />
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="Auto,*"
@@ -104,7 +102,7 @@
                                          HeightRequest="60"
                                          Source="full_screen_icon.png"
                                          Command="{Binding Source={x:Reference This}, Path=BindingContext.OpenMemberProfileCommand}"
-                                         CommandParameter="{Binding CardId}" />
+                                         CommandParameter="{Binding .}" />
                             
                             <!--Initially hidden data-->
                             <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"

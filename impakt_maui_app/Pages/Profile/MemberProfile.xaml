@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="impakt_maui_app.Pages.Profile.MemberProfile"
              xmlns:vm="clr-namespace:impakt_maui_app.VM"
+             x:Name="This"
              Background="{StaticResource PrimeWhite}"
              Title="Member Profile">
 
@@ -144,7 +145,8 @@
                                  BackgroundColor="Aqua"
                                  CornerRadius="64"
                                  Padding="5"
-                                 HorizontalOptions="Center"/>
+                                 HorizontalOptions="Center"
+                                 Command="{Binding Source={x:Reference This}, Path=BindingContext.ChangePrivilegeCommand}" />
 
                     <Label Text="Change Privileges"
                            HorizontalOptions="Center"/>
@@ -166,7 +168,8 @@
                                  BackgroundColor="#FEE2E2"
                                  CornerRadius="64"
                                  Padding="5"
-                                 HorizontalOptions="Center" />
+                                 HorizontalOptions="Center" 
+                                 Command="{Binding Source={x:Reference This}, Path=BindingContext.DeleteMemberCommand}" />
 
                     <Label Text="Delete this user"
                             HorizontalOptions="Center" />

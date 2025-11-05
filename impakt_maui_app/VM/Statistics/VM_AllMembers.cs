@@ -65,8 +65,6 @@ namespace impakt_maui_app.VM.Statistics
         public ObservableCollection<CV_Model_Member> Members { get; private set; } = new();
 
         [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(ChangePrivilegeCommand))]
-        [NotifyCanExecuteChangedFor(nameof(DeleteMemberCommand))]
         private CV_Model_Member selectedMember;
 
         [ObservableProperty]
@@ -125,16 +123,31 @@ namespace impakt_maui_app.VM.Statistics
         }
 
         [RelayCommand]
-        private async Task OpenMemberProfile(string CardId)
+        private async Task OpenMemberProfile(CV_Model_Member model)
         {
             // Get Info from DB about the user --> navigate to corresponding page
-            Resp_Members_Inst member = await fetch_member(CardId);
+            Resp_Members_Inst member = await fetch_member(model.CardId);
             var route = $"{nameof(Pages.Profile.MemberProfile)}";
             var args = new Dictionary<string, object>
-            {
-                { "Member", member },
-            };
+                {
+                    { "Member", member },
+                };
             await Shell.Current.GoToAsync(route, args);
+
+            // Update information about the member
+            member = await fetch_member(model.CardId);
+            if (member is null)
+            {
+                // Member was deleted
+                _allMembers.Remove(model);
+                Members.Remove(model);
+                // OnPropertyChanged(nameof(Members));
+            }
+            else
+            {
+                // Update level of privilege
+                model.AccountType = (AccountType)member.account_type;
+            }
         }
 
         [RelayCommand]
@@ -163,102 +176,7 @@ namespace impakt_maui_app.VM.Statistics
             OnPropertyChanged(nameof(Members));
         }
 
-        [RelayCommand(CanExecute = nameof(can_execute_change_privalege_or_delete_member_command))]
-        private async Task ChangePrivilege()
-        {
-            // Filter all roles that are can not be set [should be less than current role of the user].
-            string[] exclude = { };
-            foreach (AccountType type in Enum.GetValues(typeof(AccountType)))
-            {
-                if (User.Account.AccountType <= type)
-                {
-                    exclude.Append(type.ToString());
-                }
-            }
-
-            // Get all names of possible account roles exluding filtered values
-            string[] roles = Enum.GetNames(typeof(AccountType))
-                .Where(v => !exclude.Contains(v))
-                .ToArray();
-
-            // Show PopUp with possible variants
-            string chosen_variant = await Shell.Current.DisplayActionSheet("Choose Account type:", "Cancel", null, roles);
-
-            // Finish command if cancelled was clicked
-            if (chosen_variant is null) { return; }
-
-            // Parse chosen variant --> Send request to backend
-            int new_account_type = (int)Enum.Parse(typeof(AccountType), chosen_variant);
-            try
-            {
-                // Assemble request (Only account type is implemented for now).
-                Req_Members_ChangePrivileges req = new Req_Members_ChangePrivileges
-                {
-                    card_id = SelectedMember.CardId,
-                    account_type = new_account_type,
-                };
-
-                // Send request --> process result
-                HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.PutAsJsonAsync(Network.Put_Members_Privileges, req);
-                if (response.IsSuccessStatusCode)
-                {
-                    // Update changed member in the List
-                    var updated_member = await response.Content.ReadFromJsonAsync<Resp_Members_Inst>();
-                    SelectedMember = CV_Model_Member.FromRespMemberModel(updated_member);
-                }
-                else
-                {
-                    ;
-                }
-            }
-            catch (Exception ex)
-            {
-                ;
-            }
-        }
-
-        [RelayCommand(CanExecute = nameof(can_execute_change_privalege_or_delete_member_command))]
-        private async Task DeleteMember()
-        {
-            try
-            {
-                HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.DeleteAsync(Network.Delete_Members(SelectedMember.CardId));
-                if (response.IsSuccessStatusCode)
-                {
-                    // Delete a member from a list
-                    _allMembers.Remove(SelectedMember);
-                    Members = _allMembers;
-                    OnPropertyChanged(nameof(Members));
-
-                    SelectedMember = null;
-                    OnPropertyChanged(nameof(SelectedMember));
-                }
-                else
-                {
-                    ;
-                }
-            }
-            catch (Exception ex)
-            {
-                ;
-            }
-        }
-
         /* COMMANDS CONDITIONS */
-        private bool can_execute_change_privalege_or_delete_member_command()
-        {
-            // Can be executed only if any member was chosen
-            if (SelectedMember is null) { return false; }
-
-            // Only ADMINs and ROOTs can cahnge privileges of others
-            if (User.Account.AccountType == AccountType.Instructor)
-            {
-                return false;
-            }
-            return true;
-        }
 
         public VM_AllMembers() 
         {
