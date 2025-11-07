@@ -16,6 +16,14 @@ namespace impakt_maui_app.Models
         Member = 3,
         External = 4,
     }
+
+    public enum QRScanMode : ushort
+    {
+        None,
+        CheckIn,
+        UpdatePass,
+        MemberInfo,
+    }
     public class Model_Member
     {
         required public string CardId { get; set; }
@@ -82,7 +90,7 @@ namespace impakt_maui_app.Models
            };
     }
 
-    public class Model_PassType
+    public class EntryPass
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -98,8 +106,8 @@ namespace impakt_maui_app.Models
         public bool IsDeleted { get; set; }
         public DateTime? DeleteDate { get; set; }
 
-        public static Model_PassType From_Resp_Inst(Resp_PassTypes_Inst inst) =>
-            new Model_PassType
+        public static EntryPass From_Resp_Inst(Resp_PassTypes_Inst inst) =>
+            new EntryPass
             {
                 Id = inst.id,
                 Name = inst.name,

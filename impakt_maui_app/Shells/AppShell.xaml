@@ -60,9 +60,9 @@
                           Title="Scanner"/>
 
             <!--Sub tabs invisible by default-->
-            <ShellContent ContentTemplate="{DataTemplate pages:Page_Scanner_QRScanner}"
-                          Route="Page_Scanner_CheckIn"
-                          Title="Checkin"
+            <ShellContent ContentTemplate="{DataTemplate pages_scanner:Scanner_QR}"
+                          Route="Scanner_QR"
+                          Title="Scanner QR"
                           IsVisible="False"/>
         </Tab>
     </TabBar>

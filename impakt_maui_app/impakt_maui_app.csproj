@@ -96,9 +96,6 @@
 	  <Compile Update="Pages\Page_ExternalProviders.xaml.cs">
 	    <DependentUpon>Page_ExternalProviders.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Pages\Page_Scanner_QRScanner.xaml.cs">
-	    <DependentUpon>Page_Scanner_QRScanner.xaml</DependentUpon>
-	  </Compile>
 	  <Compile Update="Pages\Page_Statistics_Admin_InstructorsStatistics.xaml.cs">
 	    <DependentUpon>Page_Statistics_Admin_InstructorsStatistics.xaml</DependentUpon>
 	  </Compile>
@@ -126,6 +123,9 @@
 	  <MauiXaml Update="Pages\Scanner\Scanner.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\Scanner\Scanner_QR.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Statistics\Page_AllMembers.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -145,12 +145,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_PassTypes.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\Page_Scanner.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\Page_Scanner_QRScanner.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Profile\Page_ProfileMember.xaml">

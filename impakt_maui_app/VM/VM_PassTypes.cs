@@ -25,10 +25,10 @@ namespace impakt_maui_app.VM
         };
         private bool _is_edit_pass_type;
 
-        public ObservableCollection<Model_PassType> PassTypes { get; } = new();
+        public ObservableCollection<EntryPass> PassTypes { get; } = new();
 
         [ObservableProperty]
-        private Model_PassType? selectedPassType;
+        private EntryPass? selectedPassType;
 
         /* To be used for edit / add functionality. */
         [ObservableProperty] private bool isFormVisible = false;
@@ -162,7 +162,7 @@ namespace impakt_maui_app.VM
                 {
                     /* Update collection on this page */
                     var pass_details = await response.Content.ReadFromJsonAsync<Resp_PassTypes_Inst>();
-                    Model_PassType new_pass = Model_PassType.From_Resp_Inst(pass_details);
+                    EntryPass new_pass = EntryPass.From_Resp_Inst(pass_details);
                     
                     PassTypes.Remove(SelectedPassType);
                     PassTypes.Add(new_pass);
@@ -185,7 +185,7 @@ namespace impakt_maui_app.VM
                 {
                     /* Update collection on this page */
                     var pass_details = await response.Content.ReadFromJsonAsync<Resp_PassTypes_Inst>();
-                    Model_PassType new_pass = Model_PassType.From_Resp_Inst(pass_details);
+                    EntryPass new_pass = EntryPass.From_Resp_Inst(pass_details);
                     PassTypes.Add(new_pass);
                 }
             }
@@ -198,7 +198,7 @@ namespace impakt_maui_app.VM
         /* CONDITIONS */
         private bool can_btn_edit_be_pressed() =>
             !(SelectedPassType is null);
-        partial void OnSelectedPassTypeChanged(Model_PassType? value)
+        partial void OnSelectedPassTypeChanged(EntryPass? value)
         {
             EditPassTypeFormCommand.NotifyCanExecuteChanged();
         }

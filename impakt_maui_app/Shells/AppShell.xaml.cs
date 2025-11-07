@@ -14,8 +14,6 @@ namespace impakt_maui_app
             Routing.RegisterRoute("Page_Statistics_InstructorCheckInsDetailed", typeof(Page_Statistics_InstructorCheckInsDetailed));
             Routing.RegisterRoute("Page_AllMembers", typeof(Page_AllMembers));  // This name convention is more preferable
 
-            Routing.RegisterRoute("Page_Scanner_QRScanner", typeof(Page_Scanner_QRScanner));
-
             Routing.RegisterRoute("Page_ExternalProvider", typeof(Page_ExternalProvider));
             Routing.RegisterRoute("Page_PassTypes", typeof(Page_PassTypes));
 
@@ -23,7 +21,7 @@ namespace impakt_maui_app
             Routing.RegisterRoute(nameof(Pages.Profile.QRCode), typeof(Pages.Profile.QRCode));
 
             /* Scan related pages */
-            // ...
+            
         }
     }
 }

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="impakt_maui_app.Pages.Scanner.Scanner"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"             
              xmlns:vm="clr-namespace:impakt_maui_app.VM.Scanner"
+             xmlns:enums="clr-namespace:impakt_maui_app.Models"
+             x:Class="impakt_maui_app.Pages.Scanner.Scanner"
              x:Name="this"
-             Background="{StaticResource PrimeWhite}"
+             BackgroundColor="{StaticResource PrimeWhite}"
              Title="Scanner">
 
     <ContentPage.BindingContext>
@@ -22,7 +23,8 @@
         </Style>
         
         <!--Border as section frame
-            [ToDo] Make this border a resource for whole project-->
+            [ToDo] Make this border a resource for whole project.
+            Add as separate element to implement VisualStateManager -->
         <Style x:Key="SectionBorder" TargetType="Border">
             <Setter Property="StrokeShape"      Value="RoundRectangle 16" />
             <Setter Property="BackgroundColor"  Value="White" />
@@ -65,10 +67,10 @@
                     Grid.ColumnSpan="2"
                     Style="{StaticResource SectionBorder}">
 
-                <!--<Border.GestureRecognizers>
-                    <TapGestureRecognizer Command=""
-                                          CommandParameter="Pass"/>
-                </Border.GestureRecognizers>-->
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChooseScanTypeCommand}"
+                                          CommandParameter="{x:Static enums:QRScanMode.CheckIn}"/>
+                </Border.GestureRecognizers>
 
                 <HorizontalStackLayout Spacing="5">
                     <Image Source="dance_icon_1_red.png"
@@ -95,10 +97,10 @@
                     Grid.ColumnSpan="2"
                     Style="{StaticResource SectionBorder}">
 
-                <!--<Border.GestureRecognizers>
-                    <TapGestureRecognizer Command=""
-                                          CommandParameter="Pass"/>
-                </Border.GestureRecognizers>-->
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChooseScanTypeCommand}"
+                                          CommandParameter="{x:Static enums:QRScanMode.UpdatePass}"/>
+                </Border.GestureRecognizers>
 
                 <HorizontalStackLayout Spacing="5">
                     <Image Source="ticket_icon_2.png"
@@ -129,11 +131,10 @@
                     Grid.ColumnSpan="2"
                     Style="{StaticResource SectionBorder}">
 
-                <!--Bind a command when tap is done on the border-->
-                <!--<Border.GestureRecognizers>
-                    <TapGestureRecognizer Command=""
-                                          CommandParameter="Info"/>
-                </Border.GestureRecognizers>-->
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChooseScanTypeCommand}"
+                                          CommandParameter="{x:Static enums:QRScanMode.MemberInfo}"/>
+                </Border.GestureRecognizers>
 
                 <HorizontalStackLayout Spacing="5">
                     <Image Source="empty_user_icon_green.png"
