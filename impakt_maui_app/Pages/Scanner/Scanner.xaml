@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"             
              xmlns:vm="clr-namespace:impakt_maui_app.VM.Scanner"
-             xmlns:enums="clr-namespace:impakt_maui_app.Models"
+             xmlns:models="clr-namespace:impakt_maui_app.Models;assembly=impakt_maui_app"
              x:Class="impakt_maui_app.Pages.Scanner.Scanner"
              x:Name="this"
              BackgroundColor="{StaticResource PrimeWhite}"
@@ -14,7 +14,6 @@
     </ContentPage.BindingContext>
 
     <ContentPage.Resources>
-        
         <!--Border between elements
             [Probably] Should be as global static resource-->
         <Style x:Key="SplitBorder" TargetType="Border">
@@ -69,7 +68,7 @@
 
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ChooseScanTypeCommand}"
-                                          CommandParameter="{x:Static enums:QRScanMode.CheckIn}"/>
+                                          CommandParameter="CheckIn"/>
                 </Border.GestureRecognizers>
 
                 <HorizontalStackLayout Spacing="5">
@@ -99,7 +98,7 @@
 
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ChooseScanTypeCommand}"
-                                          CommandParameter="{x:Static enums:QRScanMode.UpdatePass}"/>
+                                          CommandParameter="UpdatePass}"/>
                 </Border.GestureRecognizers>
 
                 <HorizontalStackLayout Spacing="5">
@@ -133,7 +132,7 @@
 
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ChooseScanTypeCommand}"
-                                          CommandParameter="{x:Static enums:QRScanMode.MemberInfo}"/>
+                                          CommandParameter="MemberInfo"/>
                 </Border.GestureRecognizers>
 
                 <HorizontalStackLayout Spacing="5">

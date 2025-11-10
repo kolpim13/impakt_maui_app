@@ -21,7 +21,10 @@ namespace impakt_maui_app
             Routing.RegisterRoute(nameof(Pages.Profile.QRCode), typeof(Pages.Profile.QRCode));
 
             /* Scan related pages */
-            
+            Routing.RegisterRoute(nameof(Pages.Scanner.Scanner_QR), typeof(Pages.Scanner.Scanner_QR));
+            Routing.RegisterRoute(nameof(Pages.Scanner.EntryPass), typeof(Pages.Scanner.EntryPass));
+            Routing.RegisterRoute(nameof(Pages.Scanner.ExternalProvider), typeof(Pages.Scanner.ExternalProvider));
+
         }
     }
 }

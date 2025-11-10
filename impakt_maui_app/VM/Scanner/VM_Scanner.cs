@@ -23,8 +23,11 @@ namespace impakt_maui_app.VM.Scanner
 
         /* COMMANDS */
         [RelayCommand]
-        private async Task ChooseScanType(QRScanMode scan_type)
+        private async Task ChooseScanType(string param)
         {
+            QRScanMode scan_type;
+            Enum.TryParse(param, true, out scan_type);
+
             if (scan_type == QRScanMode.MemberInfo)
             {
                 await Shell.Current.GoToAsync(nameof(Scanner_QR),
@@ -33,7 +36,16 @@ namespace impakt_maui_app.VM.Scanner
                         ["ScanType"] = scan_type,
                     });
             }
-            
+
+            if (scan_type == QRScanMode.UpdatePass)
+            {
+                await Shell.Current.GoToAsync(nameof(Pages.Scanner.EntryPass));
+            }
+
+            if (scan_type == QRScanMode.CheckIn)
+            {
+                await Shell.Current.GoToAsync(nameof(Pages.Scanner.ExternalProvider));
+            }
         }
 
         public VM_Scanner()

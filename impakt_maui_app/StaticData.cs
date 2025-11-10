@@ -46,7 +46,7 @@ namespace impakt_maui_app
             Id = -1,
             Name = "No Provider",
             IsPartialPayment = false,
-            IsDeleted = true,
+            IsDeleted = false,
         };
         private static List<ExternalProvider> ExternalProviders = new List<ExternalProvider>();
         public static ObservableCollection<ExternalProvider> Get_ExternalProviders_AsCollection() =>

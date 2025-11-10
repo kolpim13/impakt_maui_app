@@ -60,10 +60,20 @@
                           Title="Scanner"/>
 
             <!--Sub tabs invisible by default-->
+            <!--<ShellContent ContentTemplate="{DataTemplate pages_scanner:Scanner_QR}"
+                          Route="Scanner_QR"
+                          Title="Scanner QR"
+                          IsVisible="False"/>
+
             <ShellContent ContentTemplate="{DataTemplate pages_scanner:Scanner_QR}"
                           Route="Scanner_QR"
                           Title="Scanner QR"
                           IsVisible="False"/>
+
+            <ShellContent ContentTemplate="{DataTemplate pages_scanner:Scanner_QR}"
+                          Route="Scanner_QR"
+                          Title="Scanner QR"
+                          IsVisible="False"/>-->
         </Tab>
     </TabBar>
 
