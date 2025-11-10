@@ -81,19 +81,90 @@
                 </Grid>
             </Border>
         </DataTemplate>
+        <DataTemplate x:Key="CV_ItemTemplate_Header">
+            <VerticalStackLayout>
+                <Label Text="External providers"
+                       FontSize="Large"
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+            
+        </DataTemplate>
     </ContentPage.Resources>
     
     <ScrollView>
-        <Grid RowDefinitions="*"
-            ColumnDefinitions="*"
-            Margin="10"
-            Padding="0">
+        <Grid RowDefinitions="Auto,Auto"
+              ColumnDefinitions="*"
+              Margin="10"
+              Padding="0">
 
-            <CollectionView Grid.Row="0" Grid.Column="0"
+            <Border Grid.Row="0" Grid.Column="0"
+                    BackgroundColor="White"
+                    StrokeThickness="1"
+                    Padding="10"
+                    StrokeShape="RoundRectangle 12">
+                
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToScanQRCommand}" />
+                </Border.GestureRecognizers>
+
+                <Grid RowDefinitions="*"
+                      ColumnDefinitions="Auto,*"
+                      RowSpacing="5"
+                      ColumnSpacing="10"
+                      VerticalOptions="Center" >
+
+                    <!-- Icon Section -->
+                    <Border Grid.Row="0" Grid.Column="0"
+                            Background="Transparent"
+                            WidthRequest="128"
+                            HeightRequest="128"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 16">
+
+                        <Image Source="cross_1.png"
+                               WidthRequest="96"
+                               HeightRequest="96"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"/> 
+                    </Border>
+
+                    <!-- Text Section -->
+                    <VerticalStackLayout Grid.Row="0" Grid.Column="1"
+                                         Padding="0" 
+                                         VerticalOptions="Start">
+
+                        <Label Text="No provider"
+                               FontAttributes="Bold"
+                               FontSize="Large"
+                               TextColor="Black"/>
+
+                        <Label Text="Check-In using Pass" 
+                               FontSize="Medium"
+                               TextColor="Black"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!--List with all providers-->
+            <!--<Border Grid.Row="1" Grid.Column="0"
+                    BackgroundColor="WhiteSmoke"
+                    Padding="5"
+                    StrokeShape="RoundRectangle 12">
+
+                
+            </Border>-->
+            <CollectionView Grid.Row="1" Grid.Column="0"
                             SelectionMode="None"
                             ItemsSource="{Binding Providers}"
                             ItemTemplate="{StaticResource CV_ItemTemplate_ExternalProvider}">
 
+                <!--This does nothing-->
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" 
+                                       ItemSpacing="2"/>
+                </CollectionView.ItemsLayout>
             </CollectionView>
         </Grid>
     </ScrollView>

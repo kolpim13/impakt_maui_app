@@ -30,9 +30,6 @@ namespace impakt_maui_app.VM.Scanner
         {
             /* We do know scan type since we at this page already 
             Have to figure out the external provider. */
-            if (provider is null)
-                return;
-
             await Shell.Current.GoToAsync(nameof(Pages.Scanner.Scanner_QR),
                 new Dictionary<string, object>
                 {
@@ -59,8 +56,6 @@ namespace impakt_maui_app.VM.Scanner
             Providers = GeneralResources.Get_ExternalProviders_AsCollection()
                 .Where(p => p.IsDeleted == false)
                 .ToObservableCollection();
-            Providers.Add(GeneralResources.dummy_provider);
-            OnPropertyChanged(nameof(Providers));
         }
 
         /* PRIVATE METHODS */

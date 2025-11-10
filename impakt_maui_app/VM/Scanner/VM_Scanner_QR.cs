@@ -175,7 +175,7 @@ namespace impakt_maui_app.VM.Scanner
             Req_CheckIn_Add req = new Req_CheckIn_Add
             {
                 validated_by_card_id = User.Account.CardId,
-                external_provider_id = provider.Id,
+                external_provider_id = provider?.Id,
                 member_card_id = card_id,
             };
 
