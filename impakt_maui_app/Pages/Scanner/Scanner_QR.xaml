@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
+             xmlns:vm="clr-namespace:impakt_maui_app.VM.Scanner"
+             x:Class="impakt_maui_app.Pages.Scanner.Scanner_QR"
+             Background="{StaticResource PrimeWhite}"
+             Title="QR Scanner">
+
+    <ContentPage.BindingContext>
+        <vm:VM_Scanner_QR />
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="0.75*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--QR Scanner-->
+        <zxing:CameraBarcodeReaderView Grid.Row="1" Grid.Column="1"
+                                       x:Name="QrReader"
+                                       HeightRequest="250"
+                                       WidthRequest="250"
+                                       VerticalOptions="Start"
+                                       HorizontalOptions="Center"
+                                       IsVisible="True"
+                                       IsEnabled="True"
+                                       IsDetecting="{Binding IsDetecting}" 
+                                       BarcodesDetected="OnBarcodesDetected">
+
+            <!--Failed to work-->
+            <!--<zxing:CameraBarcodeReaderView.Behaviors>
+                <toolkit:EventToCommandBehavior EventName="BarcodesDetected"
+                                                Command="{Binding BarcodeDetectedCommand}" />
+            </zxing:CameraBarcodeReaderView.Behaviors>-->
+        </zxing:CameraBarcodeReaderView>
+
+        <!--FlashLight-->
+
+        <!--Full screen overlay-->
+        <Grid Grid.Row="0" Grid.Column="0"
+              Grid.RowSpan="4" Grid.ColumnSpan="3"
+              IsVisible="{Binding IsOverlayVisible}"
+              BackgroundColor="{Binding OverlayColor}"
+              Opacity="{Binding OverlayOpacity}">
+
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding DismissOverlayCommand}"/>
+            </Grid.GestureRecognizers>
+
+            <Label Text="{Binding OverlayText}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   TextColor="White"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   Padding="20" /> 
+        </Grid>
+    </Grid>
+</ContentPage>

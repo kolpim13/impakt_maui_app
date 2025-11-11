@@ -46,7 +46,7 @@ namespace impakt_maui_app
             Id = -1,
             Name = "No Provider",
             IsPartialPayment = false,
-            IsDeleted = true,
+            IsDeleted = false,
         };
         private static List<ExternalProvider> ExternalProviders = new List<ExternalProvider>();
         public static ObservableCollection<ExternalProvider> Get_ExternalProviders_AsCollection() =>
@@ -87,17 +87,17 @@ namespace impakt_maui_app
 
         /* PASS TYPES */
         public static bool IsPassTypesObtained = false;
-        private static List<Model_PassType> PassTypes = new List<Model_PassType>();
-        public static ObservableCollection<Model_PassType> Get_PassTypes_AsCollection() =>
-            new ObservableCollection<Model_PassType>(PassTypes);
-        public static void Get_PassTypes_AsCollection(ObservableCollection<Model_PassType> collection)
+        private static List<EntryPass> PassTypes = new List<EntryPass>();
+        public static ObservableCollection<EntryPass> Get_PassTypes_AsCollection() =>
+            new ObservableCollection<EntryPass>(PassTypes);
+        public static void Get_PassTypes_AsCollection(ObservableCollection<EntryPass> collection)
         {
-            foreach (Model_PassType pass_type in PassTypes) 
+            foreach (EntryPass pass_type in PassTypes) 
             { 
                 collection.Add(pass_type); 
             }
         }
-        public static void Set_PassTypes_FromCollection(ObservableCollection<Model_PassType> collection) =>
+        public static void Set_PassTypes_FromCollection(ObservableCollection<EntryPass> collection) =>
             PassTypes = [.. collection];
         public static async Task PassTypes_FromDataBase()
         { 
@@ -111,7 +111,7 @@ namespace impakt_maui_app
                     var pass_types = await response.Content.ReadFromJsonAsync<List<Resp_PassTypes_Inst>>();
                     foreach(Resp_PassTypes_Inst pass_type in pass_types)
                     {
-                        PassTypes.Add(Model_PassType.From_Resp_Inst(pass_type));
+                        PassTypes.Add(EntryPass.From_Resp_Inst(pass_type));
                     }
 
                     IsPassTypesObtained = true;

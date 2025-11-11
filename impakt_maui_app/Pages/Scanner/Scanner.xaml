@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"             
+             xmlns:vm="clr-namespace:impakt_maui_app.VM.Scanner"
+             xmlns:models="clr-namespace:impakt_maui_app.Models;assembly=impakt_maui_app"
+             x:Class="impakt_maui_app.Pages.Scanner.Scanner"
+             x:Name="this"
+             BackgroundColor="{StaticResource PrimeWhite}"
+             Title="Scanner">
+
+    <ContentPage.BindingContext>
+        <vm:VM_Scanner />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <!--Border between elements
+            [Probably] Should be as global static resource-->
+        <Style x:Key="SplitBorder" TargetType="Border">
+            <Setter Property="HeightRequest"    Value="2" />
+            <Setter Property="BackgroundColor"  Value="{AppThemeBinding Light=#EEE, Dark=#333}" />
+        </Style>
+        
+        <!--Border as section frame
+            [ToDo] Make this border a resource for whole project.
+            Add as separate element to implement VisualStateManager -->
+        <Style x:Key="SectionBorder" TargetType="Border">
+            <Setter Property="StrokeShape"      Value="RoundRectangle 16" />
+            <Setter Property="BackgroundColor"  Value="White" />
+            <Setter Property="StrokeThickness"  Value="0" />
+            <Setter Property="Padding"          Value="5" />
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="#33000000" Offset="0,3" Radius="8" Opacity="0.25"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!--Image inside border-->
+        <Style x:Key="ButtonIcon" TargetType="Image">
+            <Setter Property="WidthRequest" Value="64" />
+            <Setter Property="HeightRequest" Value="64" />
+            <Setter Property="MaximumWidthRequest" Value="64" />
+            <Setter Property="MaximumHeightRequest" Value="64" />
+            <Setter Property="Rotation" Value="0" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="Aspect" Value="AspectFit" />
+        </Style>
+
+        <!--Title label-->
+        <Style x:Key="TitleLabel" TargetType="Label">
+            <Setter Property="FontSize" Value="Medium" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid
+            RowDefinitions="Auto,Auto,Auto"
+            ColumnDefinitions="*,*"
+            RowSpacing="8" ColumnSpacing="8"
+            Margin="6" Padding="5">
+
+            <!--Scan-->
+            <Border Grid.Row="0" Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource SectionBorder}">
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChooseScanTypeCommand}"
+                                          CommandParameter="CheckIn"/>
+                </Border.GestureRecognizers>
+
+                <HorizontalStackLayout Spacing="5">
+                    <Image Source="dance_icon_1_red.png"
+                           Style="{StaticResource ButtonIcon}"/>
+
+                    <VerticalStackLayout>
+                        <HorizontalStackLayout HorizontalOptions="Start">
+                            <VerticalStackLayout Spacing="2" HorizontalOptions="Start">
+                                <Label x:Name="TitleCheckin"
+                                       Text="Lesson Check-In"
+                                       Style="{StaticResource TitleLabel}"/>
+                                <Border Style="{StaticResource SplitBorder}"
+                                        WidthRequest="{Binding Source={x:Reference TitleCheckin}, Path=Width}"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        
+                        <Label Text="Scan to join to a lesson"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </Border>
+
+            <!--Buy pass-->
+            <Border Grid.Row="1" Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource SectionBorder}">
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChooseScanTypeCommand}"
+                                          CommandParameter="UpdatePass"/>
+                </Border.GestureRecognizers>
+
+                <HorizontalStackLayout Spacing="5">
+                    <Image Source="ticket_icon_2.png"
+                           Style="{StaticResource ButtonIcon}"
+                                 WidthRequest="96"
+                                 HeightRequest="96"
+                                 Rotation="0"
+                                 HorizontalOptions="Center"/>
+
+                    <VerticalStackLayout>
+                        <HorizontalStackLayout HorizontalOptions="Start">
+                            <VerticalStackLayout Spacing="2" HorizontalOptions="Start">
+                                <Label x:Name="TitlePass"
+                                       Text="Buy a Pass"
+                                       Style="{StaticResource TitleLabel}"/>
+                                <Border Style="{StaticResource SplitBorder}"
+                                        WidthRequest="{Binding Source={x:Reference TitlePass}, Path=Width}"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+
+                        <Label Text="Tap to scan and buy a new pass"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </Border>
+
+            <!--Member info-->
+            <Border Grid.Row="2" Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource SectionBorder}">
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChooseScanTypeCommand}"
+                                          CommandParameter="MemberInfo"/>
+                </Border.GestureRecognizers>
+
+                <HorizontalStackLayout Spacing="5">
+                    <Image Source="empty_user_icon_green.png"
+                           Style="{StaticResource ButtonIcon}" />
+
+                    <VerticalStackLayout>
+                        
+                        <HorizontalStackLayout HorizontalOptions="Start">
+                            <VerticalStackLayout Spacing="2" HorizontalOptions="Start">
+                                <Label x:Name="TitleInfo" 
+                                       Text="Member Info"
+                                       Style="{StaticResource TitleLabel}"/>
+                                <Border Style="{StaticResource SplitBorder}"
+                                        HorizontalOptions="Start"
+                                        WidthRequest="{Binding Source={x:Reference TitleInfo}, Path=Width}"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+
+                        <Label Text="View details for an existing member"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </Border>
+        </Grid>
+    </ScrollView>
+</ContentPage>
+    

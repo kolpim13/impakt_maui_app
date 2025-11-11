@@ -14,13 +14,17 @@ namespace impakt_maui_app
             Routing.RegisterRoute("Page_Statistics_InstructorCheckInsDetailed", typeof(Page_Statistics_InstructorCheckInsDetailed));
             Routing.RegisterRoute("Page_AllMembers", typeof(Page_AllMembers));  // This name convention is more preferable
 
-            Routing.RegisterRoute("Page_Scanner_QRScanner", typeof(Page_Scanner_QRScanner));
-
             Routing.RegisterRoute("Page_ExternalProvider", typeof(Page_ExternalProvider));
             Routing.RegisterRoute("Page_PassTypes", typeof(Page_PassTypes));
 
             /* Profile related pages. */
             Routing.RegisterRoute(nameof(Pages.Profile.QRCode), typeof(Pages.Profile.QRCode));
+
+            /* Scan related pages */
+            Routing.RegisterRoute(nameof(Pages.Scanner.Scanner_QR), typeof(Pages.Scanner.Scanner_QR));
+            Routing.RegisterRoute(nameof(Pages.Scanner.EntryPass), typeof(Pages.Scanner.EntryPass));
+            Routing.RegisterRoute(nameof(Pages.Scanner.ExternalProvider), typeof(Pages.Scanner.ExternalProvider));
+
         }
     }
 }

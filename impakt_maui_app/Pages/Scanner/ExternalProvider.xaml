@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" 
+             xmlns:vm="clr-namespace:impakt_maui_app.VM.Scanner"
+             xmlns:converters="clr-namespace:impakt_maui_app.VM"
+             x:Class="impakt_maui_app.Pages.Scanner.ExternalProvider"
+             x:Name="this"
+             BackgroundColor="{StaticResource PrimeWhite}"
+             Title="ExternalProvider">
+
+    <ContentPage.BindingContext>
+        <vm:VM_ExternalProvider />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <!--Converters-->
+        <converters:Converter_ExternalProviders_AddOrEditTitle x:Key="Converter_ExternalProviders_AddOrEditTitle" />
+        <converters:Converter_ExternalProviders_Description x:Key="Converter_Description" />
+        <converters:Converter_ExternalProviders_PartialPayment x:Key="Converter_PartialPayment" />
+        <converters:Converter_ExternalProviders_IsDeleted x:Key="Converter_ExternalProviders_IsDeleted" />
+        
+        <DataTemplate x:Key="CV_ItemTemplate_ExternalProvider">
+            <Border x:Name="Cell"
+                    Background="White"
+                    Margin="0"
+                    Padding="10"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 20">
+
+                <Border.Behaviors>
+                    <toolkit:TouchBehavior 
+                        Command="{Binding Source={x:Reference this}, Path=BindingContext.NavigateToScanQRCommand}"
+                        CommandParameter="{Binding Source={x:Reference Cell}, Path=BindingContext}" />
+                </Border.Behaviors>
+
+                <Grid RowDefinitions="*"
+                      ColumnDefinitions="Auto,*"
+                      RowSpacing="5"
+                      ColumnSpacing="10"
+                      VerticalOptions="Center" >
+
+                    <!-- Icon Section -->
+                    <Border Grid.Row="0" Grid.Column="0"
+                            Background="#7A4A27"
+                            WidthRequest="86"
+                            HeightRequest="86"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 16">
+
+                        <Image Source="icon_external_providers_white.png"
+                               WidthRequest="64"
+                               HeightRequest="64"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"/>
+                    </Border>
+
+                    <!-- Text Section -->
+                    <VerticalStackLayout Grid.Row="0" Grid.Column="1"
+                                         Padding="0" 
+                                         VerticalOptions="Start">
+
+                        <Label Text="{Binding Name}"
+                               FontAttributes="Bold"
+                               FontSize="Medium"
+                               TextColor="Black"/>
+
+                        <Label Text="{Binding PartialPayment, Converter={StaticResource Converter_PartialPayment}, StringFormat='Partial payment: {0}'}" 
+                               FontSize="Small"
+                               TextColor="Black"/>
+
+                        <Label Text="{Binding IsDeleted, Converter={StaticResource Converter_ExternalProviders_IsDeleted}}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Start"
+                               FontSize="15"
+                               TextColor="#4379C9"
+                               FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="CV_HeaderTemplate_ExternalProvider">
+            <VerticalStackLayout>
+                <Label Text="External providers"
+                       FontSize="Large"
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+            
+        </DataTemplate>
+    </ContentPage.Resources>
+    
+    <ScrollView>
+        <Grid RowDefinitions="Auto,Auto"
+              ColumnDefinitions="*"
+              Margin="10"
+              Padding="0">
+
+            <Border Grid.Row="0" Grid.Column="0"
+                    BackgroundColor="White"
+                    StrokeThickness="1"
+                    Padding="10"
+                    StrokeShape="RoundRectangle 12">
+                
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToScanQRCommand}" />
+                </Border.GestureRecognizers>
+
+                <Grid RowDefinitions="*"
+                      ColumnDefinitions="Auto,*"
+                      RowSpacing="5"
+                      ColumnSpacing="10"
+                      VerticalOptions="Center" >
+
+                    <!-- Icon Section -->
+                    <Border Grid.Row="0" Grid.Column="0"
+                            Background="Transparent"
+                            WidthRequest="128"
+                            HeightRequest="128"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 16">
+
+                        <Image Source="cross_1.png"
+                               WidthRequest="96"
+                               HeightRequest="96"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"/> 
+                    </Border>
+
+                    <!-- Text Section -->
+                    <VerticalStackLayout Grid.Row="0" Grid.Column="1"
+                                         Padding="0" 
+                                         VerticalOptions="Start">
+
+                        <Label Text="No provider"
+                               FontAttributes="Bold"
+                               FontSize="Large"
+                               TextColor="Black"/>
+
+                        <Label Text="Check-In using Pass" 
+                               FontSize="Medium"
+                               TextColor="Black"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!--List with all providers-->
+            <!--<Border Grid.Row="1" Grid.Column="0"
+                    BackgroundColor="WhiteSmoke"
+                    Padding="5"
+                    StrokeShape="RoundRectangle 12">
+
+                
+            </Border>-->
+            <CollectionView Grid.Row="1" Grid.Column="0"
+                            SelectionMode="None"
+                            ItemsSource="{Binding Providers}"
+                            ItemTemplate="{StaticResource CV_ItemTemplate_ExternalProvider}">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" 
+                                       ItemSpacing="2"/>
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+        </Grid>
+    </ScrollView>
+</ContentPage>

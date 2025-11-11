@@ -38,7 +38,8 @@ namespace impakt_maui_app.Pages
 
         private async void Btn_OnShowQrCodeClicked(object? sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Page_QRCode(User.Account.CardId));
+            // await Navigation.PushAsync(new Page_QRCode(User.Account.CardId));
+            ;
         }
     }
 }

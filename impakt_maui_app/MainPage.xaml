@@ -4,7 +4,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="impakt_maui_app.MainPage">
 
-    <WebView Source="https://learn.microsoft.com/dotnet/maui" />
+    <WebView Source="https://lmapkt.com/static/index.html" />
     <!--<ScrollView>
         <VerticalStackLayout Padding="30" Spacing="25">
 
