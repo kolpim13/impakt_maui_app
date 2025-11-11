@@ -1,12 +1,110 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" 
+             xmlns:vm="clr-namespace:impakt_maui_app.VM.Scanner"
+             xmlns:converters="clr-namespace:impakt_maui_app.VM"
              x:Class="impakt_maui_app.Pages.Scanner.EntryPass"
+             x:Name="this"
+             BackgroundColor="{StaticResource PrimeWhite}"
              Title="EntryPass">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+    <ContentPage.BindingContext>
+        <vm:VM_EntryPass />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <!--Converters-->
+        <converters:Converter_ExternalProviders_IsDeleted x:Key="Converter_ExternalProviders_IsDeleted" />
+        <converters:Converter_ExternalProviders_PartialPayment x:Key="Converter_PartialPayment" />
+        
+        <DataTemplate x:Key="CV_ItemTemplate_EntryPass" >
+            <Border x:Name="Cell"
+                    Background="White"
+                    Margin="0"
+                    Padding="10"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 20">
+
+                <Border.Behaviors>
+                    <toolkit:TouchBehavior 
+                        Command="{Binding Source={x:Reference this}, Path=BindingContext.NavigateToScanQRCommand}"
+                        CommandParameter="{Binding Source={x:Reference Cell}, Path=BindingContext}" />
+                </Border.Behaviors>
+
+                <Grid RowDefinitions="*"
+                      ColumnDefinitions="Auto, *"
+                      RowSpacing="5"
+                      ColumnSpacing="10"
+                      VerticalOptions="Center">
+
+                    <!-- Icon Section -->
+                    <Border Grid.Row="0" Grid.Column="0"
+                            Background="DarkOrange"
+                            WidthRequest="86"
+                            HeightRequest="86"
+                            VerticalOptions="Start"
+                            HorizontalOptions="Center"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 16">    
+
+                        <Image Source="id_card_pass.png"
+                               WidthRequest="64"
+                               HeightRequest="64"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"/>
+                    </Border>
+
+                    <!-- Text Section -->
+                    <VerticalStackLayout Grid.Row="0" Grid.Column="1"
+                                         Padding="0" 
+                                         VerticalOptions="Start">
+
+                        <Label Text="{Binding Name}"
+                               FontAttributes="Bold"
+                               FontSize="Medium"
+                               TextColor="Black"/>
+
+                        <Label Text="{Binding Price, Converter={StaticResource Converter_PartialPayment}, StringFormat='Price: {0}'}" 
+                               FontSize="Small"
+                               TextColor="Black"/>
+
+                        <Label Text="{Binding ValidityDays, StringFormat='Valid for {0} days'}" 
+                               FontSize="Small"
+                               TextColor="Black"/>
+
+                        <Label Text="{Binding MaximumEntries, StringFormat='Entries: {0}'}" 
+                               FontSize="Small"
+                               TextColor="Black"/>
+
+                        <Label Text="{Binding IsDeleted, Converter={StaticResource Converter_ExternalProviders_IsDeleted}}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Start"
+                               FontSize="15"
+                               TextColor="#4379C9"
+                               FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto"
+              ColumnDefinitions="*"
+              Margin="10"
+              Padding="0">
+
+            <CollectionView Grid.Row="0" Grid.Column="0"
+                            SelectionMode="None"
+                            ItemsSource="{Binding EntryPasses}"
+                            ItemTemplate="{StaticResource CV_ItemTemplate_EntryPass}">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" 
+                                       ItemSpacing="2"/>
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+        </Grid>
+    </ScrollView>
 </ContentPage>

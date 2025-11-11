@@ -81,7 +81,7 @@
                 </Grid>
             </Border>
         </DataTemplate>
-        <DataTemplate x:Key="CV_ItemTemplate_Header">
+        <DataTemplate x:Key="CV_HeaderTemplate_ExternalProvider">
             <VerticalStackLayout>
                 <Label Text="External providers"
                        FontSize="Large"
@@ -160,7 +160,6 @@
                             ItemsSource="{Binding Providers}"
                             ItemTemplate="{StaticResource CV_ItemTemplate_ExternalProvider}">
 
-                <!--This does nothing-->
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" 
                                        ItemSpacing="2"/>

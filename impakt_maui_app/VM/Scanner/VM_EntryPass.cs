@@ -2,18 +2,16 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using impakt_maui_app.Models;
-using impakt_maui_app.Schemas;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace impakt_maui_app.VM.Scanner
 {
-    public partial class VM_ExternalProvider : ObservableObject
+    public partial class VM_EntryPass : ObservableObject
     {
         /* DEFINITIONS */
         // ...
@@ -22,44 +20,45 @@ namespace impakt_maui_app.VM.Scanner
         // ...
 
         /* PROPERTIES */
-        public ObservableCollection<ExternalProvider> Providers { get; set; }
+        public ObservableCollection<Models.EntryPass> EntryPasses { get; set; }
 
         /* COMMANDS */
         [RelayCommand]
-        private async Task NavigateToScanQR(ExternalProvider provider)
+        private async Task NavigateToScanQR(EntryPass pass)
         {
             /* We do know scan type since we at this page already 
             Have to figure out the external provider. */
             await Shell.Current.GoToAsync(nameof(Pages.Scanner.Scanner_QR),
                 new Dictionary<string, object>
                 {
-                    ["ScanType"] = QRScanMode.CheckIn,
-                    ["ExternalProvider"] = provider,
+                    ["ScanType"] = QRScanMode.UpdatePass,
+                    ["EntryPass"] = pass,
                 });
         }
 
-        public VM_ExternalProvider()
+        public VM_EntryPass()
         {
             ;
         }
 
         /* PUBLIC METHODS (TO BE USED OUTSIDE OF VM) */
-        public async Task InitializeAsync() 
+        public async Task InitializeAsync()
         {
             // External Providers were not obtained ? --> pull them from DB
-            if (GeneralResources.IsExternalProvidersObtained is false)
+            if (GeneralResources.IsPassTypesObtained is false)
             {
-                await GeneralResources.ExternalProviders_FromDataBase();
+                await GeneralResources.PassTypes_FromDataBase();
             }
 
             // Update property
-            Providers = GeneralResources.Get_ExternalProviders_AsCollection()
+            EntryPasses = GeneralResources.Get_PassTypes_AsCollection()
                 .Where(p => p.IsDeleted == false)
                 .ToObservableCollection();
-            OnPropertyChanged(nameof(Providers));
+            OnPropertyChanged(nameof(EntryPasses));
         }
 
         /* PRIVATE METHODS */
         // ...
+
     }
 }

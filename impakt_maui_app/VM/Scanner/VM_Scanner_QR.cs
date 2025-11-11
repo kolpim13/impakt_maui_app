@@ -93,7 +93,10 @@ namespace impakt_maui_app.VM.Scanner
                     }
                 case QRScanMode.UpdatePass:
                     {
-                        await update_entry_pass(scanned_value);
+                        await MainThread.InvokeOnMainThreadAsync(async () =>
+                        {
+                            await update_entry_pass(scanned_value);
+                        });
                         break;
                     }
                 case QRScanMode.CheckIn:
