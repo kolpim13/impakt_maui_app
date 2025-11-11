@@ -59,7 +59,7 @@
             
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border Background="#F9E7DD"
+                    <Border Background="White"
                             Margin="5"
                             Padding="10"
                             StrokeThickness="2">

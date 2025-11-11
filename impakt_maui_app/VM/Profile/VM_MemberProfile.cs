@@ -90,7 +90,8 @@ namespace impakt_maui_app.VM.Profile
                 if (response.IsSuccessStatusCode)
                 {
                     // Return to previous page
-                    await Shell.Current.GoToAsync("..");
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                        { await Shell.Current.GoToAsync(".."); });
                 }
                 else
                 {
@@ -107,8 +108,7 @@ namespace impakt_maui_app.VM.Profile
         private bool can_execute_change_privalege()
         {
             if (User.Account.AccountType != AccountType.Root &&
-                User.Account.AccountType != AccountType.Admin &&
-                User.Account.AccountType != AccountType.Instructor)
+                User.Account.AccountType != AccountType.Admin)
             {
                 return false;
             }
