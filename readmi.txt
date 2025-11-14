@@ -1,0 +1,13 @@
+#1 How to compile code for Raspberry Pi 4B
+dotnet publish -c Release -r linux-arm64 --self-contained true
+OR
+dotnet publish -c Release -r linux-arm64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
+
+#2 How to install program on raspberry pi
+Copy whole "publish" folder. Example:
+scp C:\projects\impakt\impakt_maui_app\HW_QR_Scanner\bin\Release\net9.0\linux-arm64\publish\** torgu@192.168.0.171:~/Scanner/
+
+
+#3 How to connect to a raspberry pi via SSH
+ssh [user_name]@[device_ip]
+ssh torgu@192.168.0.171

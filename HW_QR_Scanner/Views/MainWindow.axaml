@@ -1,0 +1,17 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:HW_QR_Scanner.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="HW_QR_Scanner.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="HW_QR_Scanner">
+
+   <ContentControl Content="{Binding CurrentViewModel}" />
+</Window>
+
+<!--<Image Source="avares://HW_QR_Scanner/Assets/user_icon_1_1024-1024.png" 
+        MaxWidth="128"
+        MaxHeight="128"/>-->

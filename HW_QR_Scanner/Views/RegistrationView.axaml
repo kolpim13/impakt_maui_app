@@ -1,0 +1,127 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:HW_QR_Scanner.ViewModels"
+             x:DataType="vm:RegistrationViewModel"
+             x:Class="HW_QR_Scanner.Views.RegistrationView">
+  
+    <!-- Design-time DataContext (only for previewer) -->
+    <Design.DataContext>
+        <vm:RegistrationViewModel />
+    </Design.DataContext>
+
+    <UserControl.Resources>
+        <!-- Color palette based on the logo -->
+        <Color x:Key="Orange">#F7931E</Color>
+        <Color x:Key="Yellow">#FFE08A</Color>
+        <Color x:Key="Black">#111111</Color>
+        <Color x:Key="Background">#FFF8F0</Color>
+
+        <SolidColorBrush x:Key="OrangeBrush" Color="{StaticResource Orange}" />
+        <SolidColorBrush x:Key="YellowBrush" Color="{StaticResource Yellow}" />
+        <SolidColorBrush x:Key="BlackBrush"  Color="{StaticResource Black}" />
+        <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource Background}" />
+        <SolidColorBrush x:Key="CardBrush" Color="White" />
+    </UserControl.Resources>
+
+    <UserControl.Styles>
+        <!-- Card -->
+        <Style Selector="Border.registration-card">
+            <Setter Property="Padding" Value="24"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Margin" Value="24"/>
+            <Setter Property="Background" Value="{StaticResource CardBrush}"/>
+            <Setter Property="BoxShadow"
+                    Value="0 8 20 0 #22000000" />
+        </Style>
+
+        <!-- Labels -->
+        <Style Selector="TextBlock.form-label">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{StaticResource BlackBrush}"/>
+            <Setter Property="Margin" Value="0,8,0,2"/>
+        </Style>
+
+        <!-- Inputs -->
+        <Style Selector="TextBox">
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="BorderBrush" Value="{StaticResource OrangeBrush}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1.5"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+
+        <!-- Primary button (orange) -->
+        <Style Selector="Button.primary">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Background" Value="{StaticResource OrangeBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="{StaticResource OrangeBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="20"/>
+        </Style>
+
+        <!-- Secondary button (outlined, black text) -->
+        <Style Selector="Button.secondary">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Margin" Value="0,8,0,0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource BlackBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BlackBrush}"/>
+            <Setter Property="BorderThickness" Value="1.2"/>
+            <Setter Property="CornerRadius" Value="18"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Grid.Column="0"
+                    Margin="24,16,24,0">
+
+            <TextBlock Text="Register Scanner"
+                       FontSize="22"
+                       FontWeight="SemiBold"/>
+            <TextBlock Text="Register a new scanner HW in the system"
+                       Margin="0,4,0,0"
+                       Foreground="#666"
+                       FontSize="13"/>
+        </StackPanel>
+
+        <!-- Main Card -->
+        <Border Grid.Row="1" Grid.Column="0"
+                Classes="registration-card">
+
+            <Grid RowDefinitions="*,Auto" 
+                  ColumnDefinitions="*"
+                  RowSpacing="16">
+
+                <StackPanel Grid.Row="0" Grid.Column="0">
+                    <!-- Login -->
+                    <TextBlock Classes="form-label"
+                               Text="Login" />
+                    <TextBox Text="{Binding Login, Mode=TwoWay}" 
+                             Watermark="your login"/>
+
+                    <!-- Password -->
+                    <TextBlock Classes="form-label"
+                               Text="Password" />
+                    <TextBox Text="{Binding Password, Mode=TwoWay}"
+                             Watermark="your password" 
+                             PasswordChar="*"/>
+                </StackPanel>
+
+                <!-- Actions -->
+                <StackPanel Grid.Row="1" Grid.Column="0">
+                    <Button Classes="primary"
+                            Content="Regsiter scanner" 
+                            Command="{Binding RegisterScannerCommand}"/>
+
+                    <Button Classes="secondary"
+                            Content="Try to Log-In automatically" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
