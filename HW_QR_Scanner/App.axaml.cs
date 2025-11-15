@@ -3,14 +3,19 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using HW_QR_Scanner.Models;
 using HW_QR_Scanner.ViewModels;
 using HW_QR_Scanner.Views;
+using System;
+using System.IO;
 using System.Linq;
 
 namespace HW_QR_Scanner
 {
     public partial class App : Application
     {
+        public SettingsService? settingsService { get; private set; }
+
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
@@ -18,6 +23,18 @@ namespace HW_QR_Scanner
 
         public override void OnFrameworkInitializationCompleted()
         {
+            // Read settings from file
+            var configDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "HW_QR_Scanner");
+
+            Directory.CreateDirectory(configDir);
+
+            var settingsPath = Path.Combine(configDir, "settings.json");
+            settingsService = new SettingsService(settingsPath);
+            settingsService.Load();
+
+            // Create main window
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 

@@ -3,13 +3,32 @@
         xmlns:vm="using:HW_QR_Scanner.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="800"
         x:Class="HW_QR_Scanner.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="HW_QR_Scanner">
 
-   <ContentControl Content="{Binding CurrentViewModel}" />
+    
+    <Grid RowDefinitions="Auto,*"
+          ColumnDefinitions="*">
+
+        <!--Menu-->
+		<Menu Grid.Row="0" Grid.Column="0">
+			<MenuItem Header="_Settings">
+                <MenuItem Header="Scanner">
+					<MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="avares://HW_QR_Scanner/Assets/serial_port_256-256.png" />
+                    </MenuItem.Icon>
+                    <MenuItem Header="Baudrate" />
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+
+         <!--Content withible right now-->
+        <ContentControl Grid.Row="1" Grid.Column="0"
+                        Content="{Binding CurrentPage}" />
+    </Grid>
 </Window>
 
 <!--<Image Source="avares://HW_QR_Scanner/Assets/user_icon_1_1024-1024.png" 

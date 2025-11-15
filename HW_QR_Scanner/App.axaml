@@ -23,6 +23,14 @@
         <DataTemplate DataType="{x:Type vm:RegistrationViewModel}">
 			<views:RegistrationView />
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:MainViewModel}">
+			<views:MainView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:ScanViewModel}">
+			<views:ScanView />
+        </DataTemplate>
     </Application.DataTemplates>
   
     <Application.Styles>
