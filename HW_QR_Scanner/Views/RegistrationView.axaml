@@ -110,6 +110,18 @@
                     <TextBox Text="{Binding Password, Mode=TwoWay}"
                              Watermark="your password" 
                              PasswordChar="*"/>
+
+                    <!--Scanner name-->
+                    <TextBlock Classes="form-label"
+                               Text="Scanner name" />
+                    <TextBox Text="{Binding ScannerName, Mode=TwoWay}" 
+                             Watermark="Name your scanner"/>
+
+                    <!--Scanner location-->
+                    <TextBlock Classes="form-label"
+                               Text="Scanner Location" />
+                    <TextBox Text="{Binding ScannerLocation, Mode=TwoWay}" 
+                             Watermark="Set new scanner location"/>
                 </StackPanel>
 
                 <!-- Actions -->
@@ -119,7 +131,8 @@
                             Command="{Binding RegisterScannerCommand}"/>
 
                     <Button Classes="secondary"
-                            Content="Try to Log-In automatically" />
+                            Content="Try to Log-In automatically" 
+                            Command="{Binding GoToScanPageCommand}"/>
                 </StackPanel>
             </Grid>
         </Border>
