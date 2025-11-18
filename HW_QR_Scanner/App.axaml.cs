@@ -14,8 +14,6 @@ namespace HW_QR_Scanner
 {
     public partial class App : Application
     {
-        public SettingsService? settingsService { get; private set; }
-
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
@@ -23,17 +21,6 @@ namespace HW_QR_Scanner
 
         public override void OnFrameworkInitializationCompleted()
         {
-            // Read settings from file
-            var configDir = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "HW_QR_Scanner");
-
-            Directory.CreateDirectory(configDir);
-
-            var settingsPath = Path.Combine(configDir, "settings.json");
-            settingsService = new SettingsService(settingsPath);
-            settingsService.Load();
-
             // Create main window
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
