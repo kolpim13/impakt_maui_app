@@ -13,7 +13,7 @@
     <Grid RowDefinitions="Auto,*"
           ColumnDefinitions="*">
 
-
+        <!--Main Scanner View-->
 		<Border Grid.Row="0" Grid.Column="0"
                 Padding="8"
                 CornerRadius="4">
@@ -32,5 +32,22 @@
                        FontWeight="SemiBold" />
         </Border>
 
+        <!--Full screen overlay-->
+        <Grid Grid.Row="0" Grid.Column="0"
+              Grid.RowSpan="2" Grid.ColumnSpan="1"
+              IsVisible="{Binding IsOverlayVisible}"
+              Background="{Binding OverlayColor}"
+              Tapped="OnOverlayTapped"
+              Opacity="1">
+
+            <TextBlock Text="{Binding OverlayText}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       TextAlignment="Center"
+                       Foreground="White"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Padding="20" /> 
+        </Grid>
     </Grid>
 </UserControl>
