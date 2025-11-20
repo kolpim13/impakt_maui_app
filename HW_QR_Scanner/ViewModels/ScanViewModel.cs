@@ -1,16 +1,9 @@
-﻿using Avalonia.Controls;
-using Avalonia.Media;
+﻿using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using HW_QR_Scanner.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using ImpactAPI;
+using Impact.Backend;
 
 namespace HW_QR_Scanner.ViewModels
 {
@@ -37,7 +30,9 @@ namespace HW_QR_Scanner.ViewModels
 
         public ScanViewModel()
         {
-            scanner = new HWScanner(port_name: "COM5", baudrate: 115200);
+            scanner = new HWScanner(
+                port_name: DeviceService.Settings.SerialPortName,
+                baudrate: DeviceService.Settings.BaudRate);
             scanner.DataReceived += scanner_data_received;
             scanner.StartScan();
         }

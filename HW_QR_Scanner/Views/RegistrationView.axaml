@@ -97,17 +97,18 @@
                   ColumnDefinitions="*"
                   RowSpacing="16">
 
+                <!--Fields-->
                 <StackPanel Grid.Row="0" Grid.Column="0">
                     <!-- Login -->
                     <TextBlock Classes="form-label"
                                Text="Login" />
-                    <TextBox Text="{Binding Login, Mode=TwoWay}" 
+                    <TextBox Text="{Binding AdminLogin, Mode=TwoWay}" 
                              Watermark="your login"/>
 
                     <!-- Password -->
                     <TextBlock Classes="form-label"
                                Text="Password" />
-                    <TextBox Text="{Binding Password, Mode=TwoWay}"
+                    <TextBox Text="{Binding AdminPassword, Mode=TwoWay}"
                              Watermark="your password" 
                              PasswordChar="*"/>
 
@@ -121,7 +122,7 @@
                     <TextBlock Classes="form-label"
                                Text="Scanner Location" />
                     <TextBox Text="{Binding ScannerLocation, Mode=TwoWay}" 
-                             Watermark="Set new scanner location"/>
+                             Watermark="Set scanner`s location"/>
                 </StackPanel>
 
                 <!-- Actions -->
